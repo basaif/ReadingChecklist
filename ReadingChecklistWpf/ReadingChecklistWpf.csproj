@@ -7,4 +7,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Database\ReadingChecklistDB.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Database\ReadingChecklistDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReadingChecklistDataAccess\ReadingChecklistDataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

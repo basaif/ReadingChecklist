@@ -5,6 +5,10 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistWpf", "ReadingChecklistWpf\ReadingChecklistWpf.csproj", "{3AC299F9-61B9-4807-94A5-B7258240043C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistDataAccess", "ReadingChecklistDataAccess\ReadingChecklistDataAccess.csproj", "{58B58B46-95BD-4923-BEC0-252132DB1789}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistModels", "ReadingChecklistModels\ReadingChecklistModels.csproj", "{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3AC299F9-61B9-4807-94A5-B7258240043C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AC299F9-61B9-4807-94A5-B7258240043C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AC299F9-61B9-4807-94A5-B7258240043C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58B58B46-95BD-4923-BEC0-252132DB1789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B58B46-95BD-4923-BEC0-252132DB1789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B58B46-95BD-4923-BEC0-252132DB1789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B58B46-95BD-4923-BEC0-252132DB1789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,23 +21,31 @@
                 
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Background="Lavender">
-            
+
+            <StackPanel Orientation="Vertical">
+                <TextBox x:Name="WhereToGetBooks" Margin="5" MinHeight="20" VerticalContentAlignment="Center"
+                     Padding="2" FontSize="16" IsReadOnly="True" TextChanged="WhereToGetBooks_TextChanged"
+                 />
+
+                <Button x:Name="LookForBooksBtn" Margin="5" Padding="10" Click="LookForBooksBtn_Click"
+                 Content="Open"/>
+
+                <Button x:Name="GetBooksBtn" Margin="5" Padding="10" Click="GetBooksBtn_Click"
+                 Content="Get Books"/>
+
+                <ProgressBar x:Name="BooksProgress" Margin="5" Minimum="0"
+                     Maximum="100" Visibility="Hidden" IsIndeterminate="True"
+                     Background="Lavender"
+                             Foreground="MediumSlateBlue"
+                             Height="15"/>
+            </StackPanel>
         </Grid>
-        <StackPanel Orientation="Vertical"
-                    Grid.Row="1" Grid.Column="2">
-            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
-                              IsRead="True" DateRead="02/14/2021"
-                              />
-            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
-                              IsRead="True" DateRead="02/14/2021"
-                              />
-            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
-                              IsRead="True" DateRead="02/14/2021"
-                              />
-            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
-                              IsRead="True" DateRead="02/14/2021"
-                              />
-        </StackPanel>
+            <ScrollViewer  Grid.Row="1" Grid.Column="2" VerticalScrollBarVisibility="Auto"
+                                  CanContentScroll="False">
+            <StackPanel Orientation="Vertical"
+                   x:Name="BooksPanel">
+            </StackPanel>
+            </ScrollViewer>
         <GridSplitter HorizontalAlignment="Center" Width="5"
                       Background="Lavender"
                       Grid.Row="1" Grid.Column="1"/>
