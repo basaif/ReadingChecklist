@@ -1,0 +1,47 @@
+﻿<Window x:Class="ReadingChecklistWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReadingChecklistWpf"
+        mc:Ignorable="d"
+        Title="Reading Checklist" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
+              Height="40">
+                
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Background="Lavender">
+            
+        </Grid>
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="1" Grid.Column="2">
+            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
+                              IsRead="True" DateRead="02/14/2021"
+                              />
+            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
+                              IsRead="True" DateRead="02/14/2021"
+                              />
+            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
+                              IsRead="True" DateRead="02/14/2021"
+                              />
+            <local:BookCardUc BookName="jfffffffff skdjf slffffffskdfj       jfkdsljfs f jdkslfjsljfdskld fjslkdjfs fk sfjsdkljlk"
+                              IsRead="True" DateRead="02/14/2021"
+                              />
+        </StackPanel>
+        <GridSplitter HorizontalAlignment="Center" Width="5"
+                      Background="Lavender"
+                      Grid.Row="1" Grid.Column="1"/>
+
+
+    </Grid>
+</Window>
