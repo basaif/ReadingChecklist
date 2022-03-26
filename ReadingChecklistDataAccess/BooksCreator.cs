@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReadingChecklistDataAccess
 {
-    public class BooksCreater
+    public class BooksCreator
     {
         public string BookDirectory { get; set; }
 
@@ -15,7 +15,7 @@ namespace ReadingChecklistDataAccess
 
         public List<BookModel> AllBooks { get; set; } = new();
 
-        public BooksCreater(string dir)
+        public BooksCreator(string dir)
         {
             BookDirectory = dir;
         }

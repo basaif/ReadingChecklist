@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistWpf", "ReadingChecklistWpf\ReadingChecklistWpf.csproj", "{3AC299F9-61B9-4807-94A5-B7258240043C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistWpf", "ReadingChecklistWpf\ReadingChecklistWpf.csproj", "{3AC299F9-61B9-4807-94A5-B7258240043C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistDataAccess", "ReadingChecklistDataAccess\ReadingChecklistDataAccess.csproj", "{58B58B46-95BD-4923-BEC0-252132DB1789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistDataAccess", "ReadingChecklistDataAccess\ReadingChecklistDataAccess.csproj", "{58B58B46-95BD-4923-BEC0-252132DB1789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistModels", "ReadingChecklistModels\ReadingChecklistModels.csproj", "{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistModels", "ReadingChecklistModels\ReadingChecklistModels.csproj", "{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistLogicLibrary", "ReadingChecklistLogicLibrary\ReadingChecklistLogicLibrary.csproj", "{C3CA0F5E-91AB-4463-8793-9BF4810396C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagementLibrary", "FileManagementLibrary\FileManagementLibrary.csproj", "{722AFC77-4667-4E35-B0B9-DCE17601B104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3CA0F5E-91AB-4463-8793-9BF4810396C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CA0F5E-91AB-4463-8793-9BF4810396C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CA0F5E-91AB-4463-8793-9BF4810396C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CA0F5E-91AB-4463-8793-9BF4810396C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ReadingChecklistDataAccess\ReadingChecklistDataAccess.csproj" />
+    <ProjectReference Include="..\ReadingChecklistLogicLibrary\ReadingChecklistLogicLibrary.csproj" />
   </ItemGroup>
 
 </Project>

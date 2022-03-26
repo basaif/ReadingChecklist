@@ -14,8 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FileManagementLibrary;
 using Ookii.Dialogs.Wpf;
 using ReadingChecklistDataAccess;
+using ReadingChecklistLogicLibrary;
 using ReadingChecklistModels;
 
 namespace ReadingChecklistWpf
@@ -26,8 +28,9 @@ namespace ReadingChecklistWpf
     public partial class MainWindow : Window
     {
         private readonly BackgroundWorker worker = new();
-
-        private BooksCreater _booksCreater = new("");
+        private static readonly FilesManager _filesManager = new("");
+        private static readonly TagsCreator _tagsCreator = new();
+        private readonly BookDataGenerator _bookDataGenerator = new(_filesManager, _tagsCreator); 
 
         public MainWindow()
         {
@@ -67,7 +70,7 @@ namespace ReadingChecklistWpf
 
                 //Parallel.ForEach(_booksCreater.AllBooks, book => CreateBookCard(book)); 
 
-                foreach(BookModel book in _booksCreater.AllBooks)
+                foreach(BookModel book in _bookDataGenerator.AllBooks)
                 {
                     CreateBookCard(book);
                 }
@@ -107,7 +110,7 @@ namespace ReadingChecklistWpf
 
         private void GetBooksMethod()
         {
-            _booksCreater.CreateDataFromDirectory();
+            _bookDataGenerator.GenerateBooksData();
         }
 
         private void LookForBooksBtn_Click(object sender, RoutedEventArgs e)
@@ -117,7 +120,7 @@ namespace ReadingChecklistWpf
 
         private void WhereToGetBooks_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _booksCreater.BookDirectory = WhereToGetBooks.Text;
+            _filesManager.Location = WhereToGetBooks.Text;
         }
     }
 }
