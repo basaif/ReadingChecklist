@@ -7,49 +7,24 @@
         mc:Ignorable="d"
         Title="Reading Checklist" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
-              Height="40">
-                
-        </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Background="Lavender">
+        <TabControl Grid.Row="1" Grid.Column="0" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderThickness="0" TabStripPlacement="Top">
+            <TabItem  HorizontalAlignment="Center" VerticalAlignment="Bottom" IsSelected="True"
+                  >
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical">
+                       
+                        <TextBlock Text="Home"/>
+                    </StackPanel>
+                </TabItem.Header>
 
-            <StackPanel Orientation="Vertical">
-                <TextBox x:Name="WhereToGetBooks" Margin="5" MinHeight="20" VerticalContentAlignment="Center"
-                     Padding="2" FontSize="16" IsReadOnly="True" TextChanged="WhereToGetBooks_TextChanged"
-                 />
 
-                <Button x:Name="LookForBooksBtn" Margin="5" Padding="10" Click="LookForBooksBtn_Click"
-                 Content="Open"/>
+                <ContentControl Content="{Binding HomeViewModel}"/>
 
-                <Button x:Name="GetBooksBtn" Margin="5" Padding="10" Click="GetBooksBtn_Click"
-                 Content="Get Books"/>
-
-                <ProgressBar x:Name="BooksProgress" Margin="5" Minimum="0"
-                     Maximum="100" Visibility="Hidden" IsIndeterminate="True"
-                     Background="Lavender"
-                             Foreground="MediumSlateBlue"
-                             Height="15"/>
-            </StackPanel>
-        </Grid>
-            <ScrollViewer  Grid.Row="1" Grid.Column="2" VerticalScrollBarVisibility="Auto"
-                                  CanContentScroll="False">
-            <StackPanel Orientation="Vertical"
-                   x:Name="BooksPanel">
-            </StackPanel>
-            </ScrollViewer>
-        <GridSplitter HorizontalAlignment="Center" Width="5"
-                      Background="Lavender"
-                      Grid.Row="1" Grid.Column="1"/>
-
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

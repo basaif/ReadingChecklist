@@ -1,10 +1,13 @@
-﻿using System;
+﻿using ReadingChecklistLogicLibrary;
+using ReadingChecklistWpf.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using static Dapper.SqlMapper;
 
 namespace ReadingChecklistWpf
 {
@@ -13,5 +16,17 @@ namespace ReadingChecklistWpf
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            BookDataGetter bookDataGetter = new();
+
+            MainWindow = new MainWindow()
+            {
+                DataContext = new MainWindowViewModel(bookDataGetter)
+            };
+
+            MainWindow.Show();
+        }
     }
 }
+

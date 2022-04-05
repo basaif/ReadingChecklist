@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,20 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FileManagementLibrary;
-using Ookii.Dialogs.Wpf;
-using ReadingChecklistDataAccess;
-using ReadingChecklistLogicLibrary;
-using ReadingChecklistModels;
 
-namespace ReadingChecklistWpf
+namespace ReadingChecklistWpf.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NoBooksView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NoBooksView : UserControl
     {
-        public MainWindow()
+        public NoBooksView()
         {
             InitializeComponent();
         }

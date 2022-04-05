@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReadingChecklistWpf
+namespace ReadingChecklistWpf.Components
 {
     /// <summary>
     /// Interaction logic for BookCardUc.xaml
