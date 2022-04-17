@@ -38,6 +38,7 @@ namespace ReadingChecklistWpf.ViewModels.Cmds
             _noBooksViewModel.IsGettingBooks = true;
             await GetBooksAsync();
             _homeViewModel.AddBooks();
+            _homeViewModel.CalculateNumbers();
         }
 
         private async Task GetBooksAsync()

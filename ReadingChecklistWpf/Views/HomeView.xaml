@@ -18,19 +18,35 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
               Height="40">
 
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Background="Lavender">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender">
 
             
         </Grid>
-        <ScrollViewer  Grid.Row="1" Grid.Column="2" VerticalScrollBarVisibility="Auto"
+        <StackPanel Grid.Row="1" Grid.Column="2"
+            Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Margin="5">
+
+            <TextBlock Text="Books "/>
+            <TextBlock Text="{Binding NumberOfBooks}"/>
+            <TextBlock Text=" - Read "/>
+            <TextBlock Text="{Binding NumberOfReadBooks}"/>
+            <TextBlock Text=" - Percentage "/>
+            <TextBlock Text="{Binding PercentageOfReadBooks}"/>
+            <TextBlock Text="%"/>
+
+        </StackPanel>
+        <ScrollViewer  Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto"
                                   CanContentScroll="False">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+
+                
 
                 <ItemsControl ItemsSource="{Binding BookCards}">
                     <ItemsControl.ItemTemplate>
@@ -54,7 +70,7 @@
         </ScrollViewer>
         <GridSplitter HorizontalAlignment="Center" Width="5"
                       Background="Lavender"
-                      Grid.Row="1" Grid.Column="1"/>
+                      Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
 
 
     </Grid>

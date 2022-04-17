@@ -26,6 +26,42 @@ namespace ReadingChecklistWpf.ViewModels
             }
         }
 
+        private int _numberOfBooks;
+
+        public int NumberOfBooks
+        {
+            get { return _numberOfBooks; }
+            set
+            {
+                _numberOfBooks = value;
+                OnPropertyChanged(nameof(NumberOfBooks));
+            }
+        }
+
+        private int _numberOfReadBooks;
+
+        public int NumberOfReadBooks
+        {
+            get { return _numberOfReadBooks; }
+            set
+            {
+                _numberOfReadBooks = value;
+                OnPropertyChanged(nameof(NumberOfReadBooks));
+            }
+        }
+
+        private int _percentageOfReadBooks;
+
+        public int PercentageOfReadBooks
+        {
+            get { return _percentageOfReadBooks; }
+            set
+            {
+                _percentageOfReadBooks = value;
+                OnPropertyChanged(nameof(PercentageOfReadBooks));
+            }
+        }
+
         private NoBooksViewModel _noBooks;
 
         public NoBooksViewModel NoBooks
@@ -60,6 +96,8 @@ namespace ReadingChecklistWpf.ViewModels
             _bookDataGetter = bookDataGetter;
             AddBooks();
 
+            CalculateNumbers();
+
 
         }
 
@@ -82,6 +120,21 @@ namespace ReadingChecklistWpf.ViewModels
             }
         }
 
+        public void CalculateNumbers()
+        {
+            NumberOfBooks = _bookCards.Count;
+            NumberOfReadBooks = _bookCards.Where(book => book.IsRead == true).Count();
+            PercentageOfReadBooks = CalculatePercentage(NumberOfBooks, NumberOfReadBooks);
+        }
+
+        public int CalculatePercentage(int total, int part)
+        {
+            if (total == 0)
+            {
+                return 0;
+            }
+            return part * 100 / total ;
+        }
 
     }
 }
