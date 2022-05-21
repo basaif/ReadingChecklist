@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReadingChecklistWpf.Components"
+             xmlns:xb="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Name="parent">
@@ -58,11 +59,20 @@
 
             <TextBox Style="{StaticResource BookNameTextStyle}" Text="{Binding BookName}"
                      Grid.Column="0" Grid.Row="0"/>
-         
-                <CheckBox Content="Is Read" IsChecked="{Binding IsRead}"
+
+            <CheckBox Content="Is Read" IsChecked="{Binding IsRead, Mode=TwoWay}"
                           Style="{StaticResource CheckBoxStyle}"
-                          Grid.Row="0" Grid.Column="1"/>
-                <TextBlock Grid.Row="1" Grid.Column="1"
+                          Grid.Row="0" Grid.Column="1">
+                <xb:Interaction.Triggers>
+                    <xb:EventTrigger EventName="Checked">
+                        <xb:InvokeCommandAction Command="{Binding IsReadChangedCommand}" />
+                    </xb:EventTrigger>
+                    <xb:EventTrigger EventName="Unchecked">
+                        <xb:InvokeCommandAction Command="{Binding IsReadChangedCommand}" />
+                    </xb:EventTrigger>
+                </xb:Interaction.Triggers>
+            </CheckBox>
+            <TextBlock Grid.Row="1" Grid.Column="1"
                     Style="{StaticResource DateTextStyle}"
                            Text="{Binding DateRead, StringFormat=d}"
                            Visibility="{Binding IsRead, Converter={StaticResource boolToVisibilityConverter}}"/>

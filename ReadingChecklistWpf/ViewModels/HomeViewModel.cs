@@ -1,5 +1,6 @@
 ﻿using ReadingChecklistLogicLibrary;
 using ReadingChecklistModels;
+using ReadingChecklistWpf.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ namespace ReadingChecklistWpf.ViewModels
     public class HomeViewModel : ViewModelBase
     {
         private readonly BookDataGetter _bookDataGetter;
-
+        private readonly BooksStore _booksStore;
         private bool _notEnoughBooks;
 
         public bool NotEnoughBooks
@@ -84,9 +85,12 @@ namespace ReadingChecklistWpf.ViewModels
         }
 
 
-        public HomeViewModel(BookDataGetter bookDataGetter)
+        public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore)
         {
+            _booksStore = booksStore;
             _noBooks = new NoBooksViewModel(this);
+
+            _booksStore.BookUpdated += OnBookUpdated;
 
             if (_bookCards == null)
             {
@@ -99,6 +103,17 @@ namespace ReadingChecklistWpf.ViewModels
             CalculateNumbers();
 
 
+        }
+
+        private void OnBookUpdated(BookModel book)
+        {
+            CalculateNumbers();
+        }
+
+        protected override void OnDispose()
+        {
+            _booksStore.BookUpdated -= OnBookUpdated;
+            base.OnDispose();
         }
 
         public void AddBooks()
@@ -115,7 +130,7 @@ namespace ReadingChecklistWpf.ViewModels
                 NotEnoughBooks = false;
                 foreach (BookModel book in books)
                 {
-                    BookCards.Add(new BookCardViewModel(book));
+                    BookCards.Add(new BookCardViewModel(book, _booksStore));
                 }
             }
         }

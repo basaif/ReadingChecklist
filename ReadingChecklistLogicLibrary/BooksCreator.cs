@@ -1,11 +1,12 @@
-﻿using ReadingChecklistModels;
+﻿using ReadingChecklistDataAccess;
+using ReadingChecklistModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReadingChecklistDataAccess
+namespace ReadingChecklistLogicLibrary
 {
     public class BooksCreator
     {
@@ -54,7 +55,7 @@ namespace ReadingChecklistDataAccess
             List<string> tags = new();
 
             string[] tokens = filePath.Split('\\');
-            foreach(string t in tokens)
+            foreach (string t in tokens)
             {
                 if (!(BookDirectory.Contains(t) || t == fileName))
                 {
@@ -69,7 +70,7 @@ namespace ReadingChecklistDataAccess
 
         public void AddTags(List<string> tags)
         {
-            foreach(string t in tags)
+            foreach (string t in tags)
             {
                 TagModel tag = new(t);
 

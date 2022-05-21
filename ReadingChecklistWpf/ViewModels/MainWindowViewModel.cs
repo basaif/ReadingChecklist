@@ -1,4 +1,5 @@
 ﻿using ReadingChecklistLogicLibrary;
+using ReadingChecklistWpf.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ReadingChecklistWpf.ViewModels
     {
 
         private ViewModelBase _homeViewModel;
+        private readonly BooksStore _booksStore;
 
         public ViewModelBase HomeViewModel
         {
@@ -18,9 +20,10 @@ namespace ReadingChecklistWpf.ViewModels
             set { _homeViewModel = value; }
         }
 
-        public MainWindowViewModel(BookDataGetter bookDataGetter)
+        public MainWindowViewModel(BookDataGetter bookDataGetter, BooksStore booksStore)
         {
-            _homeViewModel = new HomeViewModel(bookDataGetter);
+            _booksStore = booksStore;
+            _homeViewModel = new HomeViewModel(bookDataGetter, _booksStore);
         }
 
     }

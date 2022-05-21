@@ -1,10 +1,13 @@
 ﻿using ReadingChecklistModels;
+using ReadingChecklistWpf.Stores;
+using ReadingChecklistWpf.ViewModels.Cmds;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ReadingChecklistWpf.ViewModels
 {
@@ -41,6 +44,8 @@ namespace ReadingChecklistWpf.ViewModels
         }
 
         ObservableCollection<string> _tags = new();
+        private readonly BooksStore _booksStore;
+
         public ObservableCollection<string> Tags
         {
             get
@@ -49,9 +54,16 @@ namespace ReadingChecklistWpf.ViewModels
             }
         }
 
-        public BookCardViewModel(BookModel book)
+        public BookModel Book { get; set; }
+
+        public ICommand ChangeIsReadCommand { get; }
+
+        public BookCardViewModel(BookModel book, BooksStore booksStore)
         {
+            Book = book;
+            _booksStore = booksStore;
             CreateBookCard(book);
+            ChangeIsReadCommand = new ChangeIsReadCommand(this, _booksStore);
         }
 
         private void CreateBookCard(BookModel book)

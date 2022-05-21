@@ -69,6 +69,18 @@ namespace ReadingChecklistWpf.Components
 
 
 
+        public ICommand IsReadChangedCommand
+        {
+            get { return (ICommand)GetValue(IsReadChangedCommandProperty); }
+            set { SetValue(IsReadChangedCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsReadChangedCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsReadChangedCommandProperty =
+            DependencyProperty.Register("IsReadChangedCommand", typeof(ICommand), typeof(BookCardUc), new UIPropertyMetadata());
+
+
+
         public BookCardUc()
         {
             InitializeComponent();

@@ -8,7 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <components:BookCardUc BookName="{Binding BookName}"
-                           IsRead="{Binding IsRead}"
+                           IsRead="{Binding IsRead, Mode=TwoWay}"
                            DateRead="{Binding DateRead}"
-                           Tags="{Binding Tags}"/>
+                           Tags="{Binding Tags}"
+                           IsReadChangedCommand="{Binding ChangeIsReadCommand}"/>
 </UserControl>

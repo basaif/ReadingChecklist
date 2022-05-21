@@ -1,4 +1,5 @@
 ﻿using ReadingChecklistLogicLibrary;
+using ReadingChecklistWpf.Stores;
 using ReadingChecklistWpf.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,11 @@ namespace ReadingChecklistWpf
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             BookDataGetter bookDataGetter = new();
+            BooksStore booksStore = new();
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel(bookDataGetter)
+                DataContext = new MainWindowViewModel(bookDataGetter, booksStore)
             };
 
             MainWindow.Show();
