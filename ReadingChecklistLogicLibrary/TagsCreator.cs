@@ -11,6 +11,11 @@ namespace ReadingChecklistLogicLibrary
     public class TagsCreator
     {
         public List<TagModel> AllTags { get; set; } = new();
+
+        public TagsCreator()
+        {
+            AllTags = SqliteReader.ReadAllTags();
+        }
         public void AddTags(List<string> tags)
         {
             foreach (string t in tags)
@@ -22,7 +27,7 @@ namespace ReadingChecklistLogicLibrary
             }
         }
 
-        public TagModel CreateTag(string tagName)
+        private TagModel CreateTag(string tagName)
         {
             TagModel tag = new(tagName);
 
