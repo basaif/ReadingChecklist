@@ -27,6 +27,8 @@ namespace ReadingChecklistWpf.ViewModels.Cmds
         {
             BooksUpdater booksUpdater = new(_bookCardViewModel.Book);
 
+            _bookCardViewModel.DateRead = DateTime.UtcNow;
+
             booksUpdater.ChangeReadStatus(_bookCardViewModel.IsRead, _bookCardViewModel.DateRead);
 
             _booksStore.UpdateBook(_bookCardViewModel.Book);
