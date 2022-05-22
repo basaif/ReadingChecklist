@@ -37,6 +37,7 @@ namespace ReadingChecklistLogicLibrary
             }
 
             DeleteBooks(GetMissingBooks());
+            AllNewBooks = new();
         }
 
         private void GetOldBooks()
@@ -76,22 +77,26 @@ namespace ReadingChecklistLogicLibrary
 
         private bool DoesBookExist(string bookName)
         {
-            return AllOldBooks.Any(x => x.BookName == bookName);
+            bool doesBookExist = AllOldBooks.Any(x => x.BookName == bookName);
+            return doesBookExist;
         }
 
         private BookModel GetExistingBookModel(string bookName)
         {
-            return AllOldBooks.First(x => x.BookName == bookName);
+            BookModel book = AllOldBooks.First(x => x.BookName == bookName);
+            return book;
         }
 
-        private bool AreTagsInBook(BookModel bookModel, List<TagModel> tagModels)
+        public bool AreTagsInBook(BookModel bookModel, List<TagModel> tagModels)
         {
-            return bookModel.Tags.All(x => tagModels.Contains(x)) && tagModels.All(x => bookModel.Tags.Contains(x));
+            bool areTagsInBook = bookModel.Tags.All(x => tagModels.Contains(x)) && tagModels.All(x => bookModel.Tags.Contains(x));
+            return areTagsInBook;
         }
 
         private List<BookModel> GetMissingBooks()
         {
-            return AllOldBooks.Where(x => !AllNewBooks.Select(x => x.BookName).Contains(x.BookName)).ToList();
+            List<BookModel> books = AllOldBooks.Where(x => !AllNewBooks.Select(x => x.BookName).Contains(x.BookName)).ToList();
+            return books;
         }
 
         private void DeleteBooks(List<BookModel> books)

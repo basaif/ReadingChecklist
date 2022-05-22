@@ -11,4 +11,7 @@
     <DataTemplate DataType="{x:Type ViewModels:BookCardViewModel}">
         <Views:BookCardView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:RefreshBooksViewModel}">
+        <Views:RefreshBooksView/>
+    </DataTemplate>
 </ResourceDictionary>

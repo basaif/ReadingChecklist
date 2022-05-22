@@ -1,4 +1,5 @@
-﻿using ReadingChecklistLogicLibrary;
+﻿using FileManagementLibrary;
+using ReadingChecklistLogicLibrary;
 using ReadingChecklistModels;
 using ReadingChecklistWpf.Stores;
 using System;
@@ -15,6 +16,9 @@ namespace ReadingChecklistWpf.ViewModels
     {
         private readonly BookDataGetter _bookDataGetter;
         private readonly BooksStore _booksStore;
+        private readonly FilesManager _filesManager;
+        private readonly BookDataGenerator _bookDataGenerator;
+        private readonly BooksDataRefresher _booksDataRefresher;
         private bool _notEnoughBooks;
 
         public bool NotEnoughBooks
@@ -24,8 +28,15 @@ namespace ReadingChecklistWpf.ViewModels
             {
                 _notEnoughBooks = value;
                 OnPropertyChanged(nameof(NotEnoughBooks));
+                OnPropertyChanged(nameof(EnoughBooks));
             }
         }
+
+        public bool EnoughBooks
+        {
+            get { return !NotEnoughBooks; }
+        }
+
 
         private int _numberOfBooks;
 
@@ -71,6 +82,14 @@ namespace ReadingChecklistWpf.ViewModels
             set { _noBooks = value; }
         }
 
+        private RefreshBooksViewModel _refreshBooksVM;
+
+        public RefreshBooksViewModel RefreshBooksVM
+        {
+            get { return _refreshBooksVM; }
+            set { _refreshBooksVM = value; }
+        }
+
         ObservableCollection<BookCardViewModel> _bookCards;
         public ObservableCollection<BookCardViewModel> BookCards
         {
@@ -82,13 +101,37 @@ namespace ReadingChecklistWpf.ViewModels
                 }
                 return _bookCards;
             }
+
+            set
+            {
+                if (value is not null)
+                {
+                    _bookCards = value;
+                }
+                else
+                {
+                    _bookCards = new ObservableCollection<BookCardViewModel>();
+                }
+                OnPropertyChanged(nameof(BookCards));
+            }
         }
 
 
-        public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore)
+
+
+
+        public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore,
+            FilesManager filesManager, BookDataGenerator bookDataGenerator,
+            BooksDataRefresher booksDataRefresher)
         {
             _booksStore = booksStore;
-            _noBooks = new NoBooksViewModel(this);
+            _filesManager = filesManager;
+            _bookDataGenerator = bookDataGenerator;
+            _booksDataRefresher = booksDataRefresher;
+            _bookDataGetter = bookDataGetter;
+
+            _noBooks = new NoBooksViewModel(this, _filesManager, _bookDataGenerator);
+            _refreshBooksVM = new RefreshBooksViewModel(this, _filesManager, _booksDataRefresher);
 
             _booksStore.BookUpdated += OnBookUpdated;
 
@@ -97,12 +140,9 @@ namespace ReadingChecklistWpf.ViewModels
                 _bookCards = new ObservableCollection<BookCardViewModel>();
             }
 
-            _bookDataGetter = bookDataGetter;
             AddBooks();
 
             CalculateNumbers();
-
-
         }
 
         private void OnBookUpdated(BookModel book)
@@ -113,6 +153,7 @@ namespace ReadingChecklistWpf.ViewModels
         protected override void OnDispose()
         {
             _booksStore.BookUpdated -= OnBookUpdated;
+
             base.OnDispose();
         }
 
@@ -128,11 +169,18 @@ namespace ReadingChecklistWpf.ViewModels
             else
             {
                 NotEnoughBooks = false;
+
                 foreach (BookModel book in books)
                 {
                     BookCards.Add(new BookCardViewModel(book, _booksStore));
                 }
             }
+
+        }
+        public void RefreshBooks()
+        {
+            BookCards = new ObservableCollection<BookCardViewModel>();
+            AddBooks();
         }
 
         public void CalculateNumbers()
@@ -148,7 +196,7 @@ namespace ReadingChecklistWpf.ViewModels
             {
                 return 0;
             }
-            return part * 100 / total ;
+            return part * 100 / total;
         }
 
     }

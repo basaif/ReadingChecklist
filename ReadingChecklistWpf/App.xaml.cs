@@ -1,14 +1,8 @@
-﻿using ReadingChecklistLogicLibrary;
+﻿using FileManagementLibrary;
+using ReadingChecklistLogicLibrary;
 using ReadingChecklistWpf.Stores;
 using ReadingChecklistWpf.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using static Dapper.SqlMapper;
 
 namespace ReadingChecklistWpf
 {
@@ -21,10 +15,14 @@ namespace ReadingChecklistWpf
         {
             BookDataGetter bookDataGetter = new();
             BooksStore booksStore = new();
+            FilesManager filesManager = new("");
+            TagsCreator tagsCreator = new();
+            BookDataGenerator bookDataGenerator = new(filesManager, tagsCreator);
+            BooksDataRefresher booksDataRefresher = new(filesManager, tagsCreator);
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel(bookDataGetter, booksStore)
+                DataContext = new MainWindowViewModel(bookDataGetter, booksStore, filesManager, bookDataGenerator, booksDataRefresher)
             };
 
             MainWindow.Show();

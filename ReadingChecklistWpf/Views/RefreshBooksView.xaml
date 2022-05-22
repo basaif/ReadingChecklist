@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ReadingChecklistWpf.Views.NoBooksView"
+﻿<UserControl x:Class="ReadingChecklistWpf.Views.RefreshBooksView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,8 +10,8 @@
     <components:GettingDataFromFolderUc
         Location="{Binding LocationToGetBooks}"
         OpenSearchDialogCommand="{Binding OpenSearchForBooksDialogCommand}"
-        SearchText="Get Books"
-        GetDataCommand="{Binding GenterateBookDataCommand}"
-        IsLoading="{Binding IsGettingBooks}"
+        SearchText="Refresh Books"
+        GetDataCommand="{Binding RefreshBookDataCommand}"
+        IsLoading="{Binding IsRefreshingBooks}"
         />
 </UserControl>

@@ -18,7 +18,9 @@ namespace ReadingChecklistWpf.ViewModels
         public string BookName
         {
             get { return _bookName; }
-            set { _bookName = value;
+            set
+            {
+                _bookName = value;
                 OnPropertyChanged(nameof(BookName));
             }
         }
@@ -28,7 +30,9 @@ namespace ReadingChecklistWpf.ViewModels
         public bool IsRead
         {
             get { return _isRead; }
-            set { _isRead = value;
+            set
+            {
+                _isRead = value;
                 OnPropertyChanged(nameof(IsRead));
             }
         }
@@ -38,7 +42,9 @@ namespace ReadingChecklistWpf.ViewModels
         public DateTime DateRead
         {
             get { return _dateRead; }
-            set { _dateRead = value;
+            set
+            {
+                _dateRead = value;
                 OnPropertyChanged(nameof(DateRead));
             }
         }
@@ -76,6 +82,7 @@ namespace ReadingChecklistWpf.ViewModels
             IsRead = book.IsRead;
             DateRead = book.DateRead;
         }
+
 
 
     }

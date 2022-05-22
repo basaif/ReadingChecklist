@@ -25,13 +25,21 @@
               Height="40">
 
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender" MinWidth="150">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            
+            <ContentControl Content="{Binding RefreshBooksVM}"
+                            Grid.Row="1"
+                                    Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"/>
+
         </Grid>
         <StackPanel Grid.Row="1" Grid.Column="2"
             Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
-                            Margin="5">
+                            Margin="5"
+                    Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}">
 
             <TextBlock Text="Books "/>
             <TextBlock Text="{Binding NumberOfBooks}"/>
