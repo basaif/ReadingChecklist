@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace ReadingChecklistWpf.ViewModels
 {
@@ -90,6 +92,8 @@ namespace ReadingChecklistWpf.ViewModels
             set { _refreshBooksVM = value; }
         }
 
+
+
         ObservableCollection<BookCardViewModel> _bookCards;
         public ObservableCollection<BookCardViewModel> BookCards
         {
@@ -117,8 +121,43 @@ namespace ReadingChecklistWpf.ViewModels
         }
 
 
+        public ICollectionView BooksCollectionView
+        {
+            get => _booksCollectionView;
+            set
+            {
+                _booksCollectionView = value;
+                OnPropertyChanged(nameof(BooksCollectionView));
+            }
+        }
+
+        private string _booksFilter = string.Empty;
+        private ICollectionView _booksCollectionView;
+
+        public string BooksFilter
+        {
+            get
+            {
+                return _booksFilter;
+            }
+            set
+            {
+                _booksFilter = value;
+                OnPropertyChanged(nameof(BooksFilter));
+                BooksCollectionView.Refresh();
+            }
+        }
+
+        public void SetUpBooksCollectionView()
+        {
+            BooksCollectionView = CollectionViewSource.GetDefaultView(_bookCards);
+
+            BooksCollectionView.Filter = FilterBooks;
+            BooksCollectionView.SortDescriptions.Add(new SortDescription(nameof(BookCardViewModel.BookName),
+                ListSortDirection.Ascending));
 
 
+        }
 
         public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore,
             FilesManager filesManager, BookDataGenerator bookDataGenerator,
@@ -140,9 +179,22 @@ namespace ReadingChecklistWpf.ViewModels
                 _bookCards = new ObservableCollection<BookCardViewModel>();
             }
 
+            SetUpBooksCollectionView();
+
             AddBooks();
 
             CalculateNumbers();
+        }
+
+        private bool FilterBooks(object obj)
+        {
+            if (obj is BookCardViewModel bookCardViewModel)
+            {
+                return bookCardViewModel.BookName.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase) ||
+                    bookCardViewModel.Tags.Any(x => x.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            return false;
         }
 
         private void OnBookUpdated(BookModel book)
@@ -180,6 +232,8 @@ namespace ReadingChecklistWpf.ViewModels
         public void RefreshBooks()
         {
             BookCards = new ObservableCollection<BookCardViewModel>();
+
+            SetUpBooksCollectionView();
             AddBooks();
         }
 

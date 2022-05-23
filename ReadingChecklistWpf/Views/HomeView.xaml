@@ -22,8 +22,24 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
-              Height="40">
-
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Reading Checklist" Foreground="White" FontSize="22" Margin="5 10"
+                       Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBlock Text="Search" Foreground="White" Margin="5 10"
+                       Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="0" Grid.Column="3" VerticalAlignment="Center"
+                     Margin="5 10"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender" MinWidth="150">
             <Grid.RowDefinitions>
@@ -54,9 +70,9 @@
                                   CanContentScroll="False">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
 
-                
 
-                <ItemsControl ItemsSource="{Binding BookCards}">
+
+                <ItemsControl ItemsSource="{Binding BooksCollectionView}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:BookCardView/>
