@@ -12,9 +12,9 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -22,7 +22,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
-              MinWidth="250">
+              >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>

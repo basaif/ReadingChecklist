@@ -158,7 +158,7 @@ namespace ReadingChecklistWpf.ViewModels
             {
                 _booksFilter = value;
                 OnPropertyChanged(nameof(BooksFilter));
-                BooksCollectionView.Refresh();
+                RefreshBooksCollectionView();
             }
         }
 
@@ -225,7 +225,7 @@ namespace ReadingChecklistWpf.ViewModels
                 {
                     List<string> selectedTagNames = selectedTags.Select(x => x.Tag).ToList();
 
-                    isTagSelected = selectedTagNames.Any(tagName => bookTags.Contains(tagName));
+                    isTagSelected = selectedTagNames.All(tagName => bookTags.Contains(tagName));
                 }
 
                 return (isBookFilterInName || isBookFilterInTag) && isTagSelected;
@@ -267,11 +267,17 @@ namespace ReadingChecklistWpf.ViewModels
 
         private void OnSelectedTagChanged(object? sender, PropertyChangedEventArgs e)
         {
-            BooksCollectionView.Refresh();
+            RefreshBooksCollectionView();
         }
 
         private void OnBookUpdated(BookModel book)
         {
+            RefreshBooksCollectionView();
+        }
+
+        private void RefreshBooksCollectionView()
+        {
+            BooksCollectionView.Refresh();
             CalculateNumbers();
         }
 
@@ -317,9 +323,19 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void CalculateNumbers()
         {
-            NumberOfBooks = _bookCards.Count;
-            NumberOfReadBooks = _bookCards.Where(book => book.IsRead == true).Count();
-            PercentageOfReadBooks = CalculatePercentage(NumberOfBooks, NumberOfReadBooks);
+            NumberOfBooks = 0;
+            NumberOfReadBooks = 0;
+            PercentageOfReadBooks = 0;
+
+            foreach (BookCardViewModel shownBook in BooksCollectionView)
+            {
+                NumberOfBooks += 1;
+                if (shownBook.IsRead)
+                {
+                    NumberOfReadBooks += 1;
+                }
+                PercentageOfReadBooks = CalculatePercentage(NumberOfBooks, NumberOfReadBooks);
+            }
         }
 
         public int CalculatePercentage(int total, int part)
