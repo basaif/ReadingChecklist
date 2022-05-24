@@ -1,6 +1,7 @@
 ﻿using FileManagementLibrary;
 using ReadingChecklistLogicLibrary;
 using ReadingChecklistModels;
+using ReadingChecklistWpf.Models;
 using ReadingChecklistWpf.Stores;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,19 @@ namespace ReadingChecklistWpf.ViewModels
             }
         }
 
+        private TagListViewModel _tagList;
+
+        public TagListViewModel TagList
+        {
+            get { return _tagList; }
+            set
+            {
+                _tagList = value;
+                OnPropertyChanged(nameof(TagList));
+            }
+        }
+
+
 
         public ICollectionView BooksCollectionView
         {
@@ -171,6 +185,8 @@ namespace ReadingChecklistWpf.ViewModels
 
             _noBooks = new NoBooksViewModel(this, _filesManager, _bookDataGenerator);
             _refreshBooksVM = new RefreshBooksViewModel(this, _filesManager, _booksDataRefresher);
+            _tagList = new TagListViewModel();
+            _booksCollectionView = CollectionViewSource.GetDefaultView(_bookCards);
 
             _booksStore.BookUpdated += OnBookUpdated;
 
@@ -183,18 +199,75 @@ namespace ReadingChecklistWpf.ViewModels
 
             AddBooks();
 
+            PopulateTagList();
+
             CalculateNumbers();
         }
+
+
 
         private bool FilterBooks(object obj)
         {
             if (obj is BookCardViewModel bookCardViewModel)
             {
-                return bookCardViewModel.BookName.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase) ||
-                    bookCardViewModel.Tags.Any(x => x.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase));
+                bool isBookFilterInName = bookCardViewModel.BookName.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase);
+                bool isBookFilterInTag = bookCardViewModel.Tags.Any(x => x.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase));
+
+                ObservableCollection<string> bookTags = bookCardViewModel.Tags;
+                List<SelectableTagModel> selectedTags = TagList.SelectableTags.Where(x => x.IsSelected).ToList();
+
+                bool isTagSelected = true;
+                if (selectedTags.Count == 0)
+                {
+                    isTagSelected = true;
+                }
+                else
+                {
+                    List<string> selectedTagNames = selectedTags.Select(x => x.Tag).ToList();
+
+                    isTagSelected = selectedTagNames.Any(tagName => bookTags.Contains(tagName));
+                }
+
+                return (isBookFilterInName || isBookFilterInTag) && isTagSelected;
             }
 
             return false;
+        }
+
+        public void PopulateTagList()
+        {
+            ObservableCollection<SelectableTagModel> tags = new();
+            foreach (BookCardViewModel bookCard in BookCards)
+            {
+                foreach (string tag in bookCard.Tags)
+                {
+                    SelectableTagModel selectableTagModel = new();
+                    selectableTagModel.PropertyChanged += OnSelectedTagChanged;
+                    if (tags.Any(x => x.Tag == tag))
+                    {
+                        tags.First(x => x.Tag == tag).NumberOfBooksInTag += 1;
+                    }
+                    else
+                    {
+                        selectableTagModel.Tag = tag;
+                        selectableTagModel.NumberOfBooksInTag = 1;
+                        tags.Add(selectableTagModel);
+                    }
+                }
+            }
+            var orderdTags = tags.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);
+            ObservableCollection<SelectableTagModel> orderedObservableTags = new();
+            foreach (SelectableTagModel tag in orderdTags)
+            {
+                orderedObservableTags.Add(tag);
+            }
+
+            TagList.SelectableTags = orderedObservableTags;
+        }
+
+        private void OnSelectedTagChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            BooksCollectionView.Refresh();
         }
 
         private void OnBookUpdated(BookModel book)
@@ -205,6 +278,10 @@ namespace ReadingChecklistWpf.ViewModels
         protected override void OnDispose()
         {
             _booksStore.BookUpdated -= OnBookUpdated;
+            foreach (var item in TagList.SelectableTags)
+            {
+                item.PropertyChanged -= OnSelectedTagChanged;
+            }
 
             base.OnDispose();
         }
@@ -235,6 +312,7 @@ namespace ReadingChecklistWpf.ViewModels
 
             SetUpBooksCollectionView();
             AddBooks();
+            PopulateTagList();
         }
 
         public void CalculateNumbers()

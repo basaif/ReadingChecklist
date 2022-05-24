@@ -12,7 +12,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -22,7 +22,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
-              >
+              MinWidth="250">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -41,11 +41,15 @@
                      Grid.Row="0" Grid.Column="3" VerticalAlignment="Center"
                      Margin="5 10"/>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender" MinWidth="150">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+
+            <ContentControl Content="{Binding TagList}"
+                            Grid.Row="0"
+                                    Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"/>
 
             <ContentControl Content="{Binding RefreshBooksVM}"
                             Grid.Row="1"
@@ -94,7 +98,7 @@
         </ScrollViewer>
         <GridSplitter HorizontalAlignment="Center" Width="5"
                       Background="Lavender"
-                      Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
+                      Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" />
 
 
     </Grid>

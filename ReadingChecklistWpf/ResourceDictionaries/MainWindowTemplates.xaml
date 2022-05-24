@@ -14,4 +14,7 @@
     <DataTemplate DataType="{x:Type ViewModels:RefreshBooksViewModel}">
         <Views:RefreshBooksView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:TagListViewModel}">
+        <Views:TagListView/>
+    </DataTemplate>
 </ResourceDictionary>
