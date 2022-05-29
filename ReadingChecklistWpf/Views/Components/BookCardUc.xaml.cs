@@ -45,6 +45,18 @@ namespace ReadingChecklistWpf.Components
 
 
 
+        public string HighlightText
+        {
+            get { return (string)GetValue(HighlightTextProperty); }
+            set { SetValue(HighlightTextProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HighlightText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HighlightTextProperty =
+            DependencyProperty.Register("HighlightText", typeof(string), typeof(BookCardUc), new PropertyMetadata(""));
+
+
+
         public bool IsRead
         {
             get { return (bool)GetValue(IsReadProperty); }

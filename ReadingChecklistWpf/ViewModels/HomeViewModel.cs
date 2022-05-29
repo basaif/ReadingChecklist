@@ -303,6 +303,15 @@ namespace ReadingChecklistWpf.ViewModels
         {
             BooksCollectionView.Refresh();
             CalculateNumbers();
+            SetHighlightTextForBooks();
+        }
+
+        private void SetHighlightTextForBooks()
+        {
+            foreach (BookCardViewModel book in BookCards)
+            {
+                book.HighlightText = BooksFilter;
+            }
         }
 
         protected override void OnDispose()

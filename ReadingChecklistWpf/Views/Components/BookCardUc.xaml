@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReadingChecklistWpf.Components"
              xmlns:xb="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
+             xmlns:custom="clr-namespace:HighlightTextBlockControl;assembly=HighlightTextBlockControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Name="parent">
     <UserControl.Resources>
-        <Style x:Key="BookNameTextStyle" TargetType="TextBox">
-            <Setter Property="IsReadOnly" Value="True"/>
+        <Style x:Key="BookNameTextStyle" TargetType="custom:HighlightTextBlock">
+            <!--<Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="AcceptsReturn" Value="True"/>
+            <Setter Property="AcceptsReturn" Value="True"/>-->
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="5 10"/>
@@ -40,6 +41,11 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
 
         </Style>
+        <Style x:Key="HighlightStyle" TargetType="Run">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Yellow"/>
+
+        </Style>
 
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
     </UserControl.Resources>
@@ -57,8 +63,10 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBox Style="{StaticResource BookNameTextStyle}" Text="{Binding BookName}"
-                     Grid.Column="0" Grid.Row="0"/>
+            <custom:HighlightTextBlock Style="{StaticResource BookNameTextStyle}" Text="{Binding BookName}"
+                     Grid.Column="0" Grid.Row="0"
+                                       HighlightText="{Binding HighlightText, Mode=TwoWay}"
+                                       HighlightRunStyle="{StaticResource HighlightStyle}"/>
 
             <CheckBox Content="Is Read" IsChecked="{Binding IsRead, Mode=TwoWay}"
                           Style="{StaticResource CheckBoxStyle}"
