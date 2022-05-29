@@ -120,7 +120,7 @@ namespace HighlightTextBlockControl
                         }
 
                         _displayTextBlock.Inlines.Add(new Run(Text[i..nextHighlightTextIndex]));
-                        _displayTextBlock.Inlines.Add(CreateHighlightedRun(HighlightText.ToLower()));
+                        _displayTextBlock.Inlines.Add(CreateHighlightedRun(GetHighlightedTextInText(HighlightText, i)));
 
                         i = nextHighlightTextIndex + highlightTextLength - 1;
                     }
@@ -131,15 +131,15 @@ namespace HighlightTextBlockControl
 
         private Run CreateHighlightedRun(string text)
         {
-            return new Run(GetHighlightedTextInText(text))
+            return new Run(text)
             {
                 Style = HighlightRunStyle
             };
         }
 
-        private string GetHighlightedTextInText(string text)
+        private string GetHighlightedTextInText(string text, int startIndex)
         {
-            return Text.Substring(Text.IndexOf(text, StringComparison.OrdinalIgnoreCase), text.Length);
+            return Text.Substring(Text.IndexOf(text, startIndex, StringComparison.OrdinalIgnoreCase), text.Length);
         }
     }
 }

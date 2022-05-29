@@ -11,9 +11,6 @@
              Name="parent">
     <UserControl.Resources>
         <Style x:Key="BookNameTextStyle" TargetType="custom:HighlightTextBlock">
-            <!--<Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="AcceptsReturn" Value="True"/>-->
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="5 10"/>
@@ -32,7 +29,7 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        <Style x:Key="TagStyle" TargetType="TextBlock">
+        <Style x:Key="TagStyle" TargetType="custom:HighlightTextBlock">
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -44,6 +41,12 @@
         <Style x:Key="HighlightStyle" TargetType="Run">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Yellow"/>
+
+        </Style>
+        <Style x:Key="TagHighlightStyle" TargetType="Run">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Yellow"/>
+            <Setter Property="FontWeight" Value="Normal"/>
 
         </Style>
 
@@ -66,7 +69,8 @@
             <custom:HighlightTextBlock Style="{StaticResource BookNameTextStyle}" Text="{Binding BookName}"
                      Grid.Column="0" Grid.Row="0"
                                        HighlightText="{Binding HighlightText, Mode=TwoWay}"
-                                       HighlightRunStyle="{StaticResource HighlightStyle}"/>
+                                       HighlightRunStyle="{StaticResource HighlightStyle}"
+                                       x:Name="BookNameHighlightTextBlock"/>
 
             <CheckBox Content="Is Read" IsChecked="{Binding IsRead, Mode=TwoWay}"
                           Style="{StaticResource CheckBoxStyle}"
@@ -92,8 +96,10 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                         <Border Margin="3" Background="MediumSlateBlue" CornerRadius="3">
-                            <TextBlock Text="{Binding}" 
-                             Style="{StaticResource TagStyle}"/>
+                            <custom:HighlightTextBlock Text="{Binding}" 
+                             Style="{StaticResource TagStyle}"
+                                                       HighlightText="{Binding ElementName=BookNameHighlightTextBlock, Path=HighlightText}"
+                                       HighlightRunStyle="{StaticResource TagHighlightStyle}"/>
                         </Border>
                          
                         </DataTemplate>
