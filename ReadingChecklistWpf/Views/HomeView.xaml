@@ -31,7 +31,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                
+                <ColumnDefinition Width="auto"/>
+
             </Grid.ColumnDefinitions>
             <TextBlock Text="Reading Checklist" Foreground="White" FontSize="22" Margin="5 10"
                        Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
@@ -40,6 +41,10 @@
             <TextBox Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Row="0" Grid.Column="3" VerticalAlignment="Center"
                      Margin="5 10"/>
+            <CheckBox Content="Show Read"
+                     Grid.Row="0" Grid.Column="4" VerticalAlignment="Center"
+                     Foreground="White" Margin="5 10"
+                      IsChecked="{Binding IsShowReadBooks}"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender">
             <Grid.RowDefinitions>
@@ -47,13 +52,25 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <ContentControl Content="{Binding TagList}"
-                            Grid.Row="0"
-                                    Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"/>
+            <Expander Header="Filter By Tags"
+                      Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"
+                      Grid.Row="0"
+                      IsExpanded="True"
+                      Margin="5">
+                <ContentControl Content="{Binding TagList}"/>
 
-            <ContentControl Content="{Binding RefreshBooksVM}"
-                            Grid.Row="1"
-                                    Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"/>
+            </Expander>
+
+            <Expander Header="Refresh Book List"
+                      Grid.Row="1"
+                      Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"
+                      IsExpanded="False"
+                      Margin="5">
+                <ContentControl Content="{Binding RefreshBooksVM}"/>
+
+            </Expander>
+
+            
 
         </Grid>
         <StackPanel Grid.Row="1" Grid.Column="2"

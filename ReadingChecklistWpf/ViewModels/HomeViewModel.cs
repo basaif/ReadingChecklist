@@ -35,6 +35,20 @@ namespace ReadingChecklistWpf.ViewModels
             }
         }
 
+        private bool _isShowReadBooks = true;
+
+        public bool IsShowReadBooks
+        {
+            get { return _isShowReadBooks; }
+            set
+            {
+                _isShowReadBooks = value;
+                OnPropertyChanged(nameof(IsShowReadBooks));
+                RefreshBooksCollectionView();
+            }
+        }
+
+
         public bool EnoughBooks
         {
             get { return !NotEnoughBooks; }
@@ -228,7 +242,17 @@ namespace ReadingChecklistWpf.ViewModels
                     isTagSelected = selectedTagNames.All(tagName => bookTags.Contains(tagName));
                 }
 
-                return (isBookFilterInName || isBookFilterInTag) && isTagSelected;
+                bool doShowReadBook = true;
+
+                if (IsShowReadBooks == false)
+                {
+                    if (bookCardViewModel.IsRead)
+                    {
+                        doShowReadBook = false;
+                    }
+                }
+
+                return (isBookFilterInName || isBookFilterInTag) && isTagSelected && doShowReadBook;
             }
 
             return false;
