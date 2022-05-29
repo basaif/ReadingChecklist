@@ -70,21 +70,23 @@
 
             </Expander>
 
-            
+
 
         </Grid>
         <StackPanel Grid.Row="1" Grid.Column="2"
             Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
                             Margin="5"
                     Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}">
-
-            <TextBlock Text="Books "/>
-            <TextBlock Text="{Binding NumberOfBooks}"/>
-            <TextBlock Text=" - Read "/>
-            <TextBlock Text="{Binding NumberOfReadBooks}"/>
-            <TextBlock Text=" - Percentage "/>
-            <TextBlock Text="{Binding PercentageOfReadBooks}"/>
-            <TextBlock Text="%"/>
+            <TextBlock>
+                <Run Text="Books"/>
+                <Run Text="{Binding NumberOfBooks}"/>
+                <Run Text="-"/>
+                <Run Text="Read"/>
+                <Run Text="{Binding NumberOfReadBooks}"/>
+                <Run Text="-"/>
+                <Run Text="Percentage"/>
+                <Run Text="{Binding PercentageOfReadBooks, StringFormat={}{0}%}"/>
+            </TextBlock>
 
         </StackPanel>
         <ScrollViewer  Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto"
@@ -116,7 +118,7 @@
         </ScrollViewer>
         <GridSplitter HorizontalAlignment="Center" Width="5"
                       Background="Lavender"
-                      Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" />
+                      Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
 
 
     </Grid>
