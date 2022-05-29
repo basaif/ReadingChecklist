@@ -89,11 +89,13 @@
         </StackPanel>
         <ScrollViewer  Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto"
                                   CanContentScroll="False">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
 
-
-                <ItemsControl ItemsSource="{Binding BooksCollectionView}">
+                <ItemsControl ItemsSource="{Binding BooksCollectionView}" Grid.Column="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:BookCardView/>
@@ -102,8 +104,7 @@
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel IsItemsHost="True" 
-                                        Orientation="Vertical"
-                                           HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center"/>
+                                        Orientation="Vertical" Margin="10" VerticalAlignment="Center"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -111,7 +112,7 @@
                 <ContentControl Content="{Binding NoBooks}"
                                     Visibility="{Binding NotEnoughBooks, Converter={StaticResource boolVisibilityConverter}}"/>
 
-            </StackPanel>
+            </Grid>
         </ScrollViewer>
         <GridSplitter HorizontalAlignment="Center" Width="5"
                       Background="Lavender"
