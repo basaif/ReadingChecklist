@@ -62,6 +62,18 @@ namespace ReadingChecklistWpf.ViewModels
 
         public BookModel Book { get; set; }
 
+        private string _highlightText = string.Empty;
+
+        public string HighlightText
+        {
+            get { return _highlightText; }
+            set
+            {
+                _highlightText = value;
+                OnPropertyChanged(nameof(HighlightText));
+            }
+        }
+
         public ICommand ChangeIsReadCommand { get; }
 
         public BookCardViewModel(BookModel book, BooksStore booksStore)

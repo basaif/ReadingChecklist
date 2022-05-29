@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistDataAccess"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistModels", "ReadingChecklistModels\ReadingChecklistModels.csproj", "{5137EDBC-88B1-432C-A8A7-4B4B81DC7614}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingChecklistLogicLibrary", "ReadingChecklistLogicLibrary\ReadingChecklistLogicLibrary.csproj", "{C3CA0F5E-91AB-4463-8793-9BF4810396C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistLogicLibrary", "ReadingChecklistLogicLibrary\ReadingChecklistLogicLibrary.csproj", "{C3CA0F5E-91AB-4463-8793-9BF4810396C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagementLibrary", "FileManagementLibrary\FileManagementLibrary.csproj", "{722AFC77-4667-4E35-B0B9-DCE17601B104}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagementLibrary", "FileManagementLibrary\FileManagementLibrary.csproj", "{722AFC77-4667-4E35-B0B9-DCE17601B104}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighlightTextBlockControl", "HighlightTextBlockControl\HighlightTextBlockControl.csproj", "{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{722AFC77-4667-4E35-B0B9-DCE17601B104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,14 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReadingChecklistWpf.Components"
              xmlns:xb="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
+             xmlns:custom="clr-namespace:HighlightTextBlockControl;assembly=HighlightTextBlockControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Name="parent">
     <UserControl.Resources>
-        <Style x:Key="BookNameTextStyle" TargetType="TextBox">
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="AcceptsReturn" Value="True"/>
+        <Style x:Key="BookNameTextStyle" TargetType="custom:HighlightTextBlock">
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="5 10"/>
@@ -31,13 +29,24 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        <Style x:Key="TagStyle" TargetType="TextBlock">
+        <Style x:Key="TagStyle" TargetType="custom:HighlightTextBlock">
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="Lavender"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+
+        </Style>
+        <Style x:Key="HighlightStyle" TargetType="Run">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Yellow"/>
+
+        </Style>
+        <Style x:Key="TagHighlightStyle" TargetType="Run">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Yellow"/>
+            <Setter Property="FontWeight" Value="Normal"/>
 
         </Style>
 
@@ -57,8 +66,11 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBox Style="{StaticResource BookNameTextStyle}" Text="{Binding BookName}"
-                     Grid.Column="0" Grid.Row="0"/>
+            <custom:HighlightTextBlock Style="{StaticResource BookNameTextStyle}" Text="{Binding BookName}"
+                     Grid.Column="0" Grid.Row="0"
+                                       HighlightText="{Binding HighlightText, Mode=TwoWay}"
+                                       HighlightRunStyle="{StaticResource HighlightStyle}"
+                                       x:Name="BookNameHighlightTextBlock"/>
 
             <CheckBox Content="Is Read" IsChecked="{Binding IsRead, Mode=TwoWay}"
                           Style="{StaticResource CheckBoxStyle}"
@@ -84,8 +96,10 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                         <Border Margin="3" Background="MediumSlateBlue" CornerRadius="3">
-                            <TextBlock Text="{Binding}" 
-                             Style="{StaticResource TagStyle}"/>
+                            <custom:HighlightTextBlock Text="{Binding}" 
+                             Style="{StaticResource TagStyle}"
+                                                       HighlightText="{Binding ElementName=BookNameHighlightTextBlock, Path=HighlightText}"
+                                       HighlightRunStyle="{StaticResource TagHighlightStyle}"/>
                         </Border>
                          
                         </DataTemplate>

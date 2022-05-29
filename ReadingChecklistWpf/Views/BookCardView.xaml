@@ -11,5 +11,6 @@
                            IsRead="{Binding IsRead, Mode=TwoWay}"
                            DateRead="{Binding DateRead}"
                            Tags="{Binding Tags}"
-                           IsReadChangedCommand="{Binding ChangeIsReadCommand}"/>
+                           IsReadChangedCommand="{Binding ChangeIsReadCommand}"
+                           HighlightText="{Binding HighlightText, Mode=TwoWay}"/>
 </UserControl>
