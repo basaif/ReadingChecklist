@@ -224,38 +224,83 @@ namespace ReadingChecklistWpf.ViewModels
         {
             if (obj is BookCardViewModel bookCardViewModel)
             {
-                bool isBookFilterInName = bookCardViewModel.BookName.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase);
-                bool isBookFilterInTag = bookCardViewModel.Tags.Any(x => x.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase));
-
-                ObservableCollection<string> bookTags = bookCardViewModel.Tags;
-                List<SelectableTagModel> selectedTags = TagList.SelectableTags.Where(x => x.IsSelected).ToList();
-
-                bool isTagSelected = true;
-                if (selectedTags.Count == 0)
-                {
-                    isTagSelected = true;
-                }
-                else
-                {
-                    List<string> selectedTagNames = selectedTags.Select(x => x.Tag).ToList();
-
-                    isTagSelected = selectedTagNames.All(tagName => bookTags.Contains(tagName));
-                }
-
-                bool doShowReadBook = true;
-
-                if (IsShowReadBooks == false)
-                {
-                    if (bookCardViewModel.IsRead)
-                    {
-                        doShowReadBook = false;
-                    }
-                }
-
-                return (isBookFilterInName || isBookFilterInTag) && isTagSelected && doShowReadBook;
+                return IsBookShown(bookCardViewModel);
             }
 
             return false;
+        }
+
+        private bool IsBookShown(BookCardViewModel bookCardViewModel)
+        {
+            return IsBookShownBasedOnFilterText(bookCardViewModel) && IsBookShownBasedOnTagSelection(bookCardViewModel)
+                && IsBookShownBasedOnReadStatus(bookCardViewModel);
+        }
+
+        private bool IsBookShownBasedOnReadStatus(BookCardViewModel bookCardViewModel)
+        {
+            bool isBookShown;
+            if (IsShowReadBooks == true)
+            {
+                isBookShown = true;
+            }
+            else
+            {
+                if (bookCardViewModel.IsRead)
+                {
+                    isBookShown = false;
+                }
+                else
+                {
+                    isBookShown = true;
+                }
+            }
+            return isBookShown;
+        }
+
+        private bool IsBookShownBasedOnFilterText(BookCardViewModel bookCardViewModel)
+        {
+            return IsFilterTextInBookName(bookCardViewModel) || IsFilterTextInAnyBookTag(bookCardViewModel);
+        }
+
+        private bool IsFilterTextInBookName(BookCardViewModel bookCardViewModel)
+        {
+            bool output = bookCardViewModel.BookName.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase);
+            return output;
+        }
+
+        private bool IsFilterTextInAnyBookTag(BookCardViewModel bookCardViewModel)
+        {
+            bool output = bookCardViewModel.Tags.Any(x => x.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase));
+            return output;
+        }
+
+        private bool IsBookShownBasedOnTagSelection(BookCardViewModel bookCardViewModel)
+        {
+            List<SelectableTagModel> selectedTags = GetSelectedTags();
+
+            if (selectedTags.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return DoesBookHaveAllSelectedTags(bookCardViewModel, selectedTags);
+            }
+        }
+
+        private bool DoesBookHaveAllSelectedTags(BookCardViewModel bookCardViewModel, List<SelectableTagModel> selectedTags)
+        {
+            ObservableCollection<string> bookTags = bookCardViewModel.Tags;
+            List<string> selectedTagNames = selectedTags.Select(x => x.Tag).ToList();
+
+            bool doesBookHaveAllSelectedTags = selectedTagNames.All(tagName => bookTags.Contains(tagName));
+
+            return doesBookHaveAllSelectedTags;
+        }
+
+        private List<SelectableTagModel> GetSelectedTags()
+        {
+            return TagList.SelectableTags.Where(x => x.IsSelected).ToList();
         }
 
         public void PopulateTagList()
@@ -287,6 +332,7 @@ namespace ReadingChecklistWpf.ViewModels
             }
 
             TagList.SelectableTags = orderedObservableTags;
+     
         }
 
         private void OnSelectedTagChanged(object? sender, PropertyChangedEventArgs e)
