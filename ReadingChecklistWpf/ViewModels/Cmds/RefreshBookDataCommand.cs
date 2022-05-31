@@ -38,7 +38,6 @@ namespace ReadingChecklistWpf.ViewModels.Cmds
             _refreshBooksViewModel.IsRefreshingBooks = true;
             await GetBooksAsync();
             _homeViewModel.RefreshBooks();
-            _homeViewModel.CalculateNumbers();
             _refreshBooksViewModel.IsRefreshingBooks = false;
             _refreshBooksViewModel.LocationToGetBooks = "";
         }

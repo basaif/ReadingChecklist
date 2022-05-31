@@ -109,7 +109,7 @@ namespace ReadingChecklistWpf.ViewModels
 
 
 
-        ObservableCollection<BookCardViewModel> _bookCards;
+        ObservableCollection<BookCardViewModel> _bookCards = new();
         public ObservableCollection<BookCardViewModel> BookCards
         {
             get
@@ -149,7 +149,7 @@ namespace ReadingChecklistWpf.ViewModels
 
 
 
-        public ICollectionView BooksCollectionView
+        public ListCollectionView BooksCollectionView
         {
             get => _booksCollectionView;
             set
@@ -160,7 +160,7 @@ namespace ReadingChecklistWpf.ViewModels
         }
 
         private string _booksFilter = string.Empty;
-        private ICollectionView _booksCollectionView;
+        private ListCollectionView _booksCollectionView;
 
         public string BooksFilter
         {
@@ -178,13 +178,11 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void SetUpBooksCollectionView()
         {
-            BooksCollectionView = CollectionViewSource.GetDefaultView(_bookCards);
+            BooksCollectionView = new(_bookCards);
 
             BooksCollectionView.Filter = FilterBooks;
             BooksCollectionView.SortDescriptions.Add(new SortDescription(nameof(BookCardViewModel.BookName),
                 ListSortDirection.Ascending));
-
-
         }
 
         public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore,
@@ -200,7 +198,7 @@ namespace ReadingChecklistWpf.ViewModels
             _noBooks = new NoBooksViewModel(this, _filesManager, _bookDataGenerator);
             _refreshBooksVM = new RefreshBooksViewModel(this, _filesManager, _booksDataRefresher);
             _tagList = new TagListViewModel();
-            _booksCollectionView = CollectionViewSource.GetDefaultView(_bookCards);
+            _booksCollectionView = new(_bookCards);
 
             _booksStore.BookUpdated += OnBookUpdated;
 
@@ -211,11 +209,23 @@ namespace ReadingChecklistWpf.ViewModels
 
             SetUpBooksCollectionView();
 
-            AddBooks();
+            LoadBooksData();
 
-            PopulateTagList();
 
-            CalculateNumbers();
+        }
+
+
+        public void LoadBooksData()
+        {
+            AddBooksAsync().ContinueWith(task =>
+            {
+                if (task.Exception is null)
+                {
+                    PopulateTagList();
+
+                    CalculateNumbers();
+                }
+            });
         }
 
 
@@ -256,6 +266,8 @@ namespace ReadingChecklistWpf.ViewModels
             }
             return isBookShown;
         }
+
+        
 
         private bool IsBookShownBasedOnFilterText(BookCardViewModel bookCardViewModel)
         {
@@ -398,7 +410,7 @@ namespace ReadingChecklistWpf.ViewModels
             base.OnDispose();
         }
 
-        public void AddBooks()
+        private void AddBooks()
         {
             List<BookModel> books = _bookDataGetter.GetAllBooks();
 
@@ -416,18 +428,37 @@ namespace ReadingChecklistWpf.ViewModels
                     BookCards.Add(new BookCardViewModel(book, _booksStore));
                 }
             }
-
         }
+
+        private async Task AddBooksAsync()
+        {
+            List<BookModel> books = await Task.Run(() => _bookDataGetter.GetAllBooks());
+
+            if (books.Count == 0)
+            {
+                NotEnoughBooks = true;
+            }
+
+            else
+            {
+                NotEnoughBooks = false;
+
+                foreach (BookModel book in books)
+                {
+                    BookCards.Add(new BookCardViewModel(book, _booksStore));
+                }
+            }
+        }
+
         public void RefreshBooks()
         {
             BookCards = new ObservableCollection<BookCardViewModel>();
-
             SetUpBooksCollectionView();
-            AddBooks();
-            PopulateTagList();
+
+            LoadBooksData();
         }
 
-        public void CalculateNumbers()
+        private void CalculateNumbers()
         {
             NumberOfBooks = 0;
             NumberOfReadBooks = 0;
