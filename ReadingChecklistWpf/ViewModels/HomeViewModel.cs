@@ -305,34 +305,61 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void PopulateTagList()
         {
-            ObservableCollection<SelectableTagModel> tags = new();
+            ObservableCollection<SelectableTagModel> distinctTagList = new();
             foreach (BookCardViewModel bookCard in BookCards)
             {
-                foreach (string tag in bookCard.Tags)
+                AddBookTagsToDistinctTagList(bookCard, distinctTagList);
+            }
+
+            TagList.SelectableTags = GetOrderedTagsByNumberOfBooksDecending(distinctTagList);
+        }
+
+        private void AddBookTagsToDistinctTagList(BookCardViewModel bookCard, ObservableCollection<SelectableTagModel> distinctTagList)
+        {
+            foreach (string tag in bookCard.Tags)
+            {
+                
+                if (IsTagInList(tag, distinctTagList))
                 {
-                    SelectableTagModel selectableTagModel = new();
-                    selectableTagModel.PropertyChanged += OnSelectedTagChanged;
-                    if (tags.Any(x => x.Tag == tag))
-                    {
-                        tags.First(x => x.Tag == tag).NumberOfBooksInTag += 1;
-                    }
-                    else
-                    {
-                        selectableTagModel.Tag = tag;
-                        selectableTagModel.NumberOfBooksInTag = 1;
-                        tags.Add(selectableTagModel);
-                    }
+                    IncrementNumberOfBooksInTagInList(tag, distinctTagList);
+                }
+                else
+                {
+                    AddSelectableTagToDistinctTagList(tag, distinctTagList);
                 }
             }
-            var orderdTags = tags.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);
+        }
+
+        private bool IsTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
+        {
+            return tagList.Any(x => x.Tag == tag);
+        }
+
+        private void IncrementNumberOfBooksInTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
+        {
+            tagList.First(x => x.Tag == tag).NumberOfBooksInTag += 1;
+        }
+
+        private void AddSelectableTagToDistinctTagList(string tag, ObservableCollection<SelectableTagModel> distinctTagList)
+        {
+            SelectableTagModel selectableTagModel = new();
+            selectableTagModel.PropertyChanged += OnSelectedTagChanged;
+
+            selectableTagModel.Tag = tag;
+            selectableTagModel.NumberOfBooksInTag = 1;
+            distinctTagList.Add(selectableTagModel);
+        }
+
+        private ObservableCollection<SelectableTagModel> GetOrderedTagsByNumberOfBooksDecending(ObservableCollection<SelectableTagModel> unorderedTags)
+        {
+            var orderdTags = unorderedTags.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);
             ObservableCollection<SelectableTagModel> orderedObservableTags = new();
             foreach (SelectableTagModel tag in orderdTags)
             {
                 orderedObservableTags.Add(tag);
             }
 
-            TagList.SelectableTags = orderedObservableTags;
-     
+            return orderedObservableTags;
         }
 
         private void OnSelectedTagChanged(object? sender, PropertyChangedEventArgs e)
