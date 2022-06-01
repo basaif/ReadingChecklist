@@ -10,7 +10,7 @@ namespace ReadingChecklistLogicLibrary
         private readonly FilesManager _filesManager;
 
         private readonly TagsCreator _tagsCreator;
-        public List<BookModel> AllBooks { get; set; } = new();
+        private readonly List<BookModel> _allBooks = new();
 
         public BookDataGenerator(FilesManager filesManager, TagsCreator tagsCreator)
         {
@@ -26,7 +26,7 @@ namespace ReadingChecklistLogicLibrary
             {
                 _tagsCreator.AddTags(Tags);
 
-                AllBooks.Add(CreateBook(BookName, Tags));
+                _allBooks.Add(CreateBook(BookName, Tags));
             }
         }
 

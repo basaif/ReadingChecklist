@@ -14,14 +14,15 @@ namespace ReadingChecklistLogicLibrary
         private readonly FilesManager _filesManager;
         private readonly TagsCreator _tagsCreator;
 
-        public List<BookModel> AllNewBooks { get; set; } = new();
-        public List<BookModel> AllOldBooks { get; set; } = new();
+        private List<BookModel> _allNewBooks = new();
+        private List<BookModel> _allOldBooks = new();
 
         public BooksDataRefresher(FilesManager filesManager, TagsCreator tagsCreator)
         {
             _filesManager = filesManager;
             _tagsCreator = tagsCreator;
         }
+
 
         public void RefreshBooksData()
         {
@@ -33,16 +34,16 @@ namespace ReadingChecklistLogicLibrary
             {
                 _tagsCreator.AddTags(Tags);
 
-                AllNewBooks.Add(CreateBook(BookName, Tags));
+                _allNewBooks.Add(CreateBook(BookName, Tags));
             }
 
             DeleteBooks(GetMissingBooks());
-            AllNewBooks = new();
+            _allNewBooks = new();
         }
 
         private void GetOldBooks()
         {
-            AllOldBooks = SqliteReader.ReadAllBooks();
+            _allOldBooks = SqliteReader.ReadAllBooks();
         }
 
         public BookModel CreateBook(string bookName, List<string> tags)
@@ -77,13 +78,13 @@ namespace ReadingChecklistLogicLibrary
 
         private bool DoesBookExist(string bookName)
         {
-            bool doesBookExist = AllOldBooks.Any(x => x.BookName == bookName);
+            bool doesBookExist = _allOldBooks.Any(x => x.BookName == bookName);
             return doesBookExist;
         }
 
         private BookModel GetExistingBookModel(string bookName)
         {
-            BookModel book = AllOldBooks.First(x => x.BookName == bookName);
+            BookModel book = _allOldBooks.First(x => x.BookName == bookName);
             return book;
         }
 
@@ -95,7 +96,7 @@ namespace ReadingChecklistLogicLibrary
 
         private List<BookModel> GetMissingBooks()
         {
-            List<BookModel> books = AllOldBooks.Where(x => !AllNewBooks.Select(x => x.BookName).Contains(x.BookName)).ToList();
+            List<BookModel> books = _allOldBooks.Where(x => !_allNewBooks.Select(x => x.BookName).Contains(x.BookName)).ToList();
             return books;
         }
 

@@ -10,19 +10,20 @@ namespace ReadingChecklistLogicLibrary
 {
     public class TagsCreator
     {
-        public List<TagModel> AllTags { get; set; } = new();
+        private readonly List<TagModel> _allTags = new();
 
         public TagsCreator()
         {
-            AllTags = SqliteReader.ReadAllTags();
+            _allTags = SqliteReader.ReadAllTags();
         }
+
         public void AddTags(List<string> tags)
         {
             foreach (string t in tags)
             {
                 if (!IsTagNameInList(t))
                 {
-                    AllTags.Add(CreateTag(t));
+                    _allTags.Add(CreateTag(t));
                 }
             }
         }
@@ -38,14 +39,14 @@ namespace ReadingChecklistLogicLibrary
 
         public bool IsTagNameInList(string tagName)
         {
-            return AllTags.Any(t => t.TagName == tagName);
+            return _allTags.Any(t => t.TagName == tagName);
         }
 
         public List<TagModel> GetTagModelsFromList(List<string> tags)
         {
             List<TagModel> tagModels = new();
 
-            tagModels = AllTags.Where(t => tags.Contains(t.TagName)).ToList();
+            tagModels = _allTags.Where(t => tags.Contains(t.TagName)).ToList();
 
             return tagModels;
         }

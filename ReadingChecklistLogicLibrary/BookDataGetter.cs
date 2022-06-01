@@ -14,5 +14,6 @@ namespace ReadingChecklistLogicLibrary
         {
             return SqliteReader.ReadAllBooks();
         }
+
     }
 }

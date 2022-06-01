@@ -10,22 +10,23 @@ namespace ReadingChecklistLogicLibrary
 {
     public class BooksCreator
     {
-        public string BookDirectory { get; set; }
+        private readonly string _bookDirectory;
 
-        public List<TagModel> AllTags { get; set; } = new();
+        private readonly List<TagModel> _allTags = new();
 
-        public List<BookModel> AllBooks { get; set; } = new();
+        private readonly List<BookModel> _allBooks = new();
 
         public BooksCreator(string dir)
         {
-            BookDirectory = dir;
+            _bookDirectory = dir;
         }
+
 
         public void CreateDataFromDirectory()
         {
-            if (Directory.Exists(BookDirectory))
+            if (Directory.Exists(_bookDirectory))
             {
-                string[] files = Directory.GetFiles(BookDirectory, "*", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(_bookDirectory, "*", SearchOption.AllDirectories);
 
                 foreach (string file in files)
                 {
@@ -39,7 +40,7 @@ namespace ReadingChecklistLogicLibrary
 
                     SqliteCreater.CreateBook(book);
 
-                    AllBooks.Add(book);
+                    _allBooks.Add(book);
 
                 }
             }
@@ -57,7 +58,7 @@ namespace ReadingChecklistLogicLibrary
             string[] tokens = filePath.Split('\\');
             foreach (string t in tokens)
             {
-                if (!(BookDirectory.Contains(t) || t == fileName))
+                if (!(_bookDirectory.Contains(t) || t == fileName))
                 {
                     if (!tags.Contains(t))
                     {
@@ -74,12 +75,12 @@ namespace ReadingChecklistLogicLibrary
             {
                 TagModel tag = new(t);
 
-                bool doesTagExist = AllTags.Any(t => t.TagName == tag.TagName);
+                bool doesTagExist = _allTags.Any(t => t.TagName == tag.TagName);
 
                 if (!doesTagExist)
                 {
                     SqliteCreater.CreateTag(tag);
-                    AllTags.Add(tag);
+                    _allTags.Add(tag);
                 }
             }
         }
@@ -88,7 +89,7 @@ namespace ReadingChecklistLogicLibrary
         {
             List<TagModel> tagModels = new();
 
-            tagModels = AllTags.Where(t => tags.Contains(t.TagName)).ToList();
+            tagModels = _allTags.Where(t => tags.Contains(t.TagName)).ToList();
 
             return tagModels;
         }

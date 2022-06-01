@@ -29,5 +29,6 @@ namespace ReadingChecklistLogicLibrary
         {
             SqliteUpdater.UpdateBook(_book);
         }
+
     }
 }
