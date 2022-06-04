@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Library\DataAccess.Library.csproj" />
+    <ProjectReference Include="..\FileSystemUtilities.Library\FileSystemUtilities.Library.csproj" />
+    <ProjectReference Include="..\Models.Library\Models.Library.csproj" />
+  </ItemGroup>
+
+</Project>
