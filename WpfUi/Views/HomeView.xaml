@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="WpfUi.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUi.Views"
+             mc:Ignorable="d" 
+             xmlns:components="clr-namespace:WpfUi.Components"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="SlateBlue"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Reading Checklist" Foreground="White" FontSize="22" Margin="5 10"
+                       Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBlock Text="Search" Foreground="White" Margin="5 10"
+                       Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="0" Grid.Column="3" VerticalAlignment="Center"
+                     Margin="5 10"/>
+            <CheckBox Content="Show Read"
+                     Grid.Row="0" Grid.Column="4" VerticalAlignment="Center"
+                     Foreground="White" Margin="5 10"
+                      IsChecked="{Binding IsShowReadBooks}"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="Lavender">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Expander Header="Filter By Tags"
+                      Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"
+                      Grid.Row="0"
+                      IsExpanded="True"
+                      Margin="5">
+                <ContentControl Content="{Binding TagList}"/>
+
+            </Expander>
+
+            <Expander Header="Refresh Book List"
+                      Grid.Row="1"
+                      Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"
+                      IsExpanded="False"
+                      Margin="5">
+                <ContentControl Content="{Binding RefreshBooksVM}"/>
+
+            </Expander>
+
+
+
+        </Grid>
+        <StackPanel Grid.Row="1" Grid.Column="2"
+            Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Margin="5"
+                    Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}">
+            <TextBlock>
+                <Run Text="Books"/>
+                <Run Text="{Binding NumberOfBooks}"/>
+                <Run Text="-"/>
+                <Run Text="Read"/>
+                <Run Text="{Binding NumberOfReadBooks}"/>
+                <Run Text="-"/>
+                <Run Text="Percentage"/>
+                <Run Text="{Binding PercentageOfReadBooks, StringFormat={}{0}%}"/>
+            </TextBlock>
+
+        </StackPanel>
+        <ScrollViewer  Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto"
+                                  CanContentScroll="False">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <ItemsControl ItemsSource="{Binding BooksCollectionView}" Grid.Column="0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:BookCardView/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel IsItemsHost="True" 
+                                        Orientation="Vertical" Margin="10" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+                <ContentControl Content="{Binding NoBooks}"
+                                    Visibility="{Binding NotEnoughBooks, Converter={StaticResource boolVisibilityConverter}}"/>
+
+            </Grid>
+        </ScrollViewer>
+        <GridSplitter HorizontalAlignment="Center" Width="5"
+                      Background="Lavender"
+                      Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
+
+
+    </Grid>
+</UserControl>
