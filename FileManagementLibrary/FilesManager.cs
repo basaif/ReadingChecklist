@@ -4,10 +4,16 @@
     {
         public FilesManager(string location)
         {
-            Location = location;
+            _location = location;
         }
 
-        public string Location { get; set; }
+        private string _location;
+
+        public void ChangeLocation(string newLocation)
+        {
+            _location = newLocation;
+        }
+
         public bool DoesLocationExist(string location)
         {
             return Directory.Exists(location);
@@ -15,7 +21,7 @@
 
         public List<string> GetAllFilePathsInLocation()
         {
-            string[] files = Directory.GetFiles(Location, "*", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(_location, "*", SearchOption.AllDirectories);
 
             return files.ToList();
         }
@@ -35,7 +41,7 @@
 
             foreach (string t in tokens)
             {
-                if (!(Location.Contains(t) || t == fileName))
+                if (!(_location.Contains(t) || t == fileName))
                 {
                     if (!folders.Contains(t))
                     {

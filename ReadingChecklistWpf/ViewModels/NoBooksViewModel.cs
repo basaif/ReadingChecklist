@@ -50,7 +50,7 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void SetGenterateBookDataCommand(string location)
         {
-            _filesManager.Location = location;
+            _filesManager.ChangeLocation(location);
             
         }
 

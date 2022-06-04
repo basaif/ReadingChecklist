@@ -59,7 +59,7 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void SetRefreshBookDataCommand(string location)
         {
-            _filesManager.Location = location;
+            _filesManager.ChangeLocation(location);
 
         }
     }
