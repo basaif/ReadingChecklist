@@ -13,7 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingChecklistLogicLibrar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagementLibrary", "FileManagementLibrary\FileManagementLibrary.csproj", "{722AFC77-4667-4E35-B0B9-DCE17601B104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighlightTextBlockControl", "HighlightTextBlockControl\HighlightTextBlockControl.csproj", "{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HighlightTextBlockControl", "HighlightTextBlockControl\HighlightTextBlockControl.csproj", "{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Controls", "UI Controls", "{09044289-9E14-4DA1-9D7C-84EC5B394F48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{8D50E670-E8F8-4C42-8417-F244A96D9B2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core App", "Core App", "{2A0F2E4F-B95A-49B2-A139-F56270A1AC63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagementLibrary.Tests", "FileManagementLibrary.Tests\FileManagementLibrary.Tests.csproj", "{24C5640B-525E-44EE-B722-B0B4F3D4EEC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +53,22 @@ Global
 		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24C5640B-525E-44EE-B722-B0B4F3D4EEC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24C5640B-525E-44EE-B722-B0B4F3D4EEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24C5640B-525E-44EE-B722-B0B4F3D4EEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24C5640B-525E-44EE-B722-B0B4F3D4EEC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AC299F9-61B9-4807-94A5-B7258240043C} = {2A0F2E4F-B95A-49B2-A139-F56270A1AC63}
+		{58B58B46-95BD-4923-BEC0-252132DB1789} = {2A0F2E4F-B95A-49B2-A139-F56270A1AC63}
+		{5137EDBC-88B1-432C-A8A7-4B4B81DC7614} = {2A0F2E4F-B95A-49B2-A139-F56270A1AC63}
+		{C3CA0F5E-91AB-4463-8793-9BF4810396C5} = {2A0F2E4F-B95A-49B2-A139-F56270A1AC63}
+		{722AFC77-4667-4E35-B0B9-DCE17601B104} = {8D50E670-E8F8-4C42-8417-F244A96D9B2F}
+		{EA9EA4B5-C12E-49EC-B200-966DB41C5DC6} = {09044289-9E14-4DA1-9D7C-84EC5B394F48}
+		{24C5640B-525E-44EE-B722-B0B4F3D4EEC2} = {8D50E670-E8F8-4C42-8417-F244A96D9B2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56558F58-2034-4269-9233-28C23A6BFEF5}
