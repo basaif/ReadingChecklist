@@ -7,7 +7,7 @@ namespace ReadingChecklistWpf.ViewModels
 {
     public class NoBooksViewModel : ViewModelBase
     {
-        private readonly FilesManager _filesManager;
+        private readonly IFoldersFileNamePairs _foldersFileNamePairs;
         private readonly BookDataGenerator _bookDataGenerator;
 
         private string _locationToGetBooks = "";
@@ -36,11 +36,11 @@ namespace ReadingChecklistWpf.ViewModels
 
         public ICommand? GenterateBookDataCommand { get; set; }
 
-        public NoBooksViewModel(HomeViewModel homeViewModel, FilesManager filesManager, BookDataGenerator bookDataGenerator)
+        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, BookDataGenerator bookDataGenerator)
         {
             _homeViewModel = homeViewModel;
 
-            _filesManager = filesManager;
+            _foldersFileNamePairs = foldersFileNamePairs;
             _bookDataGenerator = bookDataGenerator;
 
             OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
@@ -50,7 +50,7 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void SetGenterateBookDataCommand(string location)
         {
-            _filesManager.ChangeLocation(location);
+            _foldersFileNamePairs.ChangeLocation(location);
             
         }
 

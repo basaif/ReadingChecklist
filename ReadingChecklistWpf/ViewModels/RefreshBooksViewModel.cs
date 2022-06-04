@@ -12,7 +12,7 @@ namespace ReadingChecklistWpf.ViewModels
 {
     public class RefreshBooksViewModel : ViewModelBase
     {
-        private readonly FilesManager _filesManager;
+        private readonly IFoldersFileNamePairs _foldersFileNamePairs;
         private readonly BooksDataRefresher _booksDataRefresher;
 
         private string _locationToGetBooks = "";
@@ -45,11 +45,11 @@ namespace ReadingChecklistWpf.ViewModels
 
         public ICommand? RefreshBookDataCommand { get; set; }
 
-        public RefreshBooksViewModel(HomeViewModel homeViewModel, FilesManager filesManager, BooksDataRefresher booksDataRefresher)
+        public RefreshBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, BooksDataRefresher booksDataRefresher)
         {
             _homeViewModel = homeViewModel;
 
-            _filesManager = filesManager;
+            _foldersFileNamePairs = foldersFileNamePairs;
             _booksDataRefresher = booksDataRefresher;
 
             OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
@@ -59,7 +59,7 @@ namespace ReadingChecklistWpf.ViewModels
 
         public void SetRefreshBookDataCommand(string location)
         {
-            _filesManager.ChangeLocation(location);
+            _foldersFileNamePairs.ChangeLocation(location);
 
         }
     }

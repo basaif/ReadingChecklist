@@ -7,20 +7,20 @@ namespace ReadingChecklistLogicLibrary
     public class BookDataGenerator
     {
 
-        private readonly FilesManager _filesManager;
+        private readonly IFoldersFileNamePairs _foldersFileNamePairs;
 
         private readonly TagsCreator _tagsCreator;
         private readonly List<BookModel> _allBooks = new();
 
-        public BookDataGenerator(FilesManager filesManager, TagsCreator tagsCreator)
+        public BookDataGenerator(IFoldersFileNamePairs foldersFileNamePairs, TagsCreator tagsCreator)
         {
-            _filesManager = filesManager;
+            _foldersFileNamePairs = foldersFileNamePairs;
             _tagsCreator = tagsCreator;
         }
 
         public void GenerateBooksData()
         {
-            List<(List<string> Tags, string BookName)> tagsBookPairs = _filesManager.GetAllFoldersFileNamePairsInLocation();
+            List<(List<string> Tags, string BookName)> tagsBookPairs = _foldersFileNamePairs.GetAllFoldersFileNamePairsInLocation();
 
             foreach (var (Tags, BookName) in tagsBookPairs)
             {
