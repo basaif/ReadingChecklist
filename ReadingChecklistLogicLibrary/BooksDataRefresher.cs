@@ -11,15 +11,15 @@ namespace ReadingChecklistLogicLibrary
 {
     public class BooksDataRefresher
     {
-        private readonly FilesManager _filesManager;
+        private readonly IFoldersFileNamePairs _foldersFileNamePairs;
         private readonly TagsCreator _tagsCreator;
 
         private List<BookModel> _allNewBooks = new();
         private List<BookModel> _allOldBooks = new();
 
-        public BooksDataRefresher(FilesManager filesManager, TagsCreator tagsCreator)
+        public BooksDataRefresher(IFoldersFileNamePairs foldersFileNamePairs, TagsCreator tagsCreator)
         {
-            _filesManager = filesManager;
+            _foldersFileNamePairs = foldersFileNamePairs;
             _tagsCreator = tagsCreator;
         }
 
@@ -28,7 +28,7 @@ namespace ReadingChecklistLogicLibrary
         {
             GetOldBooks();
 
-            List<(List<string> Tags, string BookName)> tagsBookPairs = _filesManager.GetAllFoldersFileNamePairsInLocation();
+            List<(List<string> Tags, string BookName)> tagsBookPairs = _foldersFileNamePairs.GetAllFoldersFileNamePairsInLocation();
 
             foreach (var (Tags, BookName) in tagsBookPairs)
             {

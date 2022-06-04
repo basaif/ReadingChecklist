@@ -7,13 +7,13 @@ using Xunit;
 
 namespace FileManagementLibrary.Tests
 {
-    public class FilesManagerTests
+    public class FolderFileNamePairsTests
     {
         [Fact]
         public void GetFoldersFromFilePath_ReturnsListOfAllFolderNamesInFileRelativePath()
         {
             string filePath = @"F:\Books\Psychology\Social Psychology\Introduction to Social Psychology.pdf";
-            FilesManager filesManager = new("F:\\Books");
+            FoldersFileNamePairs filesManager = new("F:\\Books");
 
             List<string> expected = new() { "Psychology", "Social Psychology" };
             List<string> actual = filesManager.GetFoldersFromFilePath(filePath);
@@ -25,7 +25,7 @@ namespace FileManagementLibrary.Tests
         public void GetFoldersFromFilePath_ReturnsEmptyListIfFileIsInRootLocation()
         {
             string filePath = @"F:\Books\Introduction to Social Psychology.pdf";
-            FilesManager filesManager = new("F:\\Books");
+            FoldersFileNamePairs filesManager = new("F:\\Books");
 
             List<string> expected = new();
             List<string> actual = filesManager.GetFoldersFromFilePath(filePath);
@@ -37,7 +37,7 @@ namespace FileManagementLibrary.Tests
         public void GetFoldersFileNamePairs_ShouldReturnTupleWithListOfFoldersFileIsInAndFileName()
         {
             string filePath = @"F:\Books\Psychology\Social Psychology\Introduction to Social Psychology.pdf";
-            FilesManager filesManager = new("F:\\Books");
+            FoldersFileNamePairs filesManager = new("F:\\Books");
 
             (List<string> Folders, string FileName) expected = (new() { "Psychology", "Social Psychology" },
                 "Introduction to Social Psychology.pdf");

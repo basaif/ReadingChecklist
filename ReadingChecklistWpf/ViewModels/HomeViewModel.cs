@@ -19,7 +19,6 @@ namespace ReadingChecklistWpf.ViewModels
     {
         private readonly BookDataGetter _bookDataGetter;
         private readonly BooksStore _booksStore;
-        private readonly FilesManager _filesManager;
         private readonly BookDataGenerator _bookDataGenerator;
         private readonly BooksDataRefresher _booksDataRefresher;
         private bool _notEnoughBooks;
@@ -186,17 +185,16 @@ namespace ReadingChecklistWpf.ViewModels
         }
 
         public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore,
-            FilesManager filesManager, BookDataGenerator bookDataGenerator,
+            IFoldersFileNamePairs foldersFileNamePairs, BookDataGenerator bookDataGenerator,
             BooksDataRefresher booksDataRefresher)
         {
             _booksStore = booksStore;
-            _filesManager = filesManager;
             _bookDataGenerator = bookDataGenerator;
             _booksDataRefresher = booksDataRefresher;
             _bookDataGetter = bookDataGetter;
 
-            _noBooks = new NoBooksViewModel(this, _filesManager, _bookDataGenerator);
-            _refreshBooksVM = new RefreshBooksViewModel(this, _filesManager, _booksDataRefresher);
+            _noBooks = new NoBooksViewModel(this, foldersFileNamePairs, _bookDataGenerator);
+            _refreshBooksVM = new RefreshBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _tagList = new TagListViewModel();
             _booksCollectionView = new(_bookCards);
 
