@@ -4,15 +4,15 @@ using Models.Library;
 
 namespace DomainLogic.Library
 {
-	public class BooksDataRefresher
+	public class BooksDataRefresher : IBooksDataRefresher
 	{
 		private readonly IFoldersFileNamePairs _foldersFileNamePairs;
-		private readonly TagsCreator _tagsCreator;
+		private readonly ITagsCreator _tagsCreator;
 
 		private List<BookModel> _allNewBooks = new();
 		private List<BookModel> _allOldBooks = new();
 
-		public BooksDataRefresher(IFoldersFileNamePairs foldersFileNamePairs, TagsCreator tagsCreator)
+		public BooksDataRefresher(IFoldersFileNamePairs foldersFileNamePairs, ITagsCreator tagsCreator)
 		{
 			_foldersFileNamePairs = foldersFileNamePairs;
 			_tagsCreator = tagsCreator;
@@ -25,7 +25,7 @@ namespace DomainLogic.Library
 
 			List<(List<string> Tags, string BookName)> tagsBookPairs = _foldersFileNamePairs.GetAllFoldersFileNamePairsInLocation();
 
-			foreach (var (Tags, BookName) in tagsBookPairs)
+			foreach ((List<string> Tags, string BookName) in tagsBookPairs)
 			{
 				_tagsCreator.AddTags(Tags);
 

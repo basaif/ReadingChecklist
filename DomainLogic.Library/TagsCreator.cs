@@ -3,13 +3,18 @@ using Models.Library;
 
 namespace DomainLogic.Library
 {
-	public class TagsCreator
+	public class TagsCreator : ITagsCreator
 	{
 		private readonly List<TagModel> _allTags = new();
 
 		public TagsCreator()
 		{
-			_allTags = SqliteReader.ReadAllTags();
+			_allTags = LoadTags();
+		}
+
+		public List<TagModel> LoadTags()
+		{
+			return SqliteReader.ReadAllTags();
 		}
 
 		public void AddTags(List<string> tags)

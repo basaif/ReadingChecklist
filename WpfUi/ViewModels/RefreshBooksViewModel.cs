@@ -8,7 +8,7 @@ namespace WpfUi.ViewModels
 	public class RefreshBooksViewModel : ViewModelBase
     {
         private readonly IFoldersFileNamePairs _foldersFileNamePairs;
-        private readonly BooksDataRefresher _booksDataRefresher;
+        private readonly IBooksDataRefresher _booksDataRefresher;
 
         private string _locationToGetBooks = "";
 
@@ -40,7 +40,8 @@ namespace WpfUi.ViewModels
 
         public ICommand? RefreshBookDataCommand { get; set; }
 
-        public RefreshBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, BooksDataRefresher booksDataRefresher)
+        public RefreshBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, 
+			IBooksDataRefresher booksDataRefresher)
         {
             _homeViewModel = homeViewModel;
 

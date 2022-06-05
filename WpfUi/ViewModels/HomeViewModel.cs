@@ -15,10 +15,10 @@ namespace WpfUi.ViewModels
 {
 	public class HomeViewModel : ViewModelBase
     {
-        private readonly BookDataGetter _bookDataGetter;
+        private readonly IBookDataGetter _bookDataGetter;
         private readonly BooksStore _booksStore;
-        private readonly BookDataGenerator _bookDataGenerator;
-        private readonly BooksDataRefresher _booksDataRefresher;
+        private readonly IBookDataGenerator _bookDataGenerator;
+        private readonly IBooksDataRefresher _booksDataRefresher;
         private bool _notEnoughBooks;
 
         public bool NotEnoughBooks
@@ -182,9 +182,9 @@ namespace WpfUi.ViewModels
                 ListSortDirection.Ascending));
         }
 
-        public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore,
-            IFoldersFileNamePairs foldersFileNamePairs, BookDataGenerator bookDataGenerator,
-            BooksDataRefresher booksDataRefresher)
+        public HomeViewModel(IBookDataGetter bookDataGetter, BooksStore booksStore,
+            IFoldersFileNamePairs foldersFileNamePairs, IBookDataGenerator bookDataGenerator,
+            IBooksDataRefresher booksDataRefresher)
         {
             _booksStore = booksStore;
             _bookDataGenerator = bookDataGenerator;

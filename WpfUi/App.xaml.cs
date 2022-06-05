@@ -17,15 +17,14 @@ namespace WpfUi
         {
 			IServiceProvider serviceProvider = CreateServiceProvider();
 
-			BookDataGetter bookDataGetter = new();
             BooksStore booksStore = new();
-            TagsCreator tagsCreator = new();
-            BookDataGenerator bookDataGenerator = new(serviceProvider.GetRequiredService<IFoldersFileNamePairs>(), tagsCreator);
-            BooksDataRefresher booksDataRefresher = new(serviceProvider.GetRequiredService<IFoldersFileNamePairs>(), tagsCreator);
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel(bookDataGetter, booksStore, serviceProvider.GetRequiredService<IFoldersFileNamePairs>(), bookDataGenerator, booksDataRefresher)
+                DataContext = new MainWindowViewModel(serviceProvider.GetRequiredService<IBookDataGetter>(),
+				booksStore, serviceProvider.GetRequiredService<IFoldersFileNamePairs>(),
+				serviceProvider.GetRequiredService<IBookDataGenerator>(),
+				serviceProvider.GetRequiredService<IBooksDataRefresher>())
             };
 
             MainWindow.Show();
@@ -36,6 +35,10 @@ namespace WpfUi
 			IServiceCollection services = new ServiceCollection();
 
 			services.AddScoped<IFoldersFileNamePairs, FoldersFileNamePairs>();
+			services.AddTransient<ITagsCreator, TagsCreator>();
+			services.AddTransient<IBookDataGenerator, BookDataGenerator>();
+			services.AddTransient<IBookDataGetter, BookDataGetter>();
+			services.AddTransient<IBooksDataRefresher, BooksDataRefresher>();
 
 			return services.BuildServiceProvider();
 		}

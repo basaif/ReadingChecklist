@@ -3,7 +3,7 @@ using Models.Library;
 
 namespace DomainLogic.Library
 {
-	public class BookDataGetter
+	public class BookDataGetter : IBookDataGetter
 	{
 		public List<BookModel> GetAllBooks()
 		{

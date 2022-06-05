@@ -6,11 +6,11 @@ namespace WpfUi.ViewModels.Cmds
 	public class GenterateBookDataCommand : CommandBase
     {
         private readonly NoBooksViewModel _noBooksViewModel;
-        private readonly BookDataGenerator _bookDataGenerator;
+        private readonly IBookDataGenerator _bookDataGenerator;
         private readonly HomeViewModel _homeViewModel;
 
         public GenterateBookDataCommand(NoBooksViewModel noBooksViewModel,
-            BookDataGenerator bookDataGenerator,
+            IBookDataGenerator bookDataGenerator,
             HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;

@@ -8,7 +8,7 @@ namespace WpfUi.ViewModels
 	public class NoBooksViewModel : ViewModelBase
     {
         private readonly IFoldersFileNamePairs _foldersFileNamePairs;
-        private readonly BookDataGenerator _bookDataGenerator;
+        private readonly IBookDataGenerator _bookDataGenerator;
 
         private string _locationToGetBooks = "";
 
@@ -36,7 +36,7 @@ namespace WpfUi.ViewModels
 
         public ICommand? GenterateBookDataCommand { get; set; }
 
-        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, BookDataGenerator bookDataGenerator)
+        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, IBookDataGenerator bookDataGenerator)
         {
             _homeViewModel = homeViewModel;
 

@@ -6,11 +6,11 @@ namespace WpfUi.ViewModels.Cmds
 	public class RefreshBookDataCommand : CommandBase
     {
         private readonly RefreshBooksViewModel _refreshBooksViewModel;
-        private readonly BooksDataRefresher _booksDataRefresher;
+        private readonly IBooksDataRefresher _booksDataRefresher;
         private readonly HomeViewModel _homeViewModel;
 
         public RefreshBookDataCommand(RefreshBooksViewModel refreshBooksViewModel,
-            BooksDataRefresher booksDataRefresher,
+            IBooksDataRefresher booksDataRefresher,
             HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;
