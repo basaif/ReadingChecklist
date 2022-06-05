@@ -16,10 +16,10 @@ namespace WpfUi.ViewModels
         }
 
         public MainWindowViewModel(IBookDataGetter bookDataGetter, BooksStore booksStore,
-            IFoldersFileNamePairs foldersFileNamePairs, IBookDataGenerator bookDataGenerator, IBooksDataRefresher booksDataRefresher)
+            IFoldersFileNamePairs foldersFileNamePairs, IBooksDataRefresher booksDataRefresher)
         {
             _homeViewModel = new HomeViewModel(
-				bookDataGetter, booksStore, foldersFileNamePairs, bookDataGenerator, booksDataRefresher);
+				bookDataGetter, booksStore, foldersFileNamePairs, booksDataRefresher);
         }
 
     }

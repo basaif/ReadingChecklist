@@ -23,7 +23,6 @@ namespace WpfUi
             {
                 DataContext = new MainWindowViewModel(serviceProvider.GetRequiredService<IBookDataGetter>(),
 				booksStore, serviceProvider.GetRequiredService<IFoldersFileNamePairs>(),
-				serviceProvider.GetRequiredService<IBookDataGenerator>(),
 				serviceProvider.GetRequiredService<IBooksDataRefresher>())
             };
 
@@ -36,7 +35,6 @@ namespace WpfUi
 
 			services.AddScoped<IFoldersFileNamePairs, FoldersFileNamePairs>();
 			services.AddTransient<ITagsCreator, TagsCreator>();
-			services.AddTransient<IBookDataGenerator, BookDataGenerator>();
 			services.AddTransient<IBookDataGetter, BookDataGetter>();
 			services.AddTransient<IBooksDataRefresher, BooksDataRefresher>();
 

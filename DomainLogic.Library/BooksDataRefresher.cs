@@ -21,9 +21,17 @@ namespace DomainLogic.Library
 
 		public void RefreshBooksData()
 		{
+			ClearBookLists();
 			GetOldBooks();
+			CreateBookListStructure();
+			DeleteBooks(GetMissingBooks());
+			ClearBookLists();
+		}
 
-			List<(List<string> Tags, string BookName)> tagsBookPairs = _foldersFileNamePairs.GetAllFoldersFileNamePairsInLocation();
+		private void CreateBookListStructure()
+		{
+			List<(List<string> Tags, string BookName)> tagsBookPairs =
+					_foldersFileNamePairs.GetAllFoldersFileNamePairsInLocation();
 
 			foreach ((List<string> Tags, string BookName) in tagsBookPairs)
 			{
@@ -31,9 +39,6 @@ namespace DomainLogic.Library
 
 				_allNewBooks.Add(CreateBook(BookName, Tags));
 			}
-
-			DeleteBooks(GetMissingBooks());
-			_allNewBooks = new();
 		}
 
 		private void GetOldBooks()
@@ -41,34 +46,52 @@ namespace DomainLogic.Library
 			_allOldBooks = SqliteReader.ReadAllBooks();
 		}
 
+		private void ClearBookLists()
+		{
+			_allOldBooks.Clear();
+			_allNewBooks.Clear();
+		}
+
 		public BookModel CreateBook(string bookName, List<string> tags)
 		{
-
 			List<TagModel> tagModels = _tagsCreator.GetTagModelsFromList(tags);
 
 			if (DoesBookExist(bookName))
 			{
-				BookModel book = GetExistingBookModel(bookName);
-
-				if (AreTagsInBook(book, tagModels))
-				{
-					return book;
-				}
-				else
-				{
-					SqliteDeleter.DeleteBookRelationship(book.Id);
-					book.Tags = tagModels;
-					SqliteCreater.CreateBookTagRelationship(book);
-					return book;
-				}
+				return GetBookWithCorrectTags(bookName, tagModels);
 			}
 			else
 			{
-				BookModel book = new(bookName, false, DateTime.UtcNow, tagModels);
-				SqliteCreater.CreateBook(book);
+				return AddNewBook(bookName, tagModels);
+			}
+		}
+
+		private BookModel GetBookWithCorrectTags(string bookName, List<TagModel> tagModels)
+		{
+			BookModel book = GetExistingBookModel(bookName);
+			if (AreTagsInBook(book, tagModels))
+			{
 				return book;
 			}
+			else
+			{
+				return UpdateBookTags(book, tagModels);
+			}
+		}
 
+		private static BookModel AddNewBook(string bookName, List<TagModel> tagModels)
+		{
+			BookModel book = new(bookName, false, DateTime.UtcNow, tagModels);
+			SqliteCreater.CreateBook(book);
+			return book;
+		}
+
+		private static BookModel UpdateBookTags(BookModel book, List<TagModel> tagModels)
+		{
+			SqliteDeleter.DeleteBookRelationship(book.Id);
+			book.Tags = tagModels;
+			SqliteCreater.CreateBookTagRelationship(book);
+			return book;
 		}
 
 		private bool DoesBookExist(string bookName)

@@ -8,9 +8,8 @@ namespace WpfUi.ViewModels
 	public class NoBooksViewModel : ViewModelBase
     {
         private readonly IFoldersFileNamePairs _foldersFileNamePairs;
-        private readonly IBookDataGenerator _bookDataGenerator;
-
-        private string _locationToGetBooks = "";
+        private readonly IBooksDataRefresher _bookDataRefresher;
+		private string _locationToGetBooks = "";
 
         public string LocationToGetBooks
         {
@@ -36,16 +35,17 @@ namespace WpfUi.ViewModels
 
         public ICommand? GenterateBookDataCommand { get; set; }
 
-        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, IBookDataGenerator bookDataGenerator)
+        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs,
+			IBooksDataRefresher bookDataRefresher)
         {
             _homeViewModel = homeViewModel;
 
             _foldersFileNamePairs = foldersFileNamePairs;
-            _bookDataGenerator = bookDataGenerator;
+            _bookDataRefresher = bookDataRefresher;
+			OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
 
-            OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
-
-            GenterateBookDataCommand = new GenterateBookDataCommand(this, _bookDataGenerator, _homeViewModel);
+            GenterateBookDataCommand = new GenterateBookDataCommand(this, _bookDataRefresher,
+				_homeViewModel);
         }
 
         public void SetGenterateBookDataCommand(string location)

@@ -6,17 +6,17 @@ namespace WpfUi.ViewModels.Cmds
 	public class GenterateBookDataCommand : CommandBase
     {
         private readonly NoBooksViewModel _noBooksViewModel;
-        private readonly IBookDataGenerator _bookDataGenerator;
-        private readonly HomeViewModel _homeViewModel;
+        private readonly IBooksDataRefresher _bookDataRefresher;
+		private readonly HomeViewModel _homeViewModel;
 
         public GenterateBookDataCommand(NoBooksViewModel noBooksViewModel,
-            IBookDataGenerator bookDataGenerator,
+            IBooksDataRefresher bookDataRefresher,
             HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;
             _noBooksViewModel = noBooksViewModel;
-            _bookDataGenerator = bookDataGenerator;
-        }
+            _bookDataRefresher = bookDataRefresher;
+		}
 
         public override bool CanExecute(object? parameter)
         {
@@ -40,8 +40,7 @@ namespace WpfUi.ViewModels.Cmds
 
         private async Task GetBooksAsync()
         {
-            await Task.Run(() => _bookDataGenerator.GenerateBooksData());
-            
-        }
+			await Task.Run(() => _bookDataRefresher.RefreshBooksData());
+		}
     }
 }

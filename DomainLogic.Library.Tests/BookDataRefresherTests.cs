@@ -23,6 +23,13 @@ namespace DomainLogic.Library.Tests
 				new TagModel("Earth Science")
 			};
 
+			List<TagModel> sameTags = new()
+			{
+				new TagModel("Science"),
+				new TagModel("Text Books"),
+				new TagModel("Earth Science")
+			};
+
 			BookModel book = new("Introduction to Geology", false, DateTime.Now, tags);
 
 			List<TagModel> differentTags = new()
@@ -56,7 +63,7 @@ namespace DomainLogic.Library.Tests
 
 			IBooksDataRefresher bookDataRefresher = new BooksDataRefresher(mockFoldersFileNamePairs.Object, mockTagsCreator.Object);
 
-			Assert.True(bookDataRefresher.AreTagsInBook(book, tags));
+			Assert.True(bookDataRefresher.AreTagsInBook(book, sameTags));
 			Assert.True(!bookDataRefresher.AreTagsInBook(book, differentTags));
 			Assert.True(!bookDataRefresher.AreTagsInBook(book, addedTags));
 			Assert.True(!bookDataRefresher.AreTagsInBook(book, missingTags));

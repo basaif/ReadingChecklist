@@ -17,7 +17,6 @@ namespace WpfUi.ViewModels
     {
         private readonly IBookDataGetter _bookDataGetter;
         private readonly BooksStore _booksStore;
-        private readonly IBookDataGenerator _bookDataGenerator;
         private readonly IBooksDataRefresher _booksDataRefresher;
         private bool _notEnoughBooks;
 
@@ -183,15 +182,14 @@ namespace WpfUi.ViewModels
         }
 
         public HomeViewModel(IBookDataGetter bookDataGetter, BooksStore booksStore,
-            IFoldersFileNamePairs foldersFileNamePairs, IBookDataGenerator bookDataGenerator,
+            IFoldersFileNamePairs foldersFileNamePairs,
             IBooksDataRefresher booksDataRefresher)
         {
             _booksStore = booksStore;
-            _bookDataGenerator = bookDataGenerator;
             _booksDataRefresher = booksDataRefresher;
             _bookDataGetter = bookDataGetter;
 
-            _noBooks = new NoBooksViewModel(this, foldersFileNamePairs, _bookDataGenerator);
+            _noBooks = new NoBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _refreshBooksVM = new RefreshBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _tagList = new TagListViewModel();
             _booksCollectionView = new(_bookCards);
