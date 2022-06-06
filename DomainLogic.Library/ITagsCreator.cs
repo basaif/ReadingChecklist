@@ -6,7 +6,5 @@ namespace DomainLogic.Library
 	{
 		void AddTags(List<string> tags);
 		List<TagModel> GetTagModelsFromList(List<string> tags);
-		bool IsTagNameInList(string tagName);
-		List<TagModel> LoadTags();
 	}
 }

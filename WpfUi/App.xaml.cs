@@ -26,7 +26,9 @@ namespace WpfUi
 					services.AddTransient<ITagsCreator, TagsCreator>();
 					services.AddTransient<IBookDataGetter, BookDataGetter>();
 					services.AddTransient<IBookTagStructureCreator, BookTagStructureCreator>();
+
 					services.AddTransient<IBookDataService, BookDataService>();
+					services.AddTransient<ITagDataService, TagDataService>();
 
 					services.AddSingleton<BooksStore>();
 
