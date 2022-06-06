@@ -29,7 +29,7 @@ namespace WpfUi.ViewModels.Cmds
             return false;
         }
 
-        public async override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
             _getBooksViewModel.IsGettingBooks = true;
             await GetBooksAsync();
