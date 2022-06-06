@@ -1,4 +1,4 @@
-﻿using DomainLogic.Library;
+﻿using DomainLogic.Library.Creators;
 using System.Threading.Tasks;
 
 namespace WpfUi.ViewModels.Cmds

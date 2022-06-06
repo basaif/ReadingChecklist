@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLogic.Library
+namespace DomainLogic.Library.Services
 {
 	public class BookDataService : IBookDataService
 	{

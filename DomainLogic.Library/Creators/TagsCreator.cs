@@ -1,7 +1,8 @@
 ﻿using DataAccess.Library;
+using DomainLogic.Library.Services;
 using Models.Library;
 
-namespace DomainLogic.Library
+namespace DomainLogic.Library.Creators
 {
 	public class TagsCreator : ITagsCreator
 	{

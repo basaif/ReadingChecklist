@@ -3,10 +3,11 @@ using WpfUi.Stores;
 using WpfUi.ViewModels;
 using System;
 using System.Windows;
-using DomainLogic.Library;
 using FileSystemUtilities.Library;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
+using DomainLogic.Library.Services;
+using DomainLogic.Library.Creators;
 
 namespace WpfUi
 {
@@ -24,7 +25,6 @@ namespace WpfUi
 				{
 					services.AddScoped<IFoldersFileNamePairs, FoldersFileNamePairs>();
 					services.AddTransient<ITagsCreator, TagsCreator>();
-					services.AddTransient<IBookDataGetter, BookDataGetter>();
 					services.AddTransient<IBookTagStructureCreator, BookTagStructureCreator>();
 
 					services.AddTransient<IBookDataService, BookDataService>();

@@ -1,6 +1,6 @@
 ﻿using Models.Library;
 
-namespace DomainLogic.Library
+namespace DomainLogic.Library.Creators
 {
 	public interface IBookTagStructureCreator
 	{

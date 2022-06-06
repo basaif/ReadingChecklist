@@ -1,6 +1,6 @@
 ﻿using Models.Library;
 
-namespace DomainLogic.Library
+namespace DomainLogic.Library.Services
 {
 	public interface ITagDataService
 	{

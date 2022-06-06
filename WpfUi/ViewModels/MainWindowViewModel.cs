@@ -1,4 +1,5 @@
-﻿using DomainLogic.Library;
+﻿using DomainLogic.Library.Creators;
+using DomainLogic.Library.Services;
 using FileSystemUtilities.Library;
 using WpfUi.Stores;
 
@@ -15,11 +16,11 @@ namespace WpfUi.ViewModels
             set { _homeViewModel = value; }
         }
 
-        public MainWindowViewModel(IBookDataGetter bookDataGetter, BooksStore booksStore,
+        public MainWindowViewModel(IBookDataService bookDataService, BooksStore booksStore,
             IFoldersFileNamePairs foldersFileNamePairs, IBookTagStructureCreator booksDataRefresher)
         {
             _homeViewModel = new HomeViewModel(
-				bookDataGetter, booksStore, foldersFileNamePairs, booksDataRefresher);
+				bookDataService, booksStore, foldersFileNamePairs, booksDataRefresher);
         }
 
     }

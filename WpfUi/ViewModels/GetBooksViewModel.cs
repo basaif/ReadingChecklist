@@ -1,7 +1,7 @@
 ﻿using WpfUi.ViewModels.Cmds;
 using System.Windows.Input;
 using FileSystemUtilities.Library;
-using DomainLogic.Library;
+using DomainLogic.Library.Creators;
 
 namespace WpfUi.ViewModels
 {

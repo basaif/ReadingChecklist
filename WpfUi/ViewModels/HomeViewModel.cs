@@ -7,16 +7,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using DomainLogic.Library;
 using FileSystemUtilities.Library;
 using Models.Library;
+using DomainLogic.Library.Creators;
+using DomainLogic.Library.Services;
 
 namespace WpfUi.ViewModels
 {
 	public class HomeViewModel : ViewModelBase
     {
-        private readonly IBookDataGetter _bookDataGetter;
-        private readonly BooksStore _booksStore;
+		private readonly IBookDataService _bookDataService;
+		private readonly BooksStore _booksStore;
         private readonly IBookTagStructureCreator _booksDataRefresher;
         private bool _notEnoughBooks;
 
@@ -174,13 +175,13 @@ namespace WpfUi.ViewModels
                 ListSortDirection.Ascending));
         }
 
-        public HomeViewModel(IBookDataGetter bookDataGetter, BooksStore booksStore,
+        public HomeViewModel(IBookDataService bookDataService, BooksStore booksStore,
             IFoldersFileNamePairs foldersFileNamePairs,
             IBookTagStructureCreator booksDataRefresher)
         {
-            _booksStore = booksStore;
+			_bookDataService = bookDataService;
+			_booksStore = booksStore;
             _booksDataRefresher = booksDataRefresher;
-            _bookDataGetter = bookDataGetter;
 
             _getBooksViewModel = new GetBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _tagList = new TagListViewModel();
@@ -398,7 +399,7 @@ namespace WpfUi.ViewModels
 
         private void AddBooks()
         {
-            List<BookModel> books = _bookDataGetter.GetAllBooks();
+            List<BookModel> books = _bookDataService.GetExistingBooks();
 
             if (books.Count == 0)
             {
@@ -418,7 +419,7 @@ namespace WpfUi.ViewModels
 
         private async Task AddBooksAsync()
         {
-            List<BookModel> books = await Task.Run(() => _bookDataGetter.GetAllBooks());
+            List<BookModel> books = await Task.Run(() => _bookDataService.GetExistingBooks());
 
             if (books.Count == 0)
             {

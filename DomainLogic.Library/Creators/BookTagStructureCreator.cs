@@ -1,8 +1,9 @@
 ﻿using DataAccess.Library;
+using DomainLogic.Library.Services;
 using FileSystemUtilities.Library;
 using Models.Library;
 
-namespace DomainLogic.Library
+namespace DomainLogic.Library.Creators
 {
 	public class BookTagStructureCreator : IBookTagStructureCreator
 	{
@@ -92,7 +93,7 @@ namespace DomainLogic.Library
 				&& tagModels.All(x => bookModel.Tags.Contains(x));
 			return areTagsInBook;
 		}
-		
+
 		private List<BookModel> GetOldBooksThatAreNotInNewBooks()
 		{
 			List<BookModel> books = _allOldBooks
@@ -100,6 +101,6 @@ namespace DomainLogic.Library
 				.Contains(x.BookName)).ToList();
 			return books;
 		}
-		
+
 	}
 }
