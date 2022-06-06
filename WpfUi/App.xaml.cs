@@ -25,24 +25,31 @@ namespace WpfUi
 					services.AddScoped<IFoldersFileNamePairs, FoldersFileNamePairs>();
 					services.AddTransient<ITagsCreator, TagsCreator>();
 					services.AddTransient<IBookDataGetter, BookDataGetter>();
-					services.AddTransient<IBooksDataRefresher, BooksDataRefresher>();
+					services.AddTransient<IBookTagStructureCreator, BookTagStructureCreator>();
+					services.AddTransient<IBookDataService, BookDataService>();
+
+					services.AddSingleton<BooksStore>();
+
+					services.AddScoped<MainWindowViewModel>();
+					services.AddScoped(s => new MainWindow(s.GetRequiredService<MainWindowViewModel>()));
 
 				}).Build();
 		}
 		private void Application_Startup(object sender, StartupEventArgs e)
         {
+			_host.Start();
 
-            BooksStore booksStore = new();
+            MainWindow = _host.Services.GetRequiredService<MainWindow>();
 
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainWindowViewModel(_host.Services.GetRequiredService<IBookDataGetter>(),
-				booksStore, _host.Services.GetRequiredService<IFoldersFileNamePairs>(),
-				_host.Services.GetRequiredService<IBooksDataRefresher>())
-            };
-
-            MainWindow.Show();
+			MainWindow.Show();
         }
+
+		protected override async void OnExit(ExitEventArgs e)
+		{
+			await _host.StopAsync();
+			_host.Dispose();
+			base.OnExit(e);
+		}
 	}
 }
 

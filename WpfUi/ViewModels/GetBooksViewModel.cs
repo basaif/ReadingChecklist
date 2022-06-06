@@ -5,10 +5,10 @@ using DomainLogic.Library;
 
 namespace WpfUi.ViewModels
 {
-	public class NoBooksViewModel : ViewModelBase
+	public class GetBooksViewModel : ViewModelBase
     {
         private readonly IFoldersFileNamePairs _foldersFileNamePairs;
-        private readonly IBooksDataRefresher _bookDataRefresher;
+        private readonly IBookTagStructureCreator _bookDataRefresher;
 		private string _locationToGetBooks = "";
 
         public string LocationToGetBooks
@@ -35,8 +35,8 @@ namespace WpfUi.ViewModels
 
         public ICommand? GenterateBookDataCommand { get; set; }
 
-        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs,
-			IBooksDataRefresher bookDataRefresher)
+        public GetBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs,
+			IBookTagStructureCreator bookDataRefresher)
         {
             _homeViewModel = homeViewModel;
 
@@ -44,7 +44,7 @@ namespace WpfUi.ViewModels
             _bookDataRefresher = bookDataRefresher;
 			OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
 
-            GenterateBookDataCommand = new GenterateBookDataCommand(this, _bookDataRefresher,
+            GenterateBookDataCommand = new GetBookDataCommand(this, _bookDataRefresher,
 				_homeViewModel);
         }
 

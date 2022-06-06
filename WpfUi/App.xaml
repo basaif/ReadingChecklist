@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ResourceDictionaries/MainWindowTemplates.xaml"/>
+                <ResourceDictionary Source="/ResourceDictionaries/MainWindowTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

@@ -17,7 +17,7 @@ namespace WpfUi.ViewModels
     {
         private readonly IBookDataGetter _bookDataGetter;
         private readonly BooksStore _booksStore;
-        private readonly IBooksDataRefresher _booksDataRefresher;
+        private readonly IBookTagStructureCreator _booksDataRefresher;
         private bool _notEnoughBooks;
 
         public bool NotEnoughBooks
@@ -87,21 +87,14 @@ namespace WpfUi.ViewModels
             }
         }
 
-        private NoBooksViewModel _noBooks;
+        private GetBooksViewModel _getBooksViewModel;
 
-        public NoBooksViewModel NoBooks
+        public GetBooksViewModel GetBooksViewModel
         {
-            get { return _noBooks; }
-            set { _noBooks = value; }
+            get { return _getBooksViewModel; }
+            set { _getBooksViewModel = value; }
         }
 
-        private RefreshBooksViewModel _refreshBooksVM;
-
-        public RefreshBooksViewModel RefreshBooksVM
-        {
-            get { return _refreshBooksVM; }
-            set { _refreshBooksVM = value; }
-        }
 
 
 
@@ -183,14 +176,13 @@ namespace WpfUi.ViewModels
 
         public HomeViewModel(IBookDataGetter bookDataGetter, BooksStore booksStore,
             IFoldersFileNamePairs foldersFileNamePairs,
-            IBooksDataRefresher booksDataRefresher)
+            IBookTagStructureCreator booksDataRefresher)
         {
             _booksStore = booksStore;
             _booksDataRefresher = booksDataRefresher;
             _bookDataGetter = bookDataGetter;
 
-            _noBooks = new NoBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
-            _refreshBooksVM = new RefreshBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
+            _getBooksViewModel = new GetBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _tagList = new TagListViewModel();
             _booksCollectionView = new(_bookCards);
 
@@ -209,7 +201,7 @@ namespace WpfUi.ViewModels
         }
 
 
-        public void LoadBooksData()
+        private void LoadBooksData()
         {
             AddBooksAsync().ContinueWith(task =>
             {
@@ -444,7 +436,7 @@ namespace WpfUi.ViewModels
             }
         }
 
-        public void RefreshBooks()
+        public void LoadBookList()
         {
             BookCards = new ObservableCollection<BookCardViewModel>();
             SetUpBooksCollectionView();
