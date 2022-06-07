@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace WpfUi.Views
 {
-    /// <summary>
-    /// Interaction logic for RefreshBooksView.xaml
-    /// </summary>
-    public partial class RefreshBooksView : UserControl
-    {
-        public RefreshBooksView()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Interaction logic for GetBooksView.xaml
+	/// </summary>
+	public partial class GetBooksView : UserControl
+	{
+		public GetBooksView()
+		{
+			InitializeComponent();
+		}
+	}
 }

@@ -7,19 +7,21 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using DomainLogic.Library;
 using FileSystemUtilities.Library;
 using Models.Library;
+using DomainLogic.Library.Creators;
+using DomainLogic.Library.Services;
+using DomainLogic.Library;
 
 namespace WpfUi.ViewModels
 {
 	public class HomeViewModel : ViewModelBase
     {
-        private readonly BookDataGetter _bookDataGetter;
-        private readonly BooksStore _booksStore;
-        private readonly BookDataGenerator _bookDataGenerator;
-        private readonly BooksDataRefresher _booksDataRefresher;
-        private bool _notEnoughBooks;
+		private readonly IBookDataService _bookDataService;
+		private readonly BooksStore _booksStore;
+        private readonly IBookTagStructureCreator _booksDataRefresher;
+		private readonly IBooksUpdater _booksUpdater;
+		private bool _notEnoughBooks;
 
         public bool NotEnoughBooks
         {
@@ -88,21 +90,14 @@ namespace WpfUi.ViewModels
             }
         }
 
-        private NoBooksViewModel _noBooks;
+        private GetBooksViewModel _getBooksViewModel;
 
-        public NoBooksViewModel NoBooks
+        public GetBooksViewModel GetBooksViewModel
         {
-            get { return _noBooks; }
-            set { _noBooks = value; }
+            get { return _getBooksViewModel; }
+            set { _getBooksViewModel = value; }
         }
 
-        private RefreshBooksViewModel _refreshBooksVM;
-
-        public RefreshBooksViewModel RefreshBooksVM
-        {
-            get { return _refreshBooksVM; }
-            set { _refreshBooksVM = value; }
-        }
 
 
 
@@ -182,17 +177,16 @@ namespace WpfUi.ViewModels
                 ListSortDirection.Ascending));
         }
 
-        public HomeViewModel(BookDataGetter bookDataGetter, BooksStore booksStore,
-            IFoldersFileNamePairs foldersFileNamePairs, BookDataGenerator bookDataGenerator,
-            BooksDataRefresher booksDataRefresher)
+        public HomeViewModel(IBookDataService bookDataService, BooksStore booksStore,
+            IFoldersFileNamePairs foldersFileNamePairs,
+            IBookTagStructureCreator booksDataRefresher,
+			IBooksUpdater booksUpdater)
         {
-            _booksStore = booksStore;
-            _bookDataGenerator = bookDataGenerator;
+			_bookDataService = bookDataService;
+			_booksStore = booksStore;
             _booksDataRefresher = booksDataRefresher;
-            _bookDataGetter = bookDataGetter;
-
-            _noBooks = new NoBooksViewModel(this, foldersFileNamePairs, _bookDataGenerator);
-            _refreshBooksVM = new RefreshBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
+			_booksUpdater = booksUpdater;
+			_getBooksViewModel = new GetBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _tagList = new TagListViewModel();
             _booksCollectionView = new(_bookCards);
 
@@ -211,7 +205,7 @@ namespace WpfUi.ViewModels
         }
 
 
-        public void LoadBooksData()
+        private void LoadBooksData()
         {
             AddBooksAsync().ContinueWith(task =>
             {
@@ -408,7 +402,7 @@ namespace WpfUi.ViewModels
 
         private void AddBooks()
         {
-            List<BookModel> books = _bookDataGetter.GetAllBooks();
+            List<BookModel> books = _bookDataService.GetExistingBooks();
 
             if (books.Count == 0)
             {
@@ -421,14 +415,14 @@ namespace WpfUi.ViewModels
 
                 foreach (BookModel book in books)
                 {
-                    BookCards.Add(new BookCardViewModel(book, _booksStore));
+                    BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
                 }
             }
         }
 
         private async Task AddBooksAsync()
         {
-            List<BookModel> books = await Task.Run(() => _bookDataGetter.GetAllBooks());
+            List<BookModel> books = await Task.Run(() => _bookDataService.GetExistingBooks());
 
             if (books.Count == 0)
             {
@@ -441,12 +435,12 @@ namespace WpfUi.ViewModels
 
                 foreach (BookModel book in books)
                 {
-                    BookCards.Add(new BookCardViewModel(book, _booksStore));
+                    BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
                 }
             }
         }
 
-        public void RefreshBooks()
+        public void LoadBookList()
         {
             BookCards = new ObservableCollection<BookCardViewModel>();
             SetUpBooksCollectionView();

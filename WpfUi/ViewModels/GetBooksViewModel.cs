@@ -1,16 +1,15 @@
 ﻿using WpfUi.ViewModels.Cmds;
 using System.Windows.Input;
 using FileSystemUtilities.Library;
-using DomainLogic.Library;
+using DomainLogic.Library.Creators;
 
 namespace WpfUi.ViewModels
 {
-	public class NoBooksViewModel : ViewModelBase
+	public class GetBooksViewModel : ViewModelBase
     {
         private readonly IFoldersFileNamePairs _foldersFileNamePairs;
-        private readonly BookDataGenerator _bookDataGenerator;
-
-        private string _locationToGetBooks = "";
+        private readonly IBookTagStructureCreator _bookDataRefresher;
+		private string _locationToGetBooks = "";
 
         public string LocationToGetBooks
         {
@@ -36,16 +35,17 @@ namespace WpfUi.ViewModels
 
         public ICommand? GenterateBookDataCommand { get; set; }
 
-        public NoBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs, BookDataGenerator bookDataGenerator)
+        public GetBooksViewModel(HomeViewModel homeViewModel, IFoldersFileNamePairs foldersFileNamePairs,
+			IBookTagStructureCreator bookDataRefresher)
         {
             _homeViewModel = homeViewModel;
 
             _foldersFileNamePairs = foldersFileNamePairs;
-            _bookDataGenerator = bookDataGenerator;
+            _bookDataRefresher = bookDataRefresher;
+			OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
 
-            OpenSearchForBooksDialogCommand = new OpenSearchForBooksDialogCommand(this);
-
-            GenterateBookDataCommand = new GenterateBookDataCommand(this, _bookDataGenerator, _homeViewModel);
+            GenterateBookDataCommand = new GetBookDataCommand(this, _bookDataRefresher,
+				_homeViewModel);
         }
 
         public void SetGenterateBookDataCommand(string location)
