@@ -1,28 +1,29 @@
-﻿using DataAccess.Library;
+﻿using DataAccess.Library.ModelDataServices;
+using DataAccess.Library.SqliteDataAccess;
 using Models.Library;
 
 namespace DomainLogic.Library
 {
-	public class BooksUpdater
+	public class BooksUpdater : IBooksUpdater
 	{
-		private readonly BookModel _book;
+		private readonly ISqliteBookData _sqliteBookData;
 
-		public BooksUpdater(BookModel book)
+		public BooksUpdater(ISqliteBookData sqliteBookData)
 		{
-			_book = book;
+			_sqliteBookData = sqliteBookData;
 		}
 
-		public void ChangeReadStatus(bool isRead, DateTime date)
+		public void ChangeReadStatus(BookModel bookToUpdate, bool isRead, DateTime date)
 		{
-			_book.IsRead = isRead;
-			_book.DateRead = date;
+			bookToUpdate.IsRead = isRead;
+			bookToUpdate.DateRead = date;
 
-			UpdateBook();
+			UpdateBook(bookToUpdate);
 		}
 
-		private void UpdateBook()
+		private void UpdateBook(BookModel bookToUpdate)
 		{
-			SqliteUpdater.UpdateBook(_book);
+			_sqliteBookData.UpdateBook(bookToUpdate);
 		}
 
 	}

@@ -1,4 +1,5 @@
 ﻿using DataAccess.Library;
+using DataAccess.Library.ModelDataServices;
 using Models.Library;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,23 @@ namespace DomainLogic.Library.Services
 {
 	public class BookDataService : IBookDataService
 	{
+		private readonly ISqliteBookData _sqliteBookData;
+
+		public BookDataService(ISqliteBookData sqliteBookData)
+		{
+			_sqliteBookData = sqliteBookData;
+		}
 		public BookModel UpdateBookTags(BookModel book, List<TagModel> tagModels)
 		{
-			SqliteDeleter.DeleteBookRelationship(book.Id);
+			_sqliteBookData.DeleteBookRelationship(book.Id);
 			book.Tags = tagModels;
-			SqliteCreater.CreateBookTagRelationship(book);
+			_sqliteBookData.CreateBookTagRelationship(book);
 			return book;
 		}
 		public BookModel AddNewBook(string bookName, List<TagModel> tagModels)
 		{
 			BookModel book = new(bookName, false, DateTime.UtcNow, tagModels);
-			SqliteCreater.CreateBook(book);
+			_sqliteBookData.CreateBook(book);
 			return book;
 		}
 
@@ -28,13 +35,13 @@ namespace DomainLogic.Library.Services
 		{
 			foreach (BookModel book in books)
 			{
-				SqliteDeleter.DeleteBook(book);
+				_sqliteBookData.DeleteBook(book);
 			}
 		}
 
 		public List<BookModel> GetExistingBooks()
 		{
-			return SqliteReader.ReadAllBooks();
+			return _sqliteBookData.ReadAllBooks();
 		}
 	}
 }

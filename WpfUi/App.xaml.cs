@@ -8,6 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using DomainLogic.Library.Services;
 using DomainLogic.Library.Creators;
+using System.IO;
+using DataAccess.Library.SqliteDataAccess;
+using Models.Library;
+using DataAccess.Library.ModelDataServices;
+using DomainLogic.Library;
 
 namespace WpfUi
 {
@@ -20,15 +25,37 @@ namespace WpfUi
 
 		public App()
 		{
-			_host = Host.CreateDefaultBuilder().
-				ConfigureServices((services) =>
+			_host = Host.CreateDefaultBuilder()
+				.ConfigureAppConfiguration(c =>
 				{
+					c.SetBasePath(Directory.GetCurrentDirectory());
+					c.AddJsonFile("appsettings.json");
+#if DEBUG
+					c.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+#else
+c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: true);
+#endif
+				})
+				.ConfigureServices((context, services) =>
+				{
+					string connectionString = context.Configuration.GetConnectionString("Default");
+
+					services.AddSingleton<ISqliteConnector>(new SqliteConnector(connectionString));
+
+					services.AddTransient<ISaveData, SaveData>();
+					services.AddTransient<IQueryData<BookModel>, QueryData<BookModel>>();
+					services.AddTransient<IQueryData<TagModel>, QueryData<TagModel>>();
+
+					services.AddTransient<ISqliteBookData, SqliteBookData>();
+					services.AddTransient<ISqliteTagData, SqliteTagData>();
+
 					services.AddScoped<IFoldersFileNamePairs, FoldersFileNamePairs>();
 					services.AddTransient<ITagsCreator, TagsCreator>();
 					services.AddTransient<IBookTagStructureCreator, BookTagStructureCreator>();
 
 					services.AddTransient<IBookDataService, BookDataService>();
 					services.AddTransient<ITagDataService, TagDataService>();
+					services.AddTransient<IBooksUpdater, BooksUpdater>();
 
 					services.AddSingleton<BooksStore>();
 

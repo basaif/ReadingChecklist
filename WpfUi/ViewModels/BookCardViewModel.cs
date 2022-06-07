@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Models.Library;
+using DomainLogic.Library;
 
 namespace WpfUi.ViewModels
 {
@@ -72,12 +73,12 @@ namespace WpfUi.ViewModels
 
         public ICommand ChangeIsReadCommand { get; }
 
-        public BookCardViewModel(BookModel book, BooksStore booksStore)
+        public BookCardViewModel(BookModel book, BooksStore booksStore, IBooksUpdater booksUpdater)
         {
             Book = book;
             _booksStore = booksStore;
             CreateBookCard(book);
-            ChangeIsReadCommand = new ChangeIsReadCommand(this, _booksStore);
+            ChangeIsReadCommand = new ChangeIsReadCommand(this, _booksStore, booksUpdater);
         }
 
         private void CreateBookCard(BookModel book)

@@ -11,6 +11,7 @@ using FileSystemUtilities.Library;
 using Models.Library;
 using DomainLogic.Library.Creators;
 using DomainLogic.Library.Services;
+using DomainLogic.Library;
 
 namespace WpfUi.ViewModels
 {
@@ -19,7 +20,8 @@ namespace WpfUi.ViewModels
 		private readonly IBookDataService _bookDataService;
 		private readonly BooksStore _booksStore;
         private readonly IBookTagStructureCreator _booksDataRefresher;
-        private bool _notEnoughBooks;
+		private readonly IBooksUpdater _booksUpdater;
+		private bool _notEnoughBooks;
 
         public bool NotEnoughBooks
         {
@@ -177,13 +179,14 @@ namespace WpfUi.ViewModels
 
         public HomeViewModel(IBookDataService bookDataService, BooksStore booksStore,
             IFoldersFileNamePairs foldersFileNamePairs,
-            IBookTagStructureCreator booksDataRefresher)
+            IBookTagStructureCreator booksDataRefresher,
+			IBooksUpdater booksUpdater)
         {
 			_bookDataService = bookDataService;
 			_booksStore = booksStore;
             _booksDataRefresher = booksDataRefresher;
-
-            _getBooksViewModel = new GetBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
+			_booksUpdater = booksUpdater;
+			_getBooksViewModel = new GetBooksViewModel(this, foldersFileNamePairs, _booksDataRefresher);
             _tagList = new TagListViewModel();
             _booksCollectionView = new(_bookCards);
 
@@ -412,7 +415,7 @@ namespace WpfUi.ViewModels
 
                 foreach (BookModel book in books)
                 {
-                    BookCards.Add(new BookCardViewModel(book, _booksStore));
+                    BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
                 }
             }
         }
@@ -432,7 +435,7 @@ namespace WpfUi.ViewModels
 
                 foreach (BookModel book in books)
                 {
-                    BookCards.Add(new BookCardViewModel(book, _booksStore));
+                    BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
                 }
             }
         }

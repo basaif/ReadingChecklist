@@ -1,4 +1,5 @@
 ﻿using DataAccess.Library;
+using DataAccess.Library.ModelDataServices;
 using Models.Library;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,22 @@ namespace DomainLogic.Library.Services
 {
 	public class TagDataService : ITagDataService
 	{
+		private readonly ISqliteTagData _sqliteTagData;
+
+		public TagDataService(ISqliteTagData sqliteTagData)
+		{
+			_sqliteTagData = sqliteTagData;
+		}
 		public List<TagModel> LoadTags()
 		{
-			return SqliteReader.ReadAllTags();
+			return _sqliteTagData.ReadAllTags();
 		}
 
 		public TagModel CreateTag(string tagName)
 		{
 			TagModel tag = new(tagName);
 
-			SqliteCreater.CreateTag(tag);
+			_sqliteTagData.CreateTag(tag);
 
 			return tag;
 		}
