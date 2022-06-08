@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfUi.ViewModels.Cmds
 {
@@ -30,17 +31,23 @@ namespace WpfUi.ViewModels.Cmds
 
 		}
 
-		private string ShowFolderBrowserDialog(string description)
+		private static string ShowFolderBrowserDialog(string description)
 		{
-			VistaFolderBrowserDialog dialog = new();
-			dialog.Description = description;
-			dialog.UseDescriptionForTitle = true;
-
-			string selectedFolder = "";
-
-			if ((bool)dialog.ShowDialog(System.Windows.Application.Current.MainWindow))
+			VistaFolderBrowserDialog dialog = new()
 			{
-				selectedFolder = dialog.SelectedPath;
+				Description = description,
+				UseDescriptionForTitle = true
+				
+			};
+
+			string selectedFolder = string.Empty;
+
+			if (dialog.ShowDialog(Application.Current.MainWindow) is bool hasUserSelectedFolder)
+			{
+				if (hasUserSelectedFolder)
+				{
+					selectedFolder = dialog.SelectedPath;
+				}
 			}
 
 			return selectedFolder;

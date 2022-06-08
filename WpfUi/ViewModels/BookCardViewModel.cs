@@ -10,7 +10,7 @@ namespace WpfUi.ViewModels
 {
 	public class BookCardViewModel : ViewModelBase
     {
-        private string _bookName = "";
+        private string _bookName = string.Empty;
 
         public string BookName
         {
@@ -46,7 +46,7 @@ namespace WpfUi.ViewModels
             }
         }
 
-        ObservableCollection<string> _tags = new();
+		private readonly ObservableCollection<string> _tags = new();
         private readonly BooksStore _booksStore;
 
         public ObservableCollection<string> Tags
@@ -91,8 +91,6 @@ namespace WpfUi.ViewModels
             IsRead = book.IsRead;
             DateRead = book.DateRead;
         }
-
-
 
     }
 }

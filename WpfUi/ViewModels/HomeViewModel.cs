@@ -101,7 +101,7 @@ namespace WpfUi.ViewModels
 
 
 
-        ObservableCollection<BookCardViewModel> _bookCards = new();
+        private ObservableCollection<BookCardViewModel> _bookCards = new();
         public ObservableCollection<BookCardViewModel> BookCards
         {
             get
@@ -142,16 +142,20 @@ namespace WpfUi.ViewModels
 
 
         public ListCollectionView BooksCollectionView
-        {
-            get => _booksCollectionView;
-            set
-            {
-                _booksCollectionView = value;
-                OnPropertyChanged(nameof(BooksCollectionView));
-            }
-        }
+		{
+			get
+			{
+				return _booksCollectionView;
+			}
 
-        private string _booksFilter = string.Empty;
+			set
+			{
+				_booksCollectionView = value;
+				OnPropertyChanged(nameof(BooksCollectionView));
+			}
+		}
+
+		private string _booksFilter = string.Empty;
         private ListCollectionView _booksCollectionView;
 
         public string BooksFilter
@@ -170,10 +174,11 @@ namespace WpfUi.ViewModels
 
         public void SetUpBooksCollectionView()
         {
-            BooksCollectionView = new(_bookCards);
-
-            BooksCollectionView.Filter = FilterBooks;
-            BooksCollectionView.SortDescriptions.Add(new SortDescription(nameof(BookCardViewModel.BookName),
+			BooksCollectionView = new(_bookCards)
+			{
+				Filter = FilterBooks
+			};
+			BooksCollectionView.SortDescriptions.Add(new SortDescription(nameof(BookCardViewModel.BookName),
                 ListSortDirection.Ascending));
         }
 
@@ -290,7 +295,7 @@ namespace WpfUi.ViewModels
             }
         }
 
-        private bool DoesBookHaveAllSelectedTags(BookCardViewModel bookCardViewModel, List<SelectableTagModel> selectedTags)
+        private static bool DoesBookHaveAllSelectedTags(BookCardViewModel bookCardViewModel, List<SelectableTagModel> selectedTags)
         {
             ObservableCollection<string> bookTags = bookCardViewModel.Tags;
             List<string> selectedTagNames = selectedTags.Select(x => x.Tag).ToList();
@@ -323,7 +328,7 @@ namespace WpfUi.ViewModels
                 
                 if (IsTagInList(tag, distinctTagList))
                 {
-                    IncrementNumberOfBooksInTagInList(tag, distinctTagList);
+					IncrementNumberOfBooksInTagInList(tag, distinctTagList);
                 }
                 else
                 {
@@ -332,12 +337,12 @@ namespace WpfUi.ViewModels
             }
         }
 
-        private bool IsTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
+        private static bool IsTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
         {
             return tagList.Any(x => x.Tag == tag);
         }
 
-        private void IncrementNumberOfBooksInTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
+        private static void IncrementNumberOfBooksInTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
         {
             tagList.First(x => x.Tag == tag).NumberOfBooksInTag += 1;
         }
@@ -352,9 +357,9 @@ namespace WpfUi.ViewModels
             distinctTagList.Add(selectableTagModel);
         }
 
-        private ObservableCollection<SelectableTagModel> GetOrderedTagsByNumberOfBooksDecending(ObservableCollection<SelectableTagModel> unorderedTags)
+        private static ObservableCollection<SelectableTagModel> GetOrderedTagsByNumberOfBooksDecending(ObservableCollection<SelectableTagModel> unorderedTags)
         {
-            var orderdTags = unorderedTags.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);
+			IOrderedEnumerable<SelectableTagModel>? orderdTags = unorderedTags.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);
             ObservableCollection<SelectableTagModel> orderedObservableTags = new();
             foreach (SelectableTagModel tag in orderdTags)
             {
@@ -392,32 +397,12 @@ namespace WpfUi.ViewModels
         protected override void OnDispose()
         {
             _booksStore.BookUpdated -= OnBookUpdated;
-            foreach (var item in TagList.SelectableTags)
+            foreach (SelectableTagModel? item in TagList.SelectableTags)
             {
                 item.PropertyChanged -= OnSelectedTagChanged;
             }
 
             base.OnDispose();
-        }
-
-        private void AddBooks()
-        {
-            List<BookModel> books = _bookDataService.GetExistingBooks();
-
-            if (books.Count == 0)
-            {
-                NotEnoughBooks = true;
-            }
-
-            else
-            {
-                NotEnoughBooks = false;
-
-                foreach (BookModel book in books)
-                {
-                    BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
-                }
-            }
         }
 
         private async Task AddBooksAsync()
@@ -465,7 +450,7 @@ namespace WpfUi.ViewModels
             }
         }
 
-        public int CalculatePercentage(int total, int part)
+        public static int CalculatePercentage(int total, int part)
         {
             if (total == 0)
             {
