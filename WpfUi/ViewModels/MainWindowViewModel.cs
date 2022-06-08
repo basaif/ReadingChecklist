@@ -17,7 +17,7 @@ namespace WpfUi.ViewModels
             set { _homeViewModel = value; }
         }
 
-        public MainWindowViewModel(IBookDataService bookDataService, BooksStore booksStore,
+        public MainWindowViewModel(IBookDataService bookDataService, BookStore booksStore,
             IFoldersFileNamePairs foldersFileNamePairs, IBookTagStructureCreator booksDataRefresher, IBooksUpdater booksUpdater)
         {
             _homeViewModel = new HomeViewModel(

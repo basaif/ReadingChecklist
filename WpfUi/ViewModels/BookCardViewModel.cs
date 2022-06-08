@@ -47,7 +47,7 @@ namespace WpfUi.ViewModels
         }
 
 		private readonly ObservableCollection<string> _tags = new();
-        private readonly BooksStore _booksStore;
+        private readonly BookStore _booksStore;
 
         public ObservableCollection<string> Tags
         {
@@ -73,7 +73,7 @@ namespace WpfUi.ViewModels
 
         public ICommand ChangeIsReadCommand { get; }
 
-        public BookCardViewModel(BookModel book, BooksStore booksStore, IBooksUpdater booksUpdater)
+        public BookCardViewModel(BookModel book, BookStore booksStore, IBooksUpdater booksUpdater)
         {
             Book = book;
             _booksStore = booksStore;

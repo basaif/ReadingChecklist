@@ -57,7 +57,7 @@ c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: tru
 					services.AddTransient<ITagDataService, TagDataService>();
 					services.AddTransient<IBooksUpdater, BooksUpdater>();
 
-					services.AddSingleton<BooksStore>();
+					services.AddSingleton<BookStore>();
 
 					services.AddScoped<MainWindowViewModel>();
 					services.AddScoped(s => new MainWindow(s.GetRequiredService<MainWindowViewModel>()));

@@ -7,10 +7,10 @@ namespace WpfUi.ViewModels.Cmds
 	public class ChangeIsReadCommand : CommandBase
     {
         private readonly BookCardViewModel _bookCardViewModel;
-        private readonly BooksStore _booksStore;
+        private readonly BookStore _booksStore;
 		private readonly IBooksUpdater _booksUpdater;
 
-		public ChangeIsReadCommand(BookCardViewModel bookCardViewModel, BooksStore booksStore, IBooksUpdater booksUpdater)
+		public ChangeIsReadCommand(BookCardViewModel bookCardViewModel, BookStore booksStore, IBooksUpdater booksUpdater)
         {
             _bookCardViewModel = bookCardViewModel;
             _booksStore = booksStore;

@@ -33,7 +33,7 @@ namespace WpfUi.ViewModels.Cmds
         {
             _getBooksViewModel.IsGettingBooks = true;
             await GetBooksAsync();
-            _homeViewModel.LoadBookList();
+            _homeViewModel.LoadHomeViewModel();
             _getBooksViewModel.IsGettingBooks = false;
             _getBooksViewModel.LocationToGetBooks = "";
         }

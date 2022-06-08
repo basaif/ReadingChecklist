@@ -43,5 +43,9 @@ namespace DomainLogic.Library.Services
 		{
 			return _sqliteBookData.ReadAllBooks();
 		}
+		public async Task<List<BookModel>> GetExistingBooksAsync()
+		{
+			return await Task.Run(() => _sqliteBookData.ReadAllBooks());
+		}
 	}
 }
