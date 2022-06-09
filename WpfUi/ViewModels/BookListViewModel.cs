@@ -10,6 +10,7 @@ using WpfUi.Stores;
 using Models.Library;
 using System.ComponentModel;
 using WpfUi.Models;
+using WpfUi.Helpers;
 
 namespace WpfUi.ViewModels
 {
@@ -229,89 +230,16 @@ namespace WpfUi.ViewModels
 		{
 			if (obj is BookCardViewModel bookCardViewModel)
 			{
-				return IsBookShown(bookCardViewModel);
+				BookListFilter bookListFilter = new(bookCardViewModel, IsShowReadBooks, BooksFilter, TagList.SelectableTags);
+				return bookListFilter.IsBookShown();
 			}
 
 			return false;
 		}
-		private bool IsBookShown(BookCardViewModel bookCardViewModel)
-		{
-			return IsBookShownBasedOnFilterText(bookCardViewModel) && IsBookShownBasedOnTagSelection(bookCardViewModel)
-				&& IsBookShownBasedOnReadStatus(bookCardViewModel);
-		}
-		private bool IsBookShownBasedOnFilterText(BookCardViewModel bookCardViewModel)
-		{
-			return IsFilterTextInBookName(bookCardViewModel) || IsFilterTextInAnyBookTag(bookCardViewModel);
-		}
-		private bool IsFilterTextInBookName(BookCardViewModel bookCardViewModel)
-		{
-			bool output = bookCardViewModel.BookName.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase);
-			return output;
-		}
-		private bool IsFilterTextInAnyBookTag(BookCardViewModel bookCardViewModel)
-		{
-			bool output = bookCardViewModel.Tags.Any(x => x.Contains(BooksFilter, StringComparison.InvariantCultureIgnoreCase));
-			return output;
-		}
-		private bool IsBookShownBasedOnTagSelection(BookCardViewModel bookCardViewModel)
-		{
-			List<SelectableTagModel> selectedTags = GetSelectedTags();
-
-			if (selectedTags.Count == 0)
-			{
-				return true;
-			}
-			else
-			{
-				return DoesBookHaveAllSelectedTags(bookCardViewModel, selectedTags);
-			}
-		}
-		private List<SelectableTagModel> GetSelectedTags()
-		{
-			return TagList.SelectableTags.Where(x => x.IsSelected).ToList();
-		}
-		private static bool DoesBookHaveAllSelectedTags(BookCardViewModel bookCardViewModel, List<SelectableTagModel> selectedTags)
-		{
-			ObservableCollection<string> bookTags = bookCardViewModel.Tags;
-			List<string> selectedTagNames = selectedTags.Select(x => x.Tag).ToList();
-
-			bool doesBookHaveAllSelectedTags = selectedTagNames.All(tagName => bookTags.Contains(tagName));
-
-			return doesBookHaveAllSelectedTags;
-		}
-		private bool IsBookShownBasedOnReadStatus(BookCardViewModel bookCardViewModel)
-		{
-			bool isBookShown;
-			if (IsShowReadBooks == true)
-			{
-				isBookShown = true;
-			}
-			else
-			{
-				if (bookCardViewModel.IsRead)
-				{
-					isBookShown = false;
-				}
-				else
-				{
-					isBookShown = true;
-				}
-			}
-			return isBookShown;
-		}
+		
 
 		private void LoadBooksData()
 		{
-			//AddBooksAsync().ContinueWith(task =>
-			//{
-			//	if (task.Exception is null)
-			//	{
-			//		PopulateTagList();
-
-			//		CalculateNumbers();
-			//	}
-			//});
-
 			AddBooks();
 			PopulateTagList();
 			CalculateNumbers();
