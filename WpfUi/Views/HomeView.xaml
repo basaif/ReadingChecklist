@@ -29,14 +29,28 @@
         </Border>
 
         <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <ContentControl Margin="20" MaxWidth="500"
-                            VerticalAlignment="Center"
-                            Content="{Binding GetBooksViewModel}"
-                            Visibility="{Binding NotEnoughBooks, Converter={StaticResource boolVisibilityConverter}}" />
-            <ContentControl Content="{Binding BookListViewModel}" Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}"
-                            />
+            <Expander Grid.Row="0"
+                      Background="SlateBlue"
+                      Foreground="White"
+                      Header="Get Book List"
+                      IsExpanded="{Binding NotEnoughBooks, Mode=OneWay}">
+                <Border Background="White"
+                        BorderBrush="SlateBlue"
+                        BorderThickness="0 0 0 1">
+                    <ContentControl MaxWidth="500"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding GetBooksViewModel}" />
+                </Border>
+            </Expander>
 
+            <ContentControl Grid.Row="1"
+                            Content="{Binding BookListViewModel}"
+                            Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}" />
         </Grid>
 
     </Grid>

@@ -72,7 +72,6 @@
               Background="Lavender">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <Expander Grid.Row="0"
@@ -83,13 +82,7 @@
 
             </Expander>
 
-            <Expander Grid.Row="1"
-                      Margin="5"
-                      Header="Refresh Book List"
-                      IsExpanded="False">
-                <!--<ContentControl Content="{Binding GetBooksViewModel}" />-->
-
-            </Expander>
+          
 
 
 

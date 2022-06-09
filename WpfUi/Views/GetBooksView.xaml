@@ -12,5 +12,5 @@
                                         IsLoading="{Binding IsGettingBooks}"
                                         Location="{Binding LocationToGetBooks}"
                                         OpenSearchDialogCommand="{Binding OpenSearchForBooksDialogCommand}"
-                                        SearchText="Get Books" />
+                                        SearchText="Get Books"/>
 </UserControl>

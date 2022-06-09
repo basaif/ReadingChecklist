@@ -36,7 +36,7 @@ namespace WpfUi.ViewModels
 				OnPropertyChanged(nameof(EnoughBooks));
 			}
 		}
-		private bool _notEnoughBooks;
+		private bool _notEnoughBooks = true;
 
 		public bool EnoughBooks
 		{

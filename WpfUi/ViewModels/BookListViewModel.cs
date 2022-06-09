@@ -143,6 +143,7 @@ namespace WpfUi.ViewModels
 		}
 		private ListCollectionView _booksCollectionView;
 
+
 		public BookListViewModel(IBookDataService bookDataService,
 						   BookStore booksStore,
 						   IBooksUpdater booksUpdater)
@@ -153,6 +154,7 @@ namespace WpfUi.ViewModels
 
 			_booksCollectionView = new(_bookCards);
 			_tagList = new TagListViewModel();
+
 			if (_bookCards == null)
 			{
 				_bookCards = new ObservableCollection<BookCardViewModel>();
@@ -237,17 +239,16 @@ namespace WpfUi.ViewModels
 		}
 		private void LoadBooksData()
 		{
-			AddBooks();
-			PopulateTagList();
-			CalculateNumbers();
+			AddBooksAsync().ContinueWith(task =>
+			{
+				PopulateTagList();
+				CalculateNumbers();
+			});
+			
 		}
 		private async Task AddBooksAsync()
 		{
-			await Task.Run(() => AddBooks());
-		}
-		private void AddBooks()
-		{
-			List<BookModel> books = _booksStore.Books.ToList();
+			List<BookModel> books = await Task.Run(() => _booksStore.Books.ToList());
 			foreach (BookModel book in books)
 			{
 				BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
@@ -262,6 +263,7 @@ namespace WpfUi.ViewModels
 
 		protected override void OnDispose()
 		{
+			_booksStore.BooksLoaded -= OnBooksLoaded;
 			_booksStore.BookUpdated -= OnBookUpdated;
 			base.OnDispose();
 		}
