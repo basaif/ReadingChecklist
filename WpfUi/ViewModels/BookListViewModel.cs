@@ -180,7 +180,7 @@ namespace WpfUi.ViewModels
 		{
 			RefreshBooksCollectionView();
 		}
-		private void RefreshBooksCollectionView()
+		public void RefreshBooksCollectionView()
 		{
 			BooksCollectionView.Refresh();
 			CalculateNumbers();
@@ -233,11 +233,8 @@ namespace WpfUi.ViewModels
 				BookListFilter bookListFilter = new(bookCardViewModel, IsShowReadBooks, BooksFilter, TagList.SelectableTags);
 				return bookListFilter.IsBookShown();
 			}
-
 			return false;
 		}
-		
-
 		private void LoadBooksData()
 		{
 			AddBooks();
@@ -258,69 +255,14 @@ namespace WpfUi.ViewModels
 		}
 		public void PopulateTagList()
 		{
-			ObservableCollection<SelectableTagModel> distinctTagList = new();
-			foreach (BookCardViewModel bookCard in BookCards)
-			{
-				AddBookTagsToDistinctTagList(bookCard, distinctTagList);
-			}
-
-			TagList.SelectableTags = GetOrderedTagsByNumberOfBooksDecending(distinctTagList);
-		}
-		private void AddBookTagsToDistinctTagList(BookCardViewModel bookCard, ObservableCollection<SelectableTagModel> distinctTagList)
-		{
-			foreach (string tag in bookCard.Tags)
-			{
-				if (IsTagInList(tag, distinctTagList))
-				{
-					IncrementNumberOfBooksInTagInList(tag, distinctTagList);
-				}
-				else
-				{
-					AddSelectableTagToDistinctTagList(tag, distinctTagList);
-				}
-			}
-		}
-		private static bool IsTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
-		{
-			return tagList.Any(x => x.Tag == tag);
-		}
-		private static void IncrementNumberOfBooksInTagInList(string tag, ObservableCollection<SelectableTagModel> tagList)
-		{
-			tagList.First(x => x.Tag == tag).NumberOfBooksInTag += 1;
-		}
-		private void AddSelectableTagToDistinctTagList(string tag, ObservableCollection<SelectableTagModel> distinctTagList)
-		{
-			SelectableTagModel selectableTagModel = new();
-			selectableTagModel.PropertyChanged += OnSelectedTagChanged;
-
-			selectableTagModel.Tag = tag;
-			selectableTagModel.NumberOfBooksInTag = 1;
-			distinctTagList.Add(selectableTagModel);
-		}
-		private void OnSelectedTagChanged(object? sender, PropertyChangedEventArgs e)
-		{
-			RefreshBooksCollectionView();
-		}
-		private static ObservableCollection<SelectableTagModel> GetOrderedTagsByNumberOfBooksDecending(ObservableCollection<SelectableTagModel> unorderedTags)
-		{
-			IOrderedEnumerable<SelectableTagModel>? orderdTags = unorderedTags.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);
-			ObservableCollection<SelectableTagModel> orderedObservableTags = new();
-			foreach (SelectableTagModel tag in orderdTags)
-			{
-				orderedObservableTags.Add(tag);
-			}
-
-			return orderedObservableTags;
+			SelectableTagListFromBookListGenerator selectableTagListFromBookListGenerator = new(
+				BookCards, this);
+			TagList.SelectableTags = selectableTagListFromBookListGenerator.GetSelectableTagModels();
 		}
 
 		protected override void OnDispose()
 		{
 			_booksStore.BookUpdated -= OnBookUpdated;
-			foreach (SelectableTagModel? item in TagList.SelectableTags)
-			{
-				item.PropertyChanged -= OnSelectedTagChanged;
-			}
-
 			base.OnDispose();
 		}
 	}
