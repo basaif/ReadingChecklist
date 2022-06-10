@@ -18,7 +18,6 @@ namespace WpfUi.ViewModels
 {
 	public class BookListViewModel : ViewModelBase
 	{
-		private readonly IBookDataService _bookDataService;
 		private readonly BookStore _booksStore;
 		private readonly IBooksUpdater _booksUpdater;
 
@@ -148,11 +147,10 @@ namespace WpfUi.ViewModels
 		
 
 
-		public BookListViewModel(IBookDataService bookDataService,
+		public BookListViewModel(
 						   BookStore booksStore,
 						   IBooksUpdater booksUpdater)
 		{
-			_bookDataService = bookDataService;
 			_booksStore = booksStore;
 			_booksUpdater = booksUpdater;
 

@@ -19,7 +19,6 @@ namespace WpfUi.ViewModels
 {
 	public class HomeViewModel : ViewModelBase
 	{
-		private readonly IBookDataService _bookDataService;
 		private readonly BookStore _booksStore;
 		private readonly IFoldersFileNamePairs _foldersFileNamePairs;
 		private readonly IBookTagStructureCreator _bookTagStructureCreator;
@@ -62,19 +61,18 @@ namespace WpfUi.ViewModels
 			get;
 		}
 
-		public HomeViewModel(IBookDataService bookDataService, BookStore booksStore,
+		public HomeViewModel(BookStore booksStore,
 			IFoldersFileNamePairs foldersFileNamePairs,
 			IBookTagStructureCreator bookTagStructureCreator,
 			IBooksUpdater booksUpdater)
 		{
-			_bookDataService = bookDataService;
 			_booksStore = booksStore;
 			_foldersFileNamePairs = foldersFileNamePairs;
 			_bookTagStructureCreator = bookTagStructureCreator;
 			_booksUpdater = booksUpdater;
 
 			GetBooksViewModel = new(_foldersFileNamePairs, _bookTagStructureCreator, _booksStore);
-			BookListViewModel = new(_bookDataService, _booksStore, _booksUpdater);
+			BookListViewModel = new(_booksStore, _booksUpdater);
 
 			_booksStore.BooksLoaded += OnBooksLoaded;
 
@@ -95,12 +93,12 @@ namespace WpfUi.ViewModels
 
 		}
 
-		public static HomeViewModel LoadViewModel(IBookDataService bookDataService, BookStore booksStore,
+		public static HomeViewModel LoadViewModel(BookStore booksStore,
 			IFoldersFileNamePairs foldersFileNamePairs,
 			IBookTagStructureCreator bookTagStructureCreator,
 			IBooksUpdater booksUpdater)
 		{
-			HomeViewModel viewModel = new(bookDataService, booksStore,
+			HomeViewModel viewModel = new(booksStore,
 			 foldersFileNamePairs,
 			 bookTagStructureCreator,
 			 booksUpdater);

@@ -63,13 +63,12 @@ c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: tru
 					services.AddScoped(services =>
 					{
 						HomeViewModel homeViewModel = new(
-							services.GetRequiredService<IBookDataService>(),
 							services.GetRequiredService<BookStore>(),
 							services.GetRequiredService<IFoldersFileNamePairs>(),
 							services.GetRequiredService<IBookTagStructureCreator>(),
 							services.GetRequiredService<IBooksUpdater>());
 
-						HomeViewModel.LoadViewModel(services.GetRequiredService<IBookDataService>(),
+						HomeViewModel.LoadViewModel(
 							services.GetRequiredService<BookStore>(),
 							services.GetRequiredService<IFoldersFileNamePairs>(),
 							services.GetRequiredService<IBookTagStructureCreator>(),
