@@ -20,7 +20,7 @@ namespace WpfUi
 	/// Interaction logic for App.xaml
 	/// </summary>
 	public partial class App : Application
-    {
+	{
 		private readonly IHost _host;
 
 		public App()
@@ -60,18 +60,37 @@ c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: tru
 					services.AddSingleton<BookStore>();
 
 					services.AddScoped<MainWindowViewModel>();
+					services.AddScoped(services =>
+					{
+						HomeViewModel homeViewModel = new(
+							services.GetRequiredService<IBookDataService>(),
+							services.GetRequiredService<BookStore>(),
+							services.GetRequiredService<IFoldersFileNamePairs>(),
+							services.GetRequiredService<IBookTagStructureCreator>(),
+							services.GetRequiredService<IBooksUpdater>());
+
+						HomeViewModel.LoadViewModel(services.GetRequiredService<IBookDataService>(),
+							services.GetRequiredService<BookStore>(),
+							services.GetRequiredService<IFoldersFileNamePairs>(),
+							services.GetRequiredService<IBookTagStructureCreator>(),
+							services.GetRequiredService<IBooksUpdater>());
+
+						return homeViewModel;
+					});
 					services.AddScoped(s => new MainWindow(s.GetRequiredService<MainWindowViewModel>()));
 
 				}).Build();
 		}
+
+
 		private void Application_Startup(object sender, StartupEventArgs e)
-        {
+		{
 			_host.Start();
 
-            MainWindow = _host.Services.GetRequiredService<MainWindow>();
+			MainWindow = _host.Services.GetRequiredService<MainWindow>();
 
 			MainWindow.Show();
-        }
+		}
 
 		protected override async void OnExit(ExitEventArgs e)
 		{

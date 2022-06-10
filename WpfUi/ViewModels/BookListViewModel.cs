@@ -11,6 +11,8 @@ using Models.Library;
 using System.ComponentModel;
 using WpfUi.Models;
 using WpfUi.Helpers;
+using System.Windows.Input;
+using WpfUi.ViewModels.Cmds;
 
 namespace WpfUi.ViewModels
 {
@@ -143,6 +145,8 @@ namespace WpfUi.ViewModels
 		}
 		private ListCollectionView _booksCollectionView;
 
+		
+
 
 		public BookListViewModel(IBookDataService bookDataService,
 						   BookStore booksStore,
@@ -162,6 +166,8 @@ namespace WpfUi.ViewModels
 			_booksStore.BooksLoaded += OnBooksLoaded;
 
 			_booksStore.BookUpdated += OnBookUpdated;
+
+			
 			
 		}
 
@@ -178,47 +184,6 @@ namespace WpfUi.ViewModels
 			LoadBooksData();
 		}
 
-		private void OnBookUpdated(BookModel book)
-		{
-			RefreshBooksCollectionView();
-		}
-		public void RefreshBooksCollectionView()
-		{
-			BooksCollectionView.Refresh();
-			CalculateNumbers();
-			SetHighlightTextForBooks();
-		}
-		private void CalculateNumbers()
-		{
-			NumberOfBooks = 0;
-			NumberOfReadBooks = 0;
-			PercentageOfReadBooks = 0;
-
-			foreach (BookCardViewModel shownBook in BooksCollectionView)
-			{
-				NumberOfBooks += 1;
-				if (shownBook.IsRead)
-				{
-					NumberOfReadBooks += 1;
-				}
-				PercentageOfReadBooks = CalculatePercentage(NumberOfBooks, NumberOfReadBooks);
-			}
-		}
-		public static int CalculatePercentage(int total, int part)
-		{
-			if (total == 0)
-			{
-				return 0;
-			}
-			return part * 100 / total;
-		}
-		private void SetHighlightTextForBooks()
-		{
-			foreach (BookCardViewModel book in BookCards)
-			{
-				book.HighlightText = BooksFilter;
-			}
-		}
 		public void SetUpBooksCollectionView()
 		{
 			BooksCollectionView = new(_bookCards)
@@ -259,6 +224,47 @@ namespace WpfUi.ViewModels
 			SelectableTagListFromBookListGenerator selectableTagListFromBookListGenerator = new(
 				BookCards, this);
 			TagList.SelectableTags = selectableTagListFromBookListGenerator.GetSelectableTagModels();
+		}
+		private void CalculateNumbers()
+		{
+			NumberOfBooks = 0;
+			NumberOfReadBooks = 0;
+			PercentageOfReadBooks = 0;
+
+			foreach (BookCardViewModel shownBook in BooksCollectionView)
+			{
+				NumberOfBooks += 1;
+				if (shownBook.IsRead)
+				{
+					NumberOfReadBooks += 1;
+				}
+				PercentageOfReadBooks = CalculatePercentage(NumberOfBooks, NumberOfReadBooks);
+			}
+		}
+		public void RefreshBooksCollectionView()
+		{
+			BooksCollectionView.Refresh();
+			CalculateNumbers();
+			SetHighlightTextForBooks();
+		}
+		private void SetHighlightTextForBooks()
+		{
+			foreach (BookCardViewModel book in BookCards)
+			{
+				book.HighlightText = BooksFilter;
+			}
+		}
+		public static int CalculatePercentage(int total, int part)
+		{
+			if (total == 0)
+			{
+				return 0;
+			}
+			return part * 100 / total;
+		}
+		private void OnBookUpdated(BookModel book)
+		{
+			RefreshBooksCollectionView();
 		}
 
 		protected override void OnDispose()

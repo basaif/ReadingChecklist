@@ -12,6 +12,8 @@ using Models.Library;
 using DomainLogic.Library.Creators;
 using DomainLogic.Library.Services;
 using DomainLogic.Library;
+using WpfUi.ViewModels.Cmds;
+using System.Windows.Input;
 
 namespace WpfUi.ViewModels
 {
@@ -45,9 +47,20 @@ namespace WpfUi.ViewModels
 				return !NotEnoughBooks;
 			}
 		}
-		public GetBooksViewModel GetBooksViewModel { get; set; }
+		public GetBooksViewModel GetBooksViewModel
+		{
+			get; set;
+		}
 
-		public BookListViewModel BookListViewModel { get; set; }
+		public BookListViewModel BookListViewModel
+		{
+			get; set;
+		}
+
+		public ICommand LoadBooksCommand
+		{
+			get;
+		}
 
 		public HomeViewModel(IBookDataService bookDataService, BookStore booksStore,
 			IFoldersFileNamePairs foldersFileNamePairs,
@@ -63,25 +76,40 @@ namespace WpfUi.ViewModels
 			GetBooksViewModel = new(this, _foldersFileNamePairs, _bookTagStructureCreator);
 			BookListViewModel = new(_bookDataService, _booksStore, _booksUpdater);
 
-			LoadHomeViewModel();
+			_booksStore.BooksLoaded += OnBooksLoaded;
+
+			LoadBooksCommand = new LoadBooksCommand(_booksStore);
 		}
 
-		public void LoadHomeViewModel()
+		private void OnBooksLoaded()
 		{
-			_booksStore.LoadBooksAsync().ContinueWith(task =>
+
+			if (!_booksStore.Books.Any())
 			{
-				if (task.Exception is null)
-				{
-					if (!_booksStore.Books.Any())
-					{
-						NotEnoughBooks = true;
-					}
-					else
-					{
-						NotEnoughBooks = false;
-					}
-				}
-			});
+				NotEnoughBooks = true;
+			}
+			else
+			{
+				NotEnoughBooks = false;
+			}
+
 		}
+
+		public static HomeViewModel LoadViewModel(IBookDataService bookDataService, BookStore booksStore,
+			IFoldersFileNamePairs foldersFileNamePairs,
+			IBookTagStructureCreator bookTagStructureCreator,
+			IBooksUpdater booksUpdater)
+		{
+			HomeViewModel viewModel = new(bookDataService, booksStore,
+			 foldersFileNamePairs,
+			 bookTagStructureCreator,
+			 booksUpdater);
+
+			viewModel.LoadBooksCommand.Execute(null);
+
+			return viewModel;
+		}
+
+
 	}
 }
