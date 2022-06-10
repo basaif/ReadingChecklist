@@ -1,5 +1,6 @@
 ﻿using DomainLogic.Library.Creators;
 using System.Threading.Tasks;
+using WpfUi.Stores;
 
 namespace WpfUi.ViewModels.Cmds
 {
@@ -7,16 +8,16 @@ namespace WpfUi.ViewModels.Cmds
     {
         private readonly GetBooksViewModel _getBooksViewModel;
         private readonly IBookTagStructureCreator _bookTagStructureCreator;
-        private readonly HomeViewModel _homeViewModel;
+		private readonly BookStore _bookStore;
 
-        public GetBookDataCommand(GetBooksViewModel getBooksViewModel,
+		public GetBookDataCommand(GetBooksViewModel getBooksViewModel,
             IBookTagStructureCreator bookTagStructureCreator,
-            HomeViewModel homeViewModel)
+            BookStore bookStore)
         {
-            _homeViewModel = homeViewModel;
             _getBooksViewModel = getBooksViewModel;
             _bookTagStructureCreator = bookTagStructureCreator;
-        }
+			_bookStore = bookStore;
+		}
 
         public override bool CanExecute(object? parameter)
         {
@@ -40,6 +41,7 @@ namespace WpfUi.ViewModels.Cmds
         private async Task GetBooksAsync()
         {
             await Task.Run(() => _bookTagStructureCreator.LoadBookData());
+			await _bookStore.RefreshBooksAsync();
 
         }
     }

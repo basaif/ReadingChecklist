@@ -73,7 +73,7 @@ namespace WpfUi.ViewModels
 			_bookTagStructureCreator = bookTagStructureCreator;
 			_booksUpdater = booksUpdater;
 
-			GetBooksViewModel = new(this, _foldersFileNamePairs, _bookTagStructureCreator);
+			GetBooksViewModel = new(_foldersFileNamePairs, _bookTagStructureCreator, _booksStore);
 			BookListViewModel = new(_bookDataService, _booksStore, _booksUpdater);
 
 			_booksStore.BooksLoaded += OnBooksLoaded;
