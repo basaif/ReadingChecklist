@@ -19,7 +19,6 @@ namespace WpfUi.ViewModels
 	public class BookListViewModel : ViewModelBase
 	{
 		private readonly BookStore _booksStore;
-		private readonly IBooksUpdater _booksUpdater;
 
 		public int NumberOfBooks
 		{
@@ -147,12 +146,9 @@ namespace WpfUi.ViewModels
 		
 
 
-		public BookListViewModel(
-						   BookStore booksStore,
-						   IBooksUpdater booksUpdater)
+		public BookListViewModel(BookStore booksStore)
 		{
 			_booksStore = booksStore;
-			_booksUpdater = booksUpdater;
 
 			_booksCollectionView = new(_bookCards);
 			_tagList = new TagListViewModel();
@@ -214,7 +210,7 @@ namespace WpfUi.ViewModels
 			List<BookModel> books = await Task.Run(() => _booksStore.Books.ToList());
 			foreach (BookModel book in books)
 			{
-				BookCards.Add(new BookCardViewModel(book, _booksStore, _booksUpdater));
+				BookCards.Add(new BookCardViewModel(book, _booksStore));
 			}
 		}
 		public void PopulateTagList()

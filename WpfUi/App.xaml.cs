@@ -13,6 +13,7 @@ using DataAccess.Library.SqliteDataAccess;
 using Models.Library;
 using DataAccess.Library.ModelDataServices;
 using DomainLogic.Library;
+using System.Threading.Tasks;
 
 namespace WpfUi
 {
@@ -55,7 +56,7 @@ c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: tru
 
 					services.AddTransient<IBookDataService, BookDataService>();
 					services.AddTransient<ITagDataService, TagDataService>();
-					services.AddTransient<IBooksUpdater, BooksUpdater>();
+					services.AddTransient<IBookUpdater, BookUpdater>();
 
 					services.AddSingleton<BookStore>();
 
@@ -65,14 +66,12 @@ c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: tru
 						HomeViewModel homeViewModel = new(
 							services.GetRequiredService<BookStore>(),
 							services.GetRequiredService<IFoldersFileNamePairs>(),
-							services.GetRequiredService<IBookTagStructureCreator>(),
-							services.GetRequiredService<IBooksUpdater>());
+							services.GetRequiredService<IBookTagStructureCreator>());
 
 						HomeViewModel.LoadViewModel(
 							services.GetRequiredService<BookStore>(),
 							services.GetRequiredService<IFoldersFileNamePairs>(),
-							services.GetRequiredService<IBookTagStructureCreator>(),
-							services.GetRequiredService<IBooksUpdater>());
+							services.GetRequiredService<IBookTagStructureCreator>());
 
 						return homeViewModel;
 					});

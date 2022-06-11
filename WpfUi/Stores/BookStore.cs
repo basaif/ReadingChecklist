@@ -1,4 +1,5 @@
-﻿using DomainLogic.Library.Services;
+﻿using DomainLogic.Library;
+using DomainLogic.Library.Services;
 using Microsoft.Extensions.Hosting;
 using Models.Library;
 using System;
@@ -10,6 +11,7 @@ namespace WpfUi.Stores
 	public class BookStore
 	{
 		private readonly IBookDataService _bookDataService;
+		private readonly IBookUpdater _bookUpdater;
 		private readonly List<BookModel> _books;
 
 		private Lazy<Task> _loadBooksLazy;
@@ -25,9 +27,10 @@ namespace WpfUi.Stores
 
 		public event Action? BooksLoaded;
 
-		public BookStore(IBookDataService bookDataService)
+		public BookStore(IBookDataService bookDataService, IBookUpdater bookUpdater)
 		{
 			_bookDataService = bookDataService;
+			_bookUpdater = bookUpdater;
 			_books = new List<BookModel>();
 
 			_loadBooksLazy = CreateLoadBooksLazy();
@@ -58,8 +61,9 @@ namespace WpfUi.Stores
 			BooksLoaded?.Invoke();
 		}
 
-		public void UpdateBook(BookModel book)
+		public void UpdateBookReadStatus(BookModel book, bool isRead, DateTime readDate)
 		{
+			_bookUpdater.ChangeReadStatus(book, isRead, readDate);
 			BookUpdated?.Invoke(book);
 		}
 	}

@@ -73,12 +73,12 @@ namespace WpfUi.ViewModels
 
         public ICommand ChangeIsReadCommand { get; }
 
-        public BookCardViewModel(BookModel book, BookStore booksStore, IBooksUpdater booksUpdater)
+        public BookCardViewModel(BookModel book, BookStore booksStore)
         {
             Book = book;
             _booksStore = booksStore;
             CreateBookCard(book);
-            ChangeIsReadCommand = new ChangeIsReadCommand(this, _booksStore, booksUpdater);
+            ChangeIsReadCommand = new ChangeIsReadCommand(this, _booksStore);
         }
 
         private void CreateBookCard(BookModel book)

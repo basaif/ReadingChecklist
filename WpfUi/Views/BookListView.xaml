@@ -98,7 +98,8 @@
                 </Grid.ColumnDefinitions>
 
 
-                <ItemsControl Grid.Column="0" ItemsSource="{Binding BooksCollectionView}">
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding BooksCollectionView}"
+                              >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:BookCardView />

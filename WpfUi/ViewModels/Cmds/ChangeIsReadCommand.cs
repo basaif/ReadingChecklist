@@ -8,13 +8,11 @@ namespace WpfUi.ViewModels.Cmds
     {
         private readonly BookCardViewModel _bookCardViewModel;
         private readonly BookStore _booksStore;
-		private readonly IBooksUpdater _booksUpdater;
 
-		public ChangeIsReadCommand(BookCardViewModel bookCardViewModel, BookStore booksStore, IBooksUpdater booksUpdater)
+		public ChangeIsReadCommand(BookCardViewModel bookCardViewModel, BookStore booksStore)
         {
             _bookCardViewModel = bookCardViewModel;
             _booksStore = booksStore;
-			_booksUpdater = booksUpdater;
 		}
         public override bool CanExecute(object? parameter)
         {
@@ -25,9 +23,7 @@ namespace WpfUi.ViewModels.Cmds
         {
             _bookCardViewModel.DateRead = DateTime.UtcNow;
 
-            _booksUpdater.ChangeReadStatus(_bookCardViewModel.Book, _bookCardViewModel.IsRead, _bookCardViewModel.DateRead);
-
-            _booksStore.UpdateBook(_bookCardViewModel.Book);
+            _booksStore.UpdateBookReadStatus(_bookCardViewModel.Book, _bookCardViewModel.IsRead, _bookCardViewModel.DateRead);
         }
     }
 }

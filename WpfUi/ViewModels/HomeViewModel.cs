@@ -22,7 +22,6 @@ namespace WpfUi.ViewModels
 		private readonly BookStore _booksStore;
 		private readonly IFoldersFileNamePairs _foldersFileNamePairs;
 		private readonly IBookTagStructureCreator _bookTagStructureCreator;
-		private readonly IBooksUpdater _booksUpdater;
 
 		public bool NotEnoughBooks
 		{
@@ -63,16 +62,14 @@ namespace WpfUi.ViewModels
 
 		public HomeViewModel(BookStore booksStore,
 			IFoldersFileNamePairs foldersFileNamePairs,
-			IBookTagStructureCreator bookTagStructureCreator,
-			IBooksUpdater booksUpdater)
+			IBookTagStructureCreator bookTagStructureCreator)
 		{
 			_booksStore = booksStore;
 			_foldersFileNamePairs = foldersFileNamePairs;
 			_bookTagStructureCreator = bookTagStructureCreator;
-			_booksUpdater = booksUpdater;
 
 			GetBooksViewModel = new(_foldersFileNamePairs, _bookTagStructureCreator, _booksStore);
-			BookListViewModel = new(_booksStore, _booksUpdater);
+			BookListViewModel = new(_booksStore);
 
 			_booksStore.BooksLoaded += OnBooksLoaded;
 
@@ -95,13 +92,11 @@ namespace WpfUi.ViewModels
 
 		public static HomeViewModel LoadViewModel(BookStore booksStore,
 			IFoldersFileNamePairs foldersFileNamePairs,
-			IBookTagStructureCreator bookTagStructureCreator,
-			IBooksUpdater booksUpdater)
+			IBookTagStructureCreator bookTagStructureCreator)
 		{
 			HomeViewModel viewModel = new(booksStore,
 			 foldersFileNamePairs,
-			 bookTagStructureCreator,
-			 booksUpdater);
+			 bookTagStructureCreator);
 
 			viewModel.LoadBooksCommand.Execute(null);
 

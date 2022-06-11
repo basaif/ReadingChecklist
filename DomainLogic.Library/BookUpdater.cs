@@ -4,11 +4,11 @@ using Models.Library;
 
 namespace DomainLogic.Library
 {
-	public class BooksUpdater : IBooksUpdater
+	public class BookUpdater : IBookUpdater
 	{
 		private readonly ISqliteBookData _sqliteBookData;
 
-		public BooksUpdater(ISqliteBookData sqliteBookData)
+		public BookUpdater(ISqliteBookData sqliteBookData)
 		{
 			_sqliteBookData = sqliteBookData;
 		}
