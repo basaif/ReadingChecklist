@@ -13,7 +13,7 @@ namespace WpfUi.ViewModels
 {
     public class TagListViewModel : ViewModelBase
     {
-        ObservableCollection<SelectableTagModel> _selectableTags;
+		private ObservableCollection<SelectableTagModel> _selectableTags;
 
         public ObservableCollection<SelectableTagModel> SelectableTags
         {

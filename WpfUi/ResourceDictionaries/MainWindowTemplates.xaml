@@ -14,4 +14,7 @@
     <DataTemplate DataType="{x:Type ViewModels:TagListViewModel}">
         <Views:TagListView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:BookListViewModel}">
+        <Views:BookListView />
+    </DataTemplate>
 </ResourceDictionary>

@@ -13,6 +13,7 @@ using DataAccess.Library.SqliteDataAccess;
 using Models.Library;
 using DataAccess.Library.ModelDataServices;
 using DomainLogic.Library;
+using System.Threading.Tasks;
 
 namespace WpfUi
 {
@@ -20,7 +21,7 @@ namespace WpfUi
 	/// Interaction logic for App.xaml
 	/// </summary>
 	public partial class App : Application
-    {
+	{
 		private readonly IHost _host;
 
 		public App()
@@ -55,23 +56,39 @@ c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: tru
 
 					services.AddTransient<IBookDataService, BookDataService>();
 					services.AddTransient<ITagDataService, TagDataService>();
-					services.AddTransient<IBooksUpdater, BooksUpdater>();
+					services.AddTransient<IBookUpdater, BookUpdater>();
 
-					services.AddSingleton<BooksStore>();
+					services.AddSingleton<BookStore>();
 
 					services.AddScoped<MainWindowViewModel>();
+					services.AddScoped(services =>
+					{
+						HomeViewModel homeViewModel = new(
+							services.GetRequiredService<BookStore>(),
+							services.GetRequiredService<IFoldersFileNamePairs>(),
+							services.GetRequiredService<IBookTagStructureCreator>());
+
+						HomeViewModel.LoadViewModel(
+							services.GetRequiredService<BookStore>(),
+							services.GetRequiredService<IFoldersFileNamePairs>(),
+							services.GetRequiredService<IBookTagStructureCreator>());
+
+						return homeViewModel;
+					});
 					services.AddScoped(s => new MainWindow(s.GetRequiredService<MainWindowViewModel>()));
 
 				}).Build();
 		}
+
+
 		private void Application_Startup(object sender, StartupEventArgs e)
-        {
+		{
 			_host.Start();
 
-            MainWindow = _host.Services.GetRequiredService<MainWindow>();
+			MainWindow = _host.Services.GetRequiredService<MainWindow>();
 
 			MainWindow.Show();
-        }
+		}
 
 		protected override async void OnExit(ExitEventArgs e)
 		{
