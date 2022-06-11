@@ -14,6 +14,7 @@ using Models.Library;
 using DataAccess.Library.ModelDataServices;
 using DomainLogic.Library;
 using System.Threading.Tasks;
+using WpfUi.HostBuilders;
 
 namespace WpfUi
 {
@@ -27,57 +28,13 @@ namespace WpfUi
 		public App()
 		{
 			_host = Host.CreateDefaultBuilder()
-				.ConfigureAppConfiguration(c =>
-				{
-					c.SetBasePath(Directory.GetCurrentDirectory());
-					c.AddJsonFile("appsettings.json");
-#if DEBUG
-					c.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-#else
-c.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: true);
-#endif
-				})
-				.ConfigureServices((context, services) =>
-				{
-					string connectionString = context.Configuration.GetConnectionString("Default");
-
-					services.AddSingleton<ISqliteConnector>(new SqliteConnector(connectionString));
-
-					services.AddTransient<ISaveData, SaveData>();
-					services.AddTransient<IQueryData<BookModel>, QueryData<BookModel>>();
-					services.AddTransient<IQueryData<TagModel>, QueryData<TagModel>>();
-
-					services.AddTransient<ISqliteBookData, SqliteBookData>();
-					services.AddTransient<ISqliteTagData, SqliteTagData>();
-
-					services.AddScoped<IFoldersFileNamePairs, FoldersFileNamePairs>();
-					services.AddTransient<ITagsCreator, TagsCreator>();
-					services.AddTransient<IBookTagStructureCreator, BookTagStructureCreator>();
-
-					services.AddTransient<IBookDataService, BookDataService>();
-					services.AddTransient<ITagDataService, TagDataService>();
-					services.AddTransient<IBookUpdater, BookUpdater>();
-
-					services.AddSingleton<BookStore>();
-
-					services.AddScoped<MainWindowViewModel>();
-					services.AddScoped(services =>
-					{
-						HomeViewModel homeViewModel = new(
-							services.GetRequiredService<BookStore>(),
-							services.GetRequiredService<IFoldersFileNamePairs>(),
-							services.GetRequiredService<IBookTagStructureCreator>());
-
-						HomeViewModel.LoadViewModel(
-							services.GetRequiredService<BookStore>(),
-							services.GetRequiredService<IFoldersFileNamePairs>(),
-							services.GetRequiredService<IBookTagStructureCreator>());
-
-						return homeViewModel;
-					});
-					services.AddScoped(s => new MainWindow(s.GetRequiredService<MainWindowViewModel>()));
-
-				}).Build();
+				.AddConfiguration()
+				.AddDataClasses()
+				.AddDomainClasses()
+				.AddUiClasses()
+				.AddViewModels()
+				.AddViews()
+				.Build();
 		}
 
 
