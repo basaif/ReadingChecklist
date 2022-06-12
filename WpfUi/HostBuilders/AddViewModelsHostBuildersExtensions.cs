@@ -18,8 +18,8 @@ namespace WpfUi.HostBuilders
 		{
 			host.ConfigureServices((services) =>
 			{
-				services.AddScoped<MainWindowViewModel>();
-				services.AddScoped(services => CreateHomeViewModel(services));
+				services.AddTransient<MainWindowViewModel>();
+				services.AddTransient(services => CreateHomeViewModel(services));
 			});
 
 			return host;
@@ -27,12 +27,7 @@ namespace WpfUi.HostBuilders
 
 		private static HomeViewModel CreateHomeViewModel(IServiceProvider services)
 		{
-			HomeViewModel homeViewModel = new(
-						services.GetRequiredService<BookStore>(),
-						services.GetRequiredService<IFoldersFileNamePairs>(),
-						services.GetRequiredService<IBookTagStructureCreator>());
-
-			HomeViewModel.LoadViewModel(
+			HomeViewModel homeViewModel = HomeViewModel.LoadViewModel(
 				services.GetRequiredService<BookStore>(),
 				services.GetRequiredService<IFoldersFileNamePairs>(),
 				services.GetRequiredService<IBookTagStructureCreator>());
