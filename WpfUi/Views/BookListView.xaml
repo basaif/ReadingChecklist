@@ -33,7 +33,7 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="0"
                         Margin="5 10"
-                       VerticalAlignment="Center"
+                        VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <TextBlock>
                     <Run Text="Books" />
@@ -57,8 +57,7 @@
                      Grid.Column="3"
                      Margin="5 10"
                      VerticalAlignment="Center"
-                     Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}" 
-                     />
+                     Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox Grid.Row="0"
                       Grid.Column="4"
                       Margin="5 10"
@@ -82,43 +81,58 @@
 
             </Expander>
 
-          
+
 
 
 
         </Grid>
 
-        <ScrollViewer Grid.Row="1"
-                      Grid.Column="2"
-                      CanContentScroll="False"
-                      VerticalScrollBarVisibility="Auto">
-            <Grid VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="1"
+              Grid.Column="2"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
 
-                <ItemsControl Grid.Column="0" ItemsSource="{Binding BooksCollectionView}"
-                              >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:BookCardView />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Margin="10"
-                                        VerticalAlignment="Center"
-                                        IsItemsHost="True"
-                                        Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+            <ItemsControl Grid.Column="0"
+                          ItemsSource="{Binding BooksCollectionView}"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:BookCardView />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Margin="10"
+                                                VerticalAlignment="Center"
+                                                IsItemsHost="True"
+                                                IsVirtualizing="True"
+                                                Orientation="Vertical"
+                                                VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer Padding="{TemplateBinding Padding}"
+                                          CanContentScroll="True"
+                                          Focusable="False">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+            </ItemsControl>
 
 
 
-            </Grid>
-        </ScrollViewer>
+        </Grid>
         <GridSplitter Grid.Row="0"
                       Grid.RowSpan="2"
                       Grid.Column="1"
