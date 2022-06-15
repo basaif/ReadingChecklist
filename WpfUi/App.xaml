@@ -7,6 +7,13 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ResourceDictionaries/MainWindowTemplates.xaml" />
+                <ResourceDictionary Source="/ResourceDictionaries/LightColors.xaml" />
+                <ResourceDictionary Source="/ResourceDictionaries/Fonts.xaml" />
+                <ResourceDictionary Source="/Styles/Buttons.xaml" />
+                <ResourceDictionary Source="/Styles/ScrollBars.xaml" />
+                <ResourceDictionary Source="/Styles/TextBoxes.xaml" />
+                <ResourceDictionary Source="/Styles/Texts.xaml" />
+                <ResourceDictionary Source="/Styles/Checkboxes.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

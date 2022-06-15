@@ -11,34 +11,8 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Style x:Key="BookNameTextStyle" TargetType="custom:HighlightTextBlock">
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Margin" Value="5 10" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style x:Key="DateTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="Margin" Value="3" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="Margin" Value="3" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style x:Key="TagStyle" TargetType="custom:HighlightTextBlock">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="Lavender" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-
-        </Style>
+       
+       
         <Style x:Key="HighlightStyle" TargetType="Run">
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Background" Value="Yellow" />
@@ -81,8 +55,7 @@
             <CheckBox Grid.Row="0"
                       Grid.Column="1"
                       Content="Is Read"
-                      IsChecked="{Binding IsRead, Mode=TwoWay}"
-                      Style="{StaticResource CheckBoxStyle}">
+                      IsChecked="{Binding IsRead, Mode=TwoWay}">
                 <xb:Interaction.Triggers>
                     <xb:EventTrigger EventName="Checked">
                         <xb:InvokeCommandAction Command="{Binding IsReadChangedCommand}" />

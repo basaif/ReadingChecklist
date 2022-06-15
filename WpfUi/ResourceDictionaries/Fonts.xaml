@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FontFamily x:Key="RalewayBlack">pack://application:,,,/Resources/Fonts/Raleway-Black.ttf#Raleway Black</FontFamily>
+    <FontFamily x:Key="RalewayBlackItalic">pack://application:,,,/Resources/Fonts/Raleway-BlackItalic.ttf#Raleway Black</FontFamily>
+    <FontFamily x:Key="RalewayBold">pack://application:,,,/Resources/Fonts/Raleway-Bold.ttf#Raleway</FontFamily>
+    <FontFamily x:Key="RalewayBoldItalic">pack://application:,,,/Resources/Fonts/Raleway-BoldItalic.ttf#Raleway</FontFamily>
+    <FontFamily x:Key="RalewayExtraBold">pack://application:,,,/Resources/Fonts/Raleway-ExtraBold.ttf#Raleway ExtraBold</FontFamily>
+    <FontFamily x:Key="RalewayExtraBoldItalic">pack://application:,,,/Resources/Fonts/Raleway-ExtraBoldItalic.ttf#Raleway ExtraBold</FontFamily>
+    <FontFamily x:Key="RalewayExtraLight">pack://application:,,,/Resources/Fonts/Raleway-ExtraLight.ttf#Raleway ExtraLight</FontFamily>
+    <FontFamily x:Key="RalewayExtraLightItalic">pack://application:,,,/Resources/Fonts/Raleway-ExtraLightItalic.ttf#Raleway ExtraLight</FontFamily>
+    <FontFamily x:Key="RalewayItalic">pack://application:,,,/Resources/Fonts/Raleway-Italic.ttf#Raleway</FontFamily>
+    <FontFamily x:Key="RalewayLight">pack://application:,,,/Resources/Fonts/Raleway-Light.ttf#Raleway Light</FontFamily>
+    <FontFamily x:Key="RalewayLightItalic">pack://application:,,,/Resources/Fonts/Raleway-LightItalic.ttf#Raleway Light</FontFamily>
+    <FontFamily x:Key="RalewayMedium">pack://application:,,,/Resources/Fonts/Raleway-Medium.ttf#Raleway Medium</FontFamily>
+    <FontFamily x:Key="RalewayMediumItalic">pack://application:,,,/Resources/Fonts/MediumItalic.ttf#Raleway Medium</FontFamily>
+    <FontFamily x:Key="RalewayRegular">pack://application:,,,/Resources/Fonts/Raleway-Regular.ttf#Raleway</FontFamily>
+    <FontFamily x:Key="RalewaySemiBold">pack://application:,,,/Resources/Fonts/Raleway-SemiBold.ttf#Raleway SemiBold</FontFamily>
+    <FontFamily x:Key="RalewaySemiBoldItalic">pack://application:,,,/Resources/Fonts/Raleway-SemiBoldItalic.ttf#Raleway SemiBold</FontFamily>
+    <FontFamily x:Key="RalewayThin">pack://application:,,,/Resources/Fonts/Raleway-Thin.ttf#Raleway Thin</FontFamily>
+    <FontFamily x:Key="RalewayThinItalic">pack://application:,,,/Resources/Fonts/Raleway-ThinItalic.ttf#Raleway Thin</FontFamily>
+</ResourceDictionary>

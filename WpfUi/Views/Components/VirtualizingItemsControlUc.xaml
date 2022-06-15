@@ -35,8 +35,9 @@
                         BorderThickness="{TemplateBinding BorderThickness}">
                     <ScrollViewer Padding="{TemplateBinding Padding}"
                                   CanContentScroll="True"
-                                  Focusable="False">
-                        <ItemsPresenter />
+                                  Focusable="False"
+                                  >
+                        <ItemsPresenter/>
                     </ScrollViewer>
                 </Border>
             </ControlTemplate>

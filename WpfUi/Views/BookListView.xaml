@@ -37,7 +37,7 @@
                         Margin="5 10"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                <TextBlock>
+                <TextBlock Style="{StaticResource CommonText}">
                     <Run Text="Books" />
                     <Run Text="{Binding NumberOfBooks}" />
                     <Run Text="-" />
@@ -52,18 +52,13 @@
 
             <TextBlock Grid.Row="0"
                        Grid.Column="2"
-                       Margin="5 10"
-                       VerticalAlignment="Center"
+                       Style="{StaticResource CommonText}"
                        Text="Search" />
             <TextBox Grid.Row="0"
                      Grid.Column="3"
-                     Margin="5 10"
-                     VerticalAlignment="Center"
                      Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox Grid.Row="0"
                       Grid.Column="4"
-                      Margin="5 10"
-                      VerticalAlignment="Center"
                       Content="Show Read"
                       IsChecked="{Binding IsShowReadBooks}" />
         </Grid>

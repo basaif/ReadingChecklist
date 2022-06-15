@@ -14,9 +14,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Margin="5 10"
-                Padding="5 10"
-                Command="{Binding ClearSelectedTagsCommand}"
+        <Button Command="{Binding ClearSelectedTagsCommand}"
                 Content="Clear Selected Tags" />
 
         <components:VirtualizingItemsControlUc Grid.Row="1" ItemsSource="{Binding SelectableTags}">

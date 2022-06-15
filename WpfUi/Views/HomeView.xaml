@@ -20,11 +20,7 @@
                 Grid.Column="0"
                 Background="SlateBlue">
 
-            <TextBlock Margin="5 10"
-                       VerticalAlignment="Center"
-                       FontSize="22"
-                       Foreground="White"
-                       Text="Reading Checklist" />
+            <TextBlock Style="{StaticResource AppTitle}" Text="Reading Checklist" />
 
         </Border>
 
