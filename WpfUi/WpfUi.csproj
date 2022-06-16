@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Memow\LoadingSpinnerControl\LoadingSpinnerControl.csproj" />
     <ProjectReference Include="..\DomainLogic.Library\DomainLogic.Library.csproj" />
     <ProjectReference Include="..\FileSystemUtilities.Library\FileSystemUtilities.Library.csproj" />
     <ProjectReference Include="..\HighlightTextBlockControl\HighlightTextBlockControl.csproj" />

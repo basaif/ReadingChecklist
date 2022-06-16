@@ -4,10 +4,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WpfUi.Views.Components"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              Name="parent"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolVisibilityConverter" />
     </UserControl.Resources>
@@ -23,21 +26,43 @@
                      Text="{Binding Location}" />
 
             <Button Grid.Column="1"
-                    Command="{Binding OpenSearchDialogCommand}"
-                    Content="Open" />
+                    Command="{Binding OpenSearchDialogCommand}" >
+                <Button.Content>
+                    <fa5:FontAwesome
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Icon="Solid_FolderOpen" />
+                </Button.Content>
+            </Button>
         </Grid>
 
         <Button Command="{Binding GetDataCommand}"
-                Content="{Binding SearchText}"
-                Margin="3 0 3 5"/>
+                Margin="3 0 3 5">
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="{Binding SearchText}"/>
+                        <fa5:FontAwesome
+                        Icon="Solid_Stream" Margin="7 0 0 0" />
+                    </StackPanel>
+                </Grid>
+            </Button.Content>
+        </Button>
 
-        <ProgressBar Height="15"
-                     Margin="5"
-                     Background="Lavender"
-                     Foreground="MediumSlateBlue"
-                     IsIndeterminate="True"
-                     Maximum="100"
-                     Minimum="0"
-                     Visibility="{Binding IsLoading, Converter={StaticResource boolVisibilityConverter}}" />
+        <spinner:LoadingSpinner  IsLoading="{Binding IsLoading}"
+                             Foreground="{DynamicResource PrimaryBrush1}"
+                                     Background="{DynamicResource BackgroundBrush1}"
+                                     Diameter="30" Thickness="4"
+                                     Margin="3 0 3 5"/>
+
+      
     </StackPanel>
 </UserControl>
