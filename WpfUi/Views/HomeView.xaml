@@ -19,35 +19,36 @@
         <Border Grid.Row="0"
                 Grid.Column="0"
                 Background="SlateBlue">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <TextBlock Style="{StaticResource AppTitle}" Text="Reading Checklist" />
+                <TextBlock Grid.Row="0"
+                           Style="{StaticResource AppTitle}"
+                           Text="Reading Checklist" />
+                <Expander Grid.Row="1"
+                          Header="Get Book List"
+                          IsExpanded="{Binding NotEnoughBooks, Mode=OneWay}">
+                    <Border Background="White">
+                        <ContentControl MaxWidth="500"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding GetBooksViewModel}" />
+                    </Border>
+                </Expander>
 
+            </Grid>
         </Border>
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
 
-            <Expander Grid.Row="0"
-                      Background="SlateBlue"
-                      Foreground="White"
-                      Header="Get Book List"
-                      IsExpanded="{Binding NotEnoughBooks, Mode=OneWay}">
-                <Border Background="White"
-                        BorderBrush="SlateBlue"
-                        BorderThickness="0 0 0 1">
-                    <ContentControl MaxWidth="500"
-                                    VerticalAlignment="Center"
-                                    Content="{Binding GetBooksViewModel}" />
-                </Border>
-            </Expander>
 
-            <ContentControl Grid.Row="1"
-                            Content="{Binding BookListViewModel}"
-                            Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}" />
-        </Grid>
+
+
+        <ContentControl Grid.Row="1"
+                        Content="{Binding BookListViewModel}"
+                        Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}" />
+
 
     </Grid>
 </UserControl>

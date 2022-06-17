@@ -8,8 +8,9 @@
 
     <SolidColorBrush x:Key="BackgroundBrush3" Color="Black" />
 
-    <SolidColorBrush x:Key="PrimaryBrush1" Color="SlateBlue" />
     <SolidColorBrush x:Key="PrimaryBrush2" Color="#FF9C90ED" />
+    <SolidColorBrush x:Key="PrimaryBrush1" Color="SlateBlue" />
+    <SolidColorBrush x:Key="PrimaryBrush3" Color="#FF4C3CA7" />
 
     <SolidColorBrush x:Key="TextBrush1" Color="White" />
     <SolidColorBrush x:Key="TextBrush2" Color="#FF2D2B3C" />
@@ -22,5 +23,8 @@
 
     <Color x:Key="PrimaryColor1">SlateBlue</Color>
     <Color x:Key="PrimaryColor2">#FF9C90ED</Color>
+
+    <Color x:Key="DisabledPrimaryColor1">#FFA9AABA</Color>
+    <Color x:Key="DisabledTextColor1">#FF313147</Color>
 
 </ResourceDictionary>
