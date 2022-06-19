@@ -2,34 +2,25 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:WpfUi"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Reading Checklist"
         Width="800"
         Height="450"
-        mc:Ignorable="d" Topmost="True">
+        Topmost="True"
+        mc:Ignorable="d">
     <Grid>
-        <TabControl Grid.Row="1"
-                    Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    BorderThickness="0"
-                    TabStripPlacement="Top">
-            <TabItem HorizontalAlignment="Center"
-                     VerticalAlignment="Bottom"
-                     IsSelected="True">
+        <TabControl Grid.Row="1" Grid.Column="0">
+            <TabItem IsSelected="True">
                 <TabItem.Header>
-                    <StackPanel Orientation="Vertical">
-
+                    <StackPanel Orientation="Vertical" Cursor="Hand">
+                        <fa5:FontAwesome Icon="Solid_Home" />
                         <TextBlock Text="Home" />
                     </StackPanel>
                 </TabItem.Header>
-
-
                 <ContentControl Content="{Binding HomeViewModel}" />
-
             </TabItem>
         </TabControl>
-
     </Grid>
 </Window>

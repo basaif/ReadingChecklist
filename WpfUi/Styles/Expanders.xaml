@@ -11,7 +11,7 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-               
+
                 <fa5:FontAwesome x:Name="Arrow"
                                  Grid.Column="0"
                                  Margin="10 0 0 0"
@@ -19,8 +19,6 @@
                                  VerticalAlignment="Center"
                                  Foreground="{DynamicResource BackgroundBrush2}"
                                  Icon="Solid_ChevronUp" />
-
-
                 <ContentPresenter Grid.Column="1" Margin="4" />
 
             </Grid>
