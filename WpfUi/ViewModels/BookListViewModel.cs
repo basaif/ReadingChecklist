@@ -240,6 +240,11 @@ namespace WpfUi.ViewModels
 			BooksCollectionView.Refresh();
 			CalculateNumbers();
 			SetHighlightTextForBooks();
+			
+		}
+
+		public void RefreshTagList()
+		{
 			TagList.RefreshTagList();
 		}
 		private void SetHighlightTextForBooks()

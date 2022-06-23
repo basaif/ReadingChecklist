@@ -70,6 +70,7 @@ namespace WpfUi.Helpers
 		private void OnSelectedTagChanged(object? sender, PropertyChangedEventArgs e)
 		{
 			_bookListViewModel.RefreshBooksCollectionView();
+			_bookListViewModel.RefreshTagList();
 		}
 
 		private void AddRelatedTagsFromBookTags(List<string> tagsInBook)
