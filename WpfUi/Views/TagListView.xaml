@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WpfUi.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -14,8 +15,25 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Command="{Binding ClearSelectedTagsCommand}"
-                Content="Clear Selected Tags" />
+        <Button Command="{Binding ClearSelectedTagsCommand}">
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="Clear Selected Tags"/>
+                        <fa5:FontAwesome
+                        Icon="Solid_Broom" Margin="7 0 0 0" />
+                    </StackPanel>
+                </Grid>
+            </Button.Content>
+        </Button>
 
         <components:VirtualizingItemsControlUc Grid.Row="1" ItemsSource="{Binding TagsCollectionView}">
             <components:VirtualizingItemsControlUc.ItemTemplate>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:components="clr-namespace:WpfUi.Views.Components"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
              xmlns:local="clr-namespace:WpfUi.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="450"
@@ -30,6 +31,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
 
             </Grid.ColumnDefinitions>
@@ -59,8 +61,12 @@
             <TextBox Grid.Row="0"
                      Grid.Column="3"
                      Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Grid.Row="0" Grid.Column="4"
+                       Style="{StaticResource CommonText}">
+                <fa5:FontAwesome Icon="Solid_Search" Margin="0 0 5 0" />
+            </TextBlock>
             <CheckBox Grid.Row="0"
-                      Grid.Column="4"
+                      Grid.Column="5"
                       Content="Show Read"
                       IsChecked="{Binding IsShowReadBooks}" />
         </Grid>
@@ -74,8 +80,20 @@
 
             <Expander Grid.Row="0"
                       Margin="5"
-                      Header="Filter By Tags"
                       IsExpanded="True">
+                <Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Filter By Tags" />
+                        <fa5:FontAwesome Grid.Column="2" Icon="Solid_Filter" />
+
+                    </Grid>
+                </Expander.Header>
                 <ContentControl Content="{Binding TagList}" />
             </Expander>
         </Grid>
