@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/ResourceDictionaries/MainWindowTemplates.xaml" />
                 <ResourceDictionary Source="/ResourceDictionaries/LightColors.xaml" />
                 <ResourceDictionary Source="/ResourceDictionaries/Fonts.xaml" />
+                <ResourceDictionary Source="/ResourceDictionaries/Icons.xaml" />
                 <ResourceDictionary Source="/Styles/Buttons.xaml" />
                 <ResourceDictionary Source="/Styles/ScrollBars.xaml" />
                 <ResourceDictionary Source="/Styles/TextBoxes.xaml" />
@@ -16,6 +17,7 @@
                 <ResourceDictionary Source="/Styles/Checkboxes.xaml" />
                 <ResourceDictionary Source="/Styles/Expanders.xaml" />
                 <ResourceDictionary Source="/Styles/TabControls.xaml" />
+                <ResourceDictionary Source="/Styles/Windows.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

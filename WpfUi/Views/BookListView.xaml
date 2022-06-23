@@ -19,7 +19,9 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="2">
+        <Grid Grid.Row="0"
+              Grid.Column="2"
+              Background="{DynamicResource BackgroundBrush2}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
@@ -65,7 +67,7 @@
         <Grid Grid.Row="0"
               Grid.RowSpan="2"
               Grid.Column="0"
-              Background="Lavender">
+              Background="{DynamicResource BackgroundBrush1}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -79,7 +81,8 @@
         </Grid>
         <Grid Grid.Row="1"
               Grid.Column="2"
-              VerticalAlignment="Center">
+              VerticalAlignment="Stretch"
+              Background="{DynamicResource BackgroundBrush1}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -98,6 +101,6 @@
                       Grid.Column="1"
                       Width="5"
                       HorizontalAlignment="Center"
-                      Background="Lavender" />
+                      Background="{DynamicResource PrimaryBrush1}" />
     </Grid>
 </UserControl>

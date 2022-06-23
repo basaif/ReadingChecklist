@@ -116,7 +116,7 @@
         <Setter Property="Padding" Value="5" />
         <Setter Property="Margin" Value="3 5" />
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundBrush2}" />
         <Setter Property="FontFamily" Value="{StaticResource RalewayMedium}" />
         <Setter Property="Template">
             <Setter.Value>

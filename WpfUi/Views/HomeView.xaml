@@ -19,32 +19,17 @@
         <Border Grid.Row="0"
                 Grid.Column="0"
                 Background="SlateBlue">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0"
-                           Style="{StaticResource AppTitle}"
-                           Text="Reading Checklist" />
-                <Expander Grid.Row="1"
-                          Header="Get Book List"
-                          IsExpanded="{Binding NotEnoughBooks, Mode=OneWay}">
-                    <Border Background="White">
-                        <ContentControl MaxWidth="500"
-                                        VerticalAlignment="Center"
-                                        Content="{Binding GetBooksViewModel}" />
-                    </Border>
-                </Expander>
-
-            </Grid>
+            <Expander Grid.Row="1"
+                      Header="Get Book List"
+                      IsExpanded="{Binding NotEnoughBooks, Mode=OneWay}">
+                <Border Background="White">
+                    <ContentControl MaxWidth="500"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding GetBooksViewModel}" />
+                </Border>
+            </Expander>
         </Border>
-
-
-
-
-
         <ContentControl Grid.Row="1"
                         Content="{Binding BookListViewModel}"
                         Visibility="{Binding EnoughBooks, Converter={StaticResource boolVisibilityConverter}}" />

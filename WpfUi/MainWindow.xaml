@@ -1,22 +1,41 @@
 ﻿<Window x:Class="WpfUi.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Ucs="clr-namespace:WpfUi.Views.Components"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:WpfUi"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Reading Checklist"
-        Width="800"
-        Height="450"
-        Topmost="True"
+        Width="1000"
+        Height="600"
+        AllowsTransparency="False"
+        Background="{DynamicResource PrimaryBrush1}"
+        FlowDirection="LeftToRight"
+        MouseDown="Window_MouseDown"
+        RenderOptions.BitmapScalingMode="NearestNeighbor"
+        RenderOptions.ClearTypeHint="Enabled"
+        ResizeMode="CanResize"
+        SnapsToDevicePixels="True"
+        Style="{StaticResource StandardStyle}"
+        UseLayoutRounding="True"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        WindowStyle="SingleBorderWindow"
         mc:Ignorable="d">
     <Grid>
-        <TabControl Grid.Row="1" Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Ucs:WindowTitleBar Grid.Row="0" Style="{StaticResource MainWindowTitleBar}" />
+
+        <TabControl Grid.Row="1">
             <TabItem IsSelected="True">
                 <TabItem.Header>
-                    <StackPanel Orientation="Vertical" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
                         <fa5:FontAwesome Icon="Solid_Home" />
-                        <TextBlock Text="Home" />
+                        <TextBlock Margin="4 0 0 0" Text="Home" />
                     </StackPanel>
                 </TabItem.Header>
                 <ContentControl Content="{Binding HomeViewModel}" />
