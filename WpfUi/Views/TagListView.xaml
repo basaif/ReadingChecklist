@@ -17,7 +17,7 @@
         <Button Command="{Binding ClearSelectedTagsCommand}"
                 Content="Clear Selected Tags" />
 
-        <components:VirtualizingItemsControlUc Grid.Row="1" ItemsSource="{Binding SelectableTags}">
+        <components:VirtualizingItemsControlUc Grid.Row="1" ItemsSource="{Binding TagsCollectionView}">
             <components:VirtualizingItemsControlUc.ItemTemplate>
                 <DataTemplate>
                     <components:SelectableTagUc />

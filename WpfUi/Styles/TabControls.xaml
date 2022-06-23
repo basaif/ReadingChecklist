@@ -19,8 +19,8 @@
                                 Margin="0 0 0 0"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="0"
-                                Cursor="Hand"
-                                CornerRadius="0">
+                                CornerRadius="0"
+                                Cursor="Hand">
                             <ContentPresenter x:Name="ContentSite"
                                               Margin="15 7"
                                               HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
@@ -39,7 +39,7 @@
                             <Setter TargetName="Border" Property="BorderThickness" Value="0 2 0 0" />
                             <Setter Property="FontFamily" Value="{DynamicResource RalewayMedium}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True" SourceName="Border">
+                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource PrimaryBrush2}" />
                             <Setter Property="Foreground" Value="{DynamicResource BackgroundBrush2}" />
                         </Trigger>

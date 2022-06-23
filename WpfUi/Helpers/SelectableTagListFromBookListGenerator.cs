@@ -26,7 +26,7 @@ namespace WpfUi.Helpers
 
 		public ObservableCollection<SelectableTagModel> GetSelectableTagModels()
 		{
-			
+
 			foreach (BookCardViewModel bookCard in _bookCards)
 			{
 				AddBookTagsToDistinctTagList(bookCard);
@@ -47,6 +47,8 @@ namespace WpfUi.Helpers
 					AddSelectableTagToDistinctTagList(tag);
 				}
 			}
+
+			AddRelatedTagsFromBookTags(bookCard.Tags.ToList());
 		}
 		private bool IsTagInList(string tag)
 		{
@@ -69,6 +71,12 @@ namespace WpfUi.Helpers
 		{
 			_bookListViewModel.RefreshBooksCollectionView();
 		}
+
+		private void AddRelatedTagsFromBookTags(List<string> tagsInBook)
+		{
+			_distinctTagList.Where(x => tagsInBook.Contains(x.Tag)).ToList().ForEach(x => x.AddRelatedTagsDistinctly(tagsInBook));
+		}
+
 		private ObservableCollection<SelectableTagModel> GetOrderedTagsByNumberOfBooksDecending()
 		{
 			IOrderedEnumerable<SelectableTagModel>? orderdTags = _distinctTagList.OrderBy(x => x.Tag).OrderByDescending(x => x.NumberOfBooksInTag);

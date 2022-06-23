@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Library;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,28 +8,36 @@ using System.Threading.Tasks;
 
 namespace WpfUi.Models
 {
-    public class SelectableTagModel : NotifyModel
-    {
-        private bool _isSelected;
+	public class SelectableTagModel : NotifyModel
+	{
+		private bool _isSelected;
 
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-                //OnIsSelectedChanged();
-            }
-        }
-        public string Tag { get; set; } = string.Empty;
-        public int NumberOfBooksInTag { get; set; }
+		public bool IsSelected
+		{
+			get => _isSelected;
+			set
+			{
+				_isSelected = value;
+				OnPropertyChanged(nameof(IsSelected));
+			}
+		}
+		public string Tag { get; set; } = string.Empty;
+		public int NumberOfBooksInTag
+		{
+			get; set;
+		}
 
-        //public event EventHandler? IsSelectedChanged;
+		public List<string> RelatedTags { get; private set; } = new();
 
-        //public void OnIsSelectedChanged()
-        //{
-        //    IsSelectedChanged?.Invoke(this, new EventArgs());
-        //}
-    }
+		public void AddRelatedTagsDistinctly(List<string> tags)
+		{
+			foreach (string tag in tags)
+			{
+				if (!RelatedTags.Contains(tag))
+				{
+					RelatedTags.Add(tag);
+				}
+			}
+		}
+	}
 }

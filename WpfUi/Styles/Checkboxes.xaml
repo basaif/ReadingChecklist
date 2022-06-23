@@ -125,12 +125,11 @@
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             CornerRadius="5">
-                        <Label 
-                               Margin="0"
+                        <Label Margin="0"
                                Padding="{TemplateBinding Padding}"
-                               Foreground="{TemplateBinding Foreground}"
                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                               Content="{TemplateBinding Content}" />
+                               Content="{TemplateBinding Content}"
+                               Foreground="{TemplateBinding Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">

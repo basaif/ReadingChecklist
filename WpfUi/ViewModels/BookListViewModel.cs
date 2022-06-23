@@ -217,7 +217,7 @@ namespace WpfUi.ViewModels
 		{
 			SelectableTagListFromBookListGenerator selectableTagListFromBookListGenerator = new(
 				BookCards, this);
-			TagList.SelectableTags = selectableTagListFromBookListGenerator.GetSelectableTagModels();
+			TagList.SetUpTagList(selectableTagListFromBookListGenerator.GetSelectableTagModels());
 		}
 		private void CalculateNumbers()
 		{
@@ -240,6 +240,7 @@ namespace WpfUi.ViewModels
 			BooksCollectionView.Refresh();
 			CalculateNumbers();
 			SetHighlightTextForBooks();
+			TagList.RefreshTagList();
 		}
 		private void SetHighlightTextForBooks()
 		{
